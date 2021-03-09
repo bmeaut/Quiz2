@@ -8,5 +8,7 @@ namespace Quiz2.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        public ICollection<Quiz> Quizzes { get; set; }
+        public ICollection<Game> Games { get; set; }
     }
 }
