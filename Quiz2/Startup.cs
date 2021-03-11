@@ -29,6 +29,9 @@ namespace Quiz2
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<QuizDbContext>(options =>
+           //     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();

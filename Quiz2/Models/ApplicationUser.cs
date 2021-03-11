@@ -8,7 +8,10 @@ namespace Quiz2.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public ICollection<Quiz> Quizzes { get; set; }
-        public ICollection<Game> Games { get; set; }
+        public ApplicationUser() {
+            this.Quizzes = new HashSet<Quiz>();
+        }
+        public virtual ICollection<Quiz> Quizzes { get; set; }
+        public virtual ICollection<Game> Games { get; set; }
     }
 }
