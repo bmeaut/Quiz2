@@ -12,6 +12,10 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
+import { QuizQuestionComponent } from './quiz-question/quiz-question.component';
+import { QuizAnswerComponent } from './quiz-answer/quiz-answer.component';
+import { QuizLobbyComponent } from './quiz-lobby/quiz-lobby.component';
+import { QuizLobbyPlayerComponent } from './quiz-lobby-player/quiz-lobby-player.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +23,10 @@ import { AuthorizeInterceptor } from 'src/api-authorization/authorize.intercepto
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
+    QuizQuestionComponent,
+    QuizAnswerComponent,
+    QuizLobbyComponent,
+    QuizLobbyPlayerComponent,
     FetchDataComponent
   ],
   imports: [
@@ -29,6 +37,8 @@ import { AuthorizeInterceptor } from 'src/api-authorization/authorize.intercepto
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
+      { path: 'question', component: QuizQuestionComponent},
+      { path: 'lobby', component: QuizLobbyComponent},
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
     ])
   ],
