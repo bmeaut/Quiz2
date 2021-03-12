@@ -7,7 +7,6 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
@@ -16,17 +15,18 @@ import { QuizQuestionComponent } from './quiz-question/quiz-question.component';
 import { QuizAnswerComponent } from './quiz-answer/quiz-answer.component';
 import { QuizLobbyComponent } from './quiz-lobby/quiz-lobby.component';
 import { QuizLobbyPlayerComponent } from './quiz-lobby-player/quiz-lobby-player.component';
+import { QuizStatisticsComponent } from './quiz-statistics/quiz-statistics.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
     QuizQuestionComponent,
     QuizAnswerComponent,
     QuizLobbyComponent,
     QuizLobbyPlayerComponent,
+    QuizStatisticsComponent,
     FetchDataComponent
   ],
   imports: [
@@ -36,9 +36,9 @@ import { QuizLobbyPlayerComponent } from './quiz-lobby-player/quiz-lobby-player.
     ApiAuthorizationModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
       { path: 'question', component: QuizQuestionComponent},
       { path: 'lobby', component: QuizLobbyComponent},
+      { path: 'stats', component: QuizStatisticsComponent},
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
     ])
   ],
