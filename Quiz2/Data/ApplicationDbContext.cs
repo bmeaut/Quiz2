@@ -21,7 +21,7 @@ namespace Quiz2.Data
     public DbSet<Game> Games { get; set; }
     public DbSet<Question> Questions { get; set; }
     public DbSet<Quiz> Quizzes { get; set; }
-    //public DbSet<AnswerInstance> AnswerInstances { get; set; }
+    public DbSet<UserAnswer> UserAnswers { get; set; }
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
 
@@ -32,8 +32,8 @@ namespace Quiz2.Data
         modelBuilder.Entity<Game>().ToTable("Games");
         modelBuilder.Entity<Question>().ToTable("Questions");
         modelBuilder.Entity<Quiz>().ToTable("Quizzes");
-       // modelBuilder.Entity<AnswerInstance>().ToTable("AnswerInstances");
-            base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<UserAnswer>().ToTable("UserAnswers");
+        base.OnModelCreating(modelBuilder);
         }
     }
 }
