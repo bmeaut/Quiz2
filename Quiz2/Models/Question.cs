@@ -13,7 +13,7 @@ namespace Quiz2.Models
         public string Text { get; set; }
         [Required]
         public ICollection<Answer> Answers { get; set; }
-        public int Timer { get; set; }
+        public int SecondsToAnswer { get; set; }
         public int Position { get; set; }
         public int Points { get; set; }
         public int NumberOfCorrectAnswers { get; set; }

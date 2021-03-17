@@ -9,6 +9,6 @@ namespace Quiz2.Models
     public class ApplicationUser : IdentityUser
     {
         public virtual ICollection<Quiz> Quizzes { get; set; }
-        public virtual ICollection<Game> Games { get; set; }
+        public virtual ICollection<GameUsers> Games { get; set; }
     }
 }
