@@ -35,15 +35,7 @@ namespace Quiz2.Data
         modelBuilder.Entity<Quiz>().ToTable("Quizzes");
         modelBuilder.Entity<UserAnswer>().ToTable("UserAnswers");
         modelBuilder.Entity<GameUsers>()
-            .HasKey(bc => new { bc.GameId, bc.ApplicationUserId });  
-        modelBuilder.Entity<GameUsers>()
-            .HasOne(bc => bc.Game)
-            .WithMany(b => b.JoinedUsers)
-            .HasForeignKey(bc => bc.GameId);  
-        modelBuilder.Entity<GameUsers>()
-            .HasOne(bc => bc.ApplicationUser)
-            .WithMany(c => c.Games)
-            .HasForeignKey(bc => bc.ApplicationUserId);
+            .HasKey(bc => new { bc.GameId, bc.ApplicationUserId });
         base.OnModelCreating(modelBuilder);
         }
     }
