@@ -30,7 +30,7 @@ namespace Quiz2
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             //services.AddDbContext<QuizDbContext>(options =>
-           //     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -44,10 +44,8 @@ namespace Quiz2
             services.AddControllersWithViews();
             services.AddRazorPages();
             // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,6 +69,12 @@ namespace Quiz2
             {
                 app.UseSpaStaticFiles();
             }
+            
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Quiz app V1");
+            });
 
             app.UseRouting();
 
@@ -97,6 +101,8 @@ namespace Quiz2
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            
         }
     }
 }
