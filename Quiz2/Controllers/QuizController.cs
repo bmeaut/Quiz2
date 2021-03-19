@@ -18,9 +18,9 @@ namespace Quiz2.Controllers
     public class QuizController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly QuizService quizService;
+        private readonly IQuizService quizService;
 
-        public QuizController(QuizService quizService, ApplicationDbContext context)
+        public QuizController(IQuizService quizService, ApplicationDbContext context)
         {
             _context = context;
             this.quizService = quizService;

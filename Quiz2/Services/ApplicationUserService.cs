@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Quiz2.Services
 {
-    public class ApplicationUserService
+    public class ApplicationUserService: IApplicationUserService
     {
         private readonly ApplicationDbContext _context;
 

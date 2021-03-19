@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace Quiz2.Services
 {
-    public class QuizService
+    public class QuizService: IQuizService
     {
         private readonly ApplicationDbContext _context;
-        private readonly ApplicationUserService applicationUserService;
+        private readonly IApplicationUserService applicationUserService;
 
-        public QuizService(ApplicationUserService applicationUserService, ApplicationDbContext context)
+        public QuizService(IApplicationUserService applicationUserService, ApplicationDbContext context)
         {
             _context = context;
             this.applicationUserService = applicationUserService;

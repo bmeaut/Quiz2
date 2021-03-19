@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Quiz2.Data;
 using Quiz2.Models;
+using Quiz2.Services;
 
 namespace Quiz2
 {
@@ -32,12 +33,16 @@ namespace Quiz2
             //services.AddDbContext<QuizDbContext>(options =>
             //     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+           
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+
+            services.AddTransient<IQuizService, QuizService>();
+            services.AddTransient<IApplicationUserService, ApplicationUserService>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
