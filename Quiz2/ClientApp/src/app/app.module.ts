@@ -16,6 +16,8 @@ import { QuizAnswerComponent } from './quiz-answer/quiz-answer.component';
 import { QuizLobbyComponent } from './quiz-lobby/quiz-lobby.component';
 import { QuizLobbyPlayerComponent } from './quiz-lobby-player/quiz-lobby-player.component';
 import { QuizStatisticsComponent } from './quiz-statistics/quiz-statistics.component';
+import { QuizQuestionEditComponent } from './quiz-question-edit/quiz-question-edit.component';
+import { QuizQuestionListComponent } from './quiz-question-list/quiz-question-list.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { QuizStatisticsComponent } from './quiz-statistics/quiz-statistics.compo
     QuizLobbyComponent,
     QuizLobbyPlayerComponent,
     QuizStatisticsComponent,
+    QuizQuestionEditComponent,
+    QuizQuestionListComponent,
     FetchDataComponent
   ],
   imports: [
@@ -39,6 +43,8 @@ import { QuizStatisticsComponent } from './quiz-statistics/quiz-statistics.compo
       { path: 'question', component: QuizQuestionComponent},
       { path: 'lobby', component: QuizLobbyComponent},
       { path: 'stats', component: QuizStatisticsComponent},
+      { path: 'question_list', component: QuizQuestionListComponent},
+      { path: 'edit', component: QuizQuestionEditComponent},
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
     ])
   ],
