@@ -4,30 +4,36 @@ using Microsoft.EntityFrameworkCore;
 using Quiz2.Data;
 using Quiz2.Models;
 using System;
+using Quiz2.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Quiz2.DTO;
 
 namespace Quiz2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class QuizController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly QuizService quizService;
 
-        public QuizController(ApplicationDbContext context)
+        public QuizController(QuizService quizService, ApplicationDbContext context)
         {
             _context = context;
+            this.quizService = quizService;
         }
 
-        [HttpGet("quizId")]
-        public async Task<ActionResult<Quiz>> GetQuiz(int quizId)
+        // GET: api/Quiz/5
+        [HttpGet("{quizId}")]
+        public ActionResult<Quiz> GetQuiz(int quizId)
         {
-            return await _context.Quizzes.FindAsync(quizId);
+            return quizService.GetQuiz(quizId);
         }
 
+        // DELETE: api/Quiz/5
         [HttpDelete("{quizId}")]
         public async Task<IActionResult> DeleteQuiz(int quizId)
         {
@@ -42,24 +48,36 @@ namespace Quiz2.Controllers
 
             return NoContent();
         }
-        [HttpPatch("{quizId}")]
+
+        // PUT: api/Quiz/5
+        [HttpPut("{quizId}")]
         public async Task<ActionResult<Quiz>> UpdateQuiz(int quizId)
         {
             _context.Quizzes.Update(await _context.Quizzes.FindAsync(quizId));
             await _context.SaveChangesAsync();
             return await _context.Quizzes.FindAsync(quizId);
         }
+
+        // PUT: api/Quiz
         [HttpPut]
-        public async Task<ActionResult<List<Quiz>>> CreateQuiz(Quiz quiz)
+        public ActionResult<Quiz> CreateQuiz(CreateQuizDTO createQuizDTO)
         {
-            _context.Quizzes.Add(quiz);
-            await _context.SaveChangesAsync();
-            return await _context.Quizzes.ToListAsync<Quiz>();
+            return quizService.CreateQuiz(createQuizDTO);
         }
+
+        // GET: api/Quiz
         [HttpGet]
         public async Task<ActionResult<List<Quiz>>> GetQuizzes()
         {
             return await _context.Quizzes.ToListAsync<Quiz>();
+        }
+
+        // GET: api/Quiz/5/questions
+        [HttpGet("{quizId}/questions")]
+        public async Task<ActionResult<List<Question>>> GetQuestions(int quizId)
+        { 
+            var quiz = await _context.Quizzes.FindAsync(quizId);
+            return quiz.Questions.ToList<Question>();
         }
     }
 }

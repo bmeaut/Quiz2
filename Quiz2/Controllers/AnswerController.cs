@@ -22,12 +22,14 @@ namespace Quiz2.Controllers
             _context = context;
         }
 
+        // GET: api/Answer/5
         [HttpGet("{answerId}")]
         public async Task<ActionResult<Answer>> GetAnswer(int answerId)
         {
             return await _context.Answers.FindAsync(answerId);
         }
 
+        // DELETE: api/Answer/5
         [HttpDelete("{answerId}")]
         public async Task<IActionResult> DeleteAnswer(int answerId)
         {
@@ -43,6 +45,7 @@ namespace Quiz2.Controllers
             return NoContent();
         }
 
+        // PATCH: api/Answer/5
         [HttpPatch("{answerId}")]
         public async Task<ActionResult<Answer>> UpdateAnswer(int answerId)
         {
