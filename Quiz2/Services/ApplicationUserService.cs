@@ -16,7 +16,7 @@ namespace Quiz2.Services
             _context = context;
         }
 
-        public ApplicationUser GetUser(int userId)
+        public ApplicationUser GetUser(string userId)
         {
             return _context.ApplicationUsers.Find(userId);
         }

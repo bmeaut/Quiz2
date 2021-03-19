@@ -35,6 +35,7 @@ namespace Quiz2.Services
             quiz.Owner = owner;
             _context.Quizzes.Add(quiz);
             _context.SaveChanges();
+            Console.WriteLine(quiz.Owner.Id);
             return quiz;
         }
     }

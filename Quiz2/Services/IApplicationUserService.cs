@@ -8,6 +8,6 @@ namespace Quiz2.Services
 {
     public interface IApplicationUserService
     {
-        public ApplicationUser GetUser(int userId);
+        public ApplicationUser GetUser(string userId);
     }
 }
