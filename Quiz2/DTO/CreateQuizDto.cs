@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Quiz2.DTO
 {
-    public class CreateQuizDTO
+    public class CreateQuizDto
     {
         public string Name { get; set; }
         public string OwnerId { get; set; }

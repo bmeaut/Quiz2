@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Quiz2.Data;
+﻿using Quiz2.Data;
 using Quiz2.DTO;
 using Quiz2.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Quiz2.Services
 {
@@ -27,16 +23,39 @@ namespace Quiz2.Services
             return _context.Quizzes.Find(quizId);
         }
 
-        public Quiz CreateQuiz(CreateQuizDTO createQuizDTO)
+        public Quiz CreateQuiz(CreateQuizDto createQuizDto)
         {
-            var owner = applicationUserService.GetUser(createQuizDTO.OwnerId);
+            var owner = applicationUserService.GetUser(createQuizDto.OwnerId);
             var quiz = new Quiz();
-            quiz.Name = createQuizDTO.Name;
+            quiz.Name = createQuizDto.Name;
             quiz.Owner = owner;
             _context.Quizzes.Add(quiz);
             _context.SaveChanges();
-            Console.WriteLine(quiz.Owner.Id);
             return quiz;
+        }
+
+        public List<Quiz> GetQuizzes()
+        {
+            return _context.Quizzes.ToList();
+        }
+
+        public List<Question> GetQuestions(int quizId)
+        {
+            return _context.Quizzes.Find(quizId).Questions.ToList();
+        }
+
+        public Quiz UpdateQuiz(int quizId, UpdateQuizDto updateQuizDto)
+        {
+            var quiz = _context.Quizzes.Find(quizId);
+            quiz.Name = updateQuizDto.Name;
+            _context.SaveChanges();
+            return quiz;
+        }
+
+        public void DeleteQuiz(int quizId)
+        {
+            _context.Quizzes.Remove(_context.Quizzes.Find(quizId));
+            _context.SaveChanges();
         }
     }
 }

@@ -24,34 +24,34 @@ namespace Quiz2.Controllers
 
         // GET: api/Answer/5
         [HttpGet("{answerId}")]
-        public async Task<ActionResult<Answer>> GetAnswer(int answerId)
+        public ActionResult<Answer> GetAnswer(int answerId)
         {
-            return await _context.Answers.FindAsync(answerId);
+            return _context.Answers.Find(answerId);
         }
 
         // DELETE: api/Answer/5
         [HttpDelete("{answerId}")]
-        public async Task<IActionResult> DeleteAnswer(int answerId)
+        public IActionResult DeleteAnswer(int answerId)
         {
-            var answer = await _context.Answers.FindAsync(answerId);
+            var answer = _context.Answers.Find(answerId);
             if (answer == null)
             {
                 return NotFound();
             }
 
             _context.Answers.Remove(answer);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return NoContent();
         }
 
         // PATCH: api/Answer/5
         [HttpPatch("{answerId}")]
-        public async Task<ActionResult<Answer>> UpdateAnswer(int answerId)
+        public ActionResult<Answer> UpdateAnswer(int answerId)
         {
-            _context.Answers.Update(await _context.Answers.FindAsync(answerId));
-            await _context.SaveChangesAsync();
-            return await _context.Answers.FindAsync(answerId);
+            _context.Answers.Update( _context.Answers.Find(answerId));
+            _context.SaveChanges();
+            return _context.Answers.Find(answerId);
         }
 
     }

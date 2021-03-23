@@ -14,6 +14,10 @@ namespace Quiz2.Services
     public interface IQuizService
     {
         public Quiz GetQuiz(int userId);
-        public Quiz CreateQuiz(CreateQuizDTO createQuizDTO);
+        public Quiz CreateQuiz(CreateQuizDto createQuizDto);
+        public List<Quiz> GetQuizzes();
+        public List<Question> GetQuestions(int quizId);
+        public Quiz UpdateQuiz(int quizId, UpdateQuizDto updateQuizDto);
+        public void DeleteQuiz(int quizId);
     }
 }

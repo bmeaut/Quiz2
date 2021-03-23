@@ -35,49 +35,43 @@ namespace Quiz2.Controllers
 
         // DELETE: api/Quiz/5
         [HttpDelete("{quizId}")]
-        public async Task<IActionResult> DeleteQuiz(int quizId)
+        public IActionResult DeleteQuiz(int quizId)
         {
-            var quiz = await _context.Quizzes.FindAsync(quizId);
+            var quiz = quizService.GetQuiz(quizId);
             if (quiz == null)
             {
                 return NotFound();
             }
-
-            _context.Quizzes.Remove(quiz);
-            await _context.SaveChangesAsync();
-
+            quizService.DeleteQuiz(quizId);
             return NoContent();
         }
 
         // PUT: api/Quiz/5
         [HttpPut("{quizId}")]
-        public async Task<ActionResult<Quiz>> UpdateQuiz(int quizId)
+        public ActionResult<Quiz> UpdateQuiz(int quizId, UpdateQuizDto updateQuizDto)
         {
-            _context.Quizzes.Update(await _context.Quizzes.FindAsync(quizId));
-            await _context.SaveChangesAsync();
-            return await _context.Quizzes.FindAsync(quizId);
+            return quizService.UpdateQuiz(quizId, updateQuizDto);
         }
 
         // PUT: api/Quiz
         [HttpPut]
-        public ActionResult<Quiz> CreateQuiz(CreateQuizDTO createQuizDTO)
+        public ActionResult<Quiz> CreateQuiz(CreateQuizDto createQuizDto)
         {
-            return quizService.CreateQuiz(createQuizDTO);
+            return quizService.CreateQuiz(createQuizDto);
         }
 
         // GET: api/Quiz
         [HttpGet]
-        public async Task<ActionResult<List<Quiz>>> GetQuizzes()
+        public ActionResult<List<Quiz>> GetQuizzes()
         {
-            return await _context.Quizzes.ToListAsync<Quiz>();
+            return quizService.GetQuizzes();
         }
 
         // GET: api/Quiz/5/questions
         [HttpGet("{quizId}/questions")]
-        public async Task<ActionResult<List<Question>>> GetQuestions(int quizId)
-        { 
-            var quiz = await _context.Quizzes.FindAsync(quizId);
-            return quiz.Questions.ToList<Question>();
+        public ActionResult<List<Question>> GetQuestions(int quizId)
+        {
+            return quizService.GetQuestions(quizId);
         }
     }
 }

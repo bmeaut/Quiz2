@@ -24,41 +24,41 @@ namespace Quiz2.Controllers
 
         // GET: api/Question/5
         [HttpGet("{questionId}")]
-        public async Task<ActionResult<Question>> GetQuestion(int questionId)
+        public ActionResult<Question> GetQuestion(int questionId)
         {
-            return await _context.Questions.FindAsync(questionId);
+            return _context.Questions.Find(questionId);
         }
 
         // PUT: api/Question/5
         [HttpPut("{questionId}")]
-        public async Task<ActionResult<List<Question>>> CreateQuestion(Question question)
+        public ActionResult<List<Question>> CreateQuestion(Question question)
         {
-            _context.Questions.Add(question);
-            await _context.SaveChangesAsync();
-            return await _context.Questions.ToListAsync<Question>();
+            _context.Questions.Add(question); 
+            _context.SaveChanges();
+            return _context.Questions.ToList<Question>();
         }
 
         //PATCH: api/Question/5
         [HttpPatch("{questionId}")]
-        public async Task<ActionResult<Question>> UpdateQuestion(int questionId)
+        public ActionResult<Question> UpdateQuestion(int questionId)
         {
-            _context.Questions.Update(await _context.Questions.FindAsync(questionId));
-            await _context.SaveChangesAsync();
-            return await _context.Questions.FindAsync(questionId);
+            _context.Questions.Update( _context.Questions.Find(questionId));
+            _context.SaveChanges();
+            return _context.Questions.Find(questionId);
         }
 
         //DELETE: api/Question/5
         [HttpDelete("{questionId}")]
-        public async Task<IActionResult> DeleteQuestion(int questionId)
+        public IActionResult DeleteQuestion(int questionId)
         {
-            var question = await _context.Questions.FindAsync(questionId);
+            var question = _context.Questions.Find(questionId);
             if (question == null)
             {
                 return NotFound();
             }
 
             _context.Questions.Remove(question);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return NoContent();
         }
