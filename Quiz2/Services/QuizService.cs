@@ -4,6 +4,7 @@ using Quiz2.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Quiz2.Services
 {
@@ -25,18 +26,18 @@ namespace Quiz2.Services
 
         public Quiz CreateQuiz(CreateQuizDto createQuizDto)
         {
-            var owner = applicationUserService.GetUser(createQuizDto.OwnerId);
             var quiz = new Quiz();
             quiz.Name = createQuizDto.Name;
-            quiz.Owner = owner;
+            quiz.Owner = applicationUserService.GetUser(createQuizDto.OwnerId);
             _context.Quizzes.Add(quiz);
             _context.SaveChanges();
+            
             return quiz;
         }
 
         public List<Quiz> GetQuizzes()
         {
-            return _context.Quizzes.ToList();
+            return _context.Quizzes.Include(quiz => quiz.Owner).ToList();
         }
 
         public List<Question> GetQuestions(int quizId)
