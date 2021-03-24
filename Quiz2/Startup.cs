@@ -30,11 +30,7 @@ namespace Quiz2
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddDbContext<QuizDbContext>(options =>
-            //     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-           
-
+            
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -43,7 +39,14 @@ namespace Quiz2
 
             services.AddTransient<IQuizService, QuizService>();
             services.AddTransient<IApplicationUserService, ApplicationUserService>();
-
+            services.AddTransient<IQuestionService, QuestionService>();
+            
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
+            
+            
             services.AddAuthentication()
                 .AddIdentityServerJwt();
             services.AddControllersWithViews();

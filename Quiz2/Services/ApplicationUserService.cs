@@ -1,9 +1,8 @@
-﻿using Quiz2.Data;
-using Quiz2.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Quiz2.Data;
+using Quiz2.DTO;
+using Quiz2.Models;
 
 namespace Quiz2.Services
 {
@@ -19,6 +18,30 @@ namespace Quiz2.Services
         public ApplicationUser GetUser(string userId)
         {
             return _context.ApplicationUsers.Find(userId);
+        }
+
+        public List<ApplicationUser> GetUsers()
+        {
+            return _context.ApplicationUsers.ToList();
+        }
+
+        public List<Game> GetGames(string userId)
+        {
+            var user = _context.ApplicationUsers.Find(userId);
+            return _context.Games.Where(e => e.JoinedUsers.Contains(user)).ToList();
+        }
+
+        public Game JoinGame(string joinId)
+        {
+            return _context.Games.Where(q => q.JoinId.Equals(joinId)).First();
+        }
+
+        public ApplicationUser UpdateApplicationUser(string userId, UpdateApplicationUserDto updateApplicationUserDto)
+        {
+            var user = _context.ApplicationUsers.Find(userId);
+            user.UserName = updateApplicationUserDto.Name;
+            _context.SaveChanges();
+            return user;
         }
     }
 }

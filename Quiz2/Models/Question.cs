@@ -11,7 +11,7 @@ namespace Quiz2.Models
         public Quiz Quiz { get; set; }
         [Required]
         public string Text { get; set; }
-        [Required]
+       // [Required]
         public ICollection<Answer> Answers { get; set; }
         public int SecondsToAnswer { get; set; }
         public int Position { get; set; }

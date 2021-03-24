@@ -1,65 +1,59 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Quiz2.Data;
-using Quiz2.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Quiz2.Data;
+using Quiz2.DTO;
+using Quiz2.Models;
+using Quiz2.Services;
 
 namespace Quiz2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class QuestionController: ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IQuestionService questionService;
 
-        public QuestionController(ApplicationDbContext context)
+        public QuestionController(IQuestionService questionService, ApplicationDbContext context)
         {
             _context = context;
+            this.questionService = questionService;
         }
 
         // GET: api/Question/5
         [HttpGet("{questionId}")]
         public ActionResult<Question> GetQuestion(int questionId)
         {
-            return _context.Questions.Find(questionId);
+            return questionService.GetQuestion(questionId);
         }
 
-        // PUT: api/Question/5
-        [HttpPut("{questionId}")]
-        public ActionResult<List<Question>> CreateQuestion(Question question)
+        // PUT: api/Question
+        [HttpPut]
+        public ActionResult<Question> CreateQuestion(CreateQuestionDto createQuestionDto)
         {
-            _context.Questions.Add(question); 
-            _context.SaveChanges();
-            return _context.Questions.ToList<Question>();
+            return questionService.CreateQuestion(createQuestionDto);
         }
 
         //PATCH: api/Question/5
         [HttpPatch("{questionId}")]
-        public ActionResult<Question> UpdateQuestion(int questionId)
+        public ActionResult<Question> UpdateQuestion(int questionId, UpdateQuestionDto updateQuestionDto)
         {
-            _context.Questions.Update( _context.Questions.Find(questionId));
-            _context.SaveChanges();
-            return _context.Questions.Find(questionId);
+            return questionService.UpdateQuestion(questionId, updateQuestionDto);
         }
 
         //DELETE: api/Question/5
         [HttpDelete("{questionId}")]
         public IActionResult DeleteQuestion(int questionId)
         {
-            var question = _context.Questions.Find(questionId);
+            var question = questionService.GetQuestion(questionId);
             if (question == null)
             {
                 return NotFound();
             }
-
-            _context.Questions.Remove(question);
-            _context.SaveChanges();
-
+            questionService.DeleteQuestion(questionId);
             return NoContent();
         }
     }

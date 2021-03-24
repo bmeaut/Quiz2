@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Quiz2.Data;
-using Quiz2.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Quiz2.Data;
+using Quiz2.DTO;
+using Quiz2.Models;
 using Quiz2.Services;
 
 namespace Quiz2.Controllers
@@ -29,7 +26,7 @@ namespace Quiz2.Controllers
         [HttpGet]
         public ActionResult<List<ApplicationUser>> GetUsers()
         {
-            return _context.ApplicationUsers.ToList();
+            return applicationUserService.GetUsers();
         }
         
         // GET: api/User/5
@@ -40,19 +37,16 @@ namespace Quiz2.Controllers
         }
         // PATCH: api/User/5
         [HttpPatch("{userId}")]
-        public ActionResult<ApplicationUser> UpdateApplicationUser(string userId)
+        public ActionResult<ApplicationUser> UpdateApplicationUser(string userId, UpdateApplicationUserDto updateApplicationUserDto)
         {
-            _context.ApplicationUsers.Update(_context.ApplicationUsers.Find(userId)); 
-            _context.SaveChanges();
-            return _context.ApplicationUsers.Find(userId);
+            return applicationUserService.UpdateApplicationUser(userId, updateApplicationUserDto);
         }
 
         //GET: api/User/5/games
         [HttpGet("{userId}/games")]
         public ActionResult<List<Game>> GetGames(string userId)
         {
-            var user = _context.ApplicationUsers.Find(userId);
-            return _context.Games.Where(e => e.JoinedUsers.Contains(user)).ToList();            
+            return applicationUserService.GetGames(userId);
         }
 
         //GET: api/User/joingame
@@ -60,7 +54,7 @@ namespace Quiz2.Controllers
         public ActionResult<Game> JoinGame(string joinId)
         {
             // join by string id provided
-            return _context.Games.Where(q => q.JoinId.Equals(joinId)).First();
+            return applicationUserService.JoinGame(joinId);
         }
 
     }

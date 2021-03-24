@@ -1,14 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Quiz2.Data;
-using Quiz2.Models;
-using System;
-using Quiz2.Services;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Quiz2.DTO;
+using Quiz2.Models;
+using Quiz2.Services;
 
 namespace Quiz2.Controllers
 {
