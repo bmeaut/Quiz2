@@ -21,7 +21,10 @@ namespace Quiz2.Services
 
         public Quiz GetQuiz(int quizId)
         {
-            return _context.Quizzes.Find(quizId);
+            var quiz = GetQuizzes().Find(quiz => quiz.Id.Equals(quizId));
+            quiz.Questions = GetQuestions(quizId);
+            return quiz;
+
         }
 
         public Quiz CreateQuiz(CreateQuizDto createQuizDto)
@@ -51,7 +54,7 @@ namespace Quiz2.Services
             var quiz = _context.Quizzes.Find(quizId);
             quiz.Name = updateQuizDto.Name;
             _context.SaveChanges();
-            return quiz;
+            return GetQuiz(quizId);
         }
 
         public void DeleteQuiz(int quizId)
