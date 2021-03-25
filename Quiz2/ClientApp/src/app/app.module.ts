@@ -18,6 +18,7 @@ import { QuizLobbyPlayerComponent } from './quiz-lobby-player/quiz-lobby-player.
 import { QuizStatisticsComponent } from './quiz-statistics/quiz-statistics.component';
 import { QuizQuestionEditComponent } from './quiz-question-edit/quiz-question-edit.component';
 import { QuizQuestionListComponent } from './quiz-question-list/quiz-question-list.component';
+import { QuizQuestionListItemComponent } from './quiz-question-list-item/quiz-question-list-item.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { QuizQuestionListComponent } from './quiz-question-list/quiz-question-li
     QuizStatisticsComponent,
     QuizQuestionEditComponent,
     QuizQuestionListComponent,
+    QuizQuestionListItemComponent,
     FetchDataComponent
   ],
   imports: [
