@@ -21,10 +21,10 @@ namespace Quiz2.Services
 
         public Quiz GetQuiz(int quizId)
         {
-            var quiz = GetQuizzes().Find(quiz => quiz.Id.Equals(quizId));
-            quiz.Questions = GetQuestions(quizId);
-            return quiz;
-
+            return _context.Quizzes.Where(q => q.Id.Equals(quizId))
+                    .Include(quiz => quiz.Owner)
+                    .Include(q => q.Questions)
+                    .First();
         }
 
         public Quiz CreateQuiz(CreateQuizDto createQuizDto)
