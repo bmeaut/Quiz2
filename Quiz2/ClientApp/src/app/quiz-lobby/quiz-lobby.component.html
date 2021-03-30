@@ -1,0 +1,8 @@
+<div class="main-container container">
+    <h1>PIN: 123123123</h1>
+    <h2>Csatlakozott játékosok:</h2>
+    <div class="players">
+        <app-quiz-lobby-player *ngFor="let user of users" [user]="user" [ngStyle]="{'width':'33.3%'}">
+        </app-quiz-lobby-player>
+    </div>
+</div>
