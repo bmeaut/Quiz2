@@ -19,6 +19,7 @@ import { QuizStatisticsComponent } from './quiz-statistics/quiz-statistics.compo
 import { QuizQuestionEditComponent } from './quiz-question-edit/quiz-question-edit.component';
 import { QuizQuestionListComponent } from './quiz-question-list/quiz-question-list.component';
 import { QuizQuestionListItemComponent } from './quiz-question-list-item/quiz-question-list-item.component';
+import {SRTestComponent} from "./SR-test/SR-test.component";
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { QuizQuestionListItemComponent } from './quiz-question-list-item/quiz-qu
     QuizQuestionEditComponent,
     QuizQuestionListComponent,
     QuizQuestionListItemComponent,
-    FetchDataComponent
+    FetchDataComponent,
+    SRTestComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -48,6 +50,7 @@ import { QuizQuestionListItemComponent } from './quiz-question-list-item/quiz-qu
       { path: 'question_list', component: QuizQuestionListComponent},
       { path: 'edit', component: QuizQuestionEditComponent},
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
+      { path: 'sr-test', component: SRTestComponent },
     ])
   ],
   providers: [
