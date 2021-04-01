@@ -1,0 +1,7 @@
+namespace Quiz2.DTO
+{
+    public class CreateAnswerDto
+    {
+        
+    }
+}
