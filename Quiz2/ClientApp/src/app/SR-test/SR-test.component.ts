@@ -11,6 +11,21 @@ const connection = new signalR.HubConnectionBuilder().withUrl("/gamehub").build(
 connection.on("groupTestAnswer", (text: string) => {
  console.debug(text);
 });
+
+connection.on("joined", () => {
+  console.debug("siker");
+});
+connection.on("joinFailed", () => {
+  console.debug("rossz");
+});
+
+connection.on("started", () => {
+  console.debug("elindult");
+});
+
+connection.on("startFailed", () => {
+  console.debug("nem indult el");
+});
 connection.start().catch(err => document.write(err));
 @Component({
   selector: 'app-SR-test',
@@ -46,16 +61,24 @@ export class SRTestComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
   }
 
-  group1(){
-    connection.send("JoinGame", "group1");
+  joinGroup(){
+    console.debug((<HTMLInputElement>document.getElementById("input_join_id")).value);
+    connection.send("JoinGame", (<HTMLInputElement>document.getElementById("input_join_id")).value);
     console.debug("group1");
   }
-  group2(){
-    connection.send("JoinGame", "group2");
-    console.debug("group2");
-  }
+
   keres(){
     connection.send("GroupTest");
     console.debug("keres");
+  }
+
+  nextQuestion(){
+    connection.send("GroupTest");
+    console.debug("keres");
+  }
+
+  startGame(){
+    connection.send("StartGame", (<HTMLInputElement>document.getElementById("input_join_id")).value);
+    console.debug("start");
   }
 }
