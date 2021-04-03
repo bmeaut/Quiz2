@@ -22,16 +22,15 @@ namespace Quiz2.Services
          */
         public Question GetQuestion(int questionId)
         {
-            return _context.Questions.Include(question => question.Quiz)
-                .First(q => q.Id.Equals(questionId));
+            return _context.Questions.First(q => q.Id.Equals(questionId));
         }
 
         public Question CreateQuestion(CreateQuestionDto createQuestionDto)
         {
             var question = new Question();
             question.Text = createQuestionDto.Text;
-            question.Quiz = quizService.GetQuiz(createQuestionDto.QuizId);
-            _context.Questions.Add(question); 
+            var quiz = quizService.GetQuiz(createQuestionDto.QuizId);
+            quiz.Questions.Add(question);
             _context.SaveChanges();
             return question;
         }
@@ -40,7 +39,6 @@ namespace Quiz2.Services
         {
             var question = _context.Questions.Find(questionId);
             question.Text = updateQuestionDto.Text;
-            question.Quiz = quizService.GetQuiz(updateQuestionDto.QuizId);
             _context.SaveChanges();
             return question;
         }

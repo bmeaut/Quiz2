@@ -45,8 +45,8 @@ namespace Quiz2.Services
 
         public List<Question> GetQuestions(int quizId)
         {
-
-            return _context.Questions.Where(question => question.Quiz.Id.Equals(quizId)).ToList();
+            var quiz = _context.Quizzes.Where(q => q.Id == quizId).Include(q => q.Questions).First();
+            return quiz.Questions;
         }
 
         public Quiz UpdateQuiz(int quizId, UpdateQuizDto updateQuizDto)
