@@ -27,7 +27,6 @@ namespace Quiz2.Hubs
         {
             try
             {
-                Console.WriteLine(Context.User.Identity.Name);
                 var game = gameService.GetGameByJoinId(joinId);
                 Groups.AddToGroupAsync(Context.ConnectionId, joinId);
                 Clients.Caller.SendAsync("joined");
@@ -54,6 +53,14 @@ namespace Quiz2.Hubs
                 Console.WriteLine(e.ToString());
                 Clients.Caller.SendAsync("startFailed");
             }
+        }
+
+        public async void NextQuestion(string joinId)
+        {
+            var game = gameService.GetGameWithQuestionsByJoinId(joinId);
+            await Clients.Groups(joinId).SendAsync("newQuestion",game.CurrentQuestion);
+            game.CurrentQuestion = game.Quiz.Questions[1];
+            gameService.Save();
         }
 
     }

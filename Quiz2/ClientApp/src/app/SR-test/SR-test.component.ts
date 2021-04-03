@@ -26,6 +26,9 @@ connection.on("started", () => {
 connection.on("startFailed", () => {
   console.debug("nem indult el");
 });
+connection.on("newQuestion", (question :Question) => {
+  console.debug(question);
+});
 connection.start().catch(err => document.write(err));
 @Component({
   selector: 'app-SR-test',
@@ -73,8 +76,8 @@ export class SRTestComponent implements OnInit, AfterViewInit {
   }
 
   nextQuestion(){
-    connection.send("GroupTest");
-    console.debug("keres");
+    connection.send("NextQuestion", (<HTMLInputElement>document.getElementById("input_join_id")).value);
+    console.debug("új kérdés");
   }
 
   startGame(){
