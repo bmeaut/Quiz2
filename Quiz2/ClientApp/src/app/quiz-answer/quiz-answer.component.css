@@ -1,0 +1,10 @@
+.answer {
+    padding: 0.4rem;
+    margin: 0.2rem;
+    background-color: #d1d1d1;
+}
+
+.answer:hover {
+    border: 1px solid #9c8c81;
+    cursor: pointer;
+}

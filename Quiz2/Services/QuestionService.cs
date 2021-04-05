@@ -17,19 +17,20 @@ namespace Quiz2.Services
             this.quizService = quizService;
         }
 
+        /*
+         * Include Quiz object in the returned json
+         */
         public Question GetQuestion(int questionId)
         {
-            return _context.Questions.Include(question => question.Quiz)
-                .Include(question => question.Answers)
-                .First(q => q.Id.Equals(questionId));
+            return _context.Questions.First(q => q.Id.Equals(questionId));
         }
 
         public Question CreateQuestion(CreateQuestionDto createQuestionDto)
         {
             var question = new Question();
             question.Text = createQuestionDto.Text;
-            question.Quiz = quizService.GetQuiz(createQuestionDto.QuizId);
-            _context.Questions.Add(question); 
+            var quiz = quizService.GetQuiz(createQuestionDto.QuizId);
+            quiz.Questions.Add(question);
             _context.SaveChanges();
             return question;
         }
