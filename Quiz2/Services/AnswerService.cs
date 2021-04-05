@@ -19,8 +19,8 @@ namespace Quiz2.Services
         
         public Answer GetAnswer(int answerId)
         {
-            return _context.Answers.Include(answer => answer.Question)
-                .Where(answer => answer.Id.Equals(answerId))
+            return _context.Answers.Where(answer => answer.Id.Equals(answerId))
+                .Include(answer => answer.Question)
                 .First();
         }
 

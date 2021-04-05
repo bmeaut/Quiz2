@@ -21,9 +21,9 @@ namespace Quiz2.Services
 
         public Quiz GetQuiz(int quizId)
         {
-            return _context.Quizzes.Where(q => q.Id.Equals(quizId))
+            return _context.Quizzes.Where(quiz => quiz.Id.Equals(quizId))
                     .Include(quiz => quiz.Owner)
-                    .Include(q => q.Questions)
+                    .Include(quiz => quiz.Questions)
                     .First();
         }
 
