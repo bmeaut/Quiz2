@@ -40,6 +40,7 @@ namespace Quiz2
             services.AddTransient<IQuizService, QuizService>();
             services.AddTransient<IApplicationUserService, ApplicationUserService>();
             services.AddTransient<IQuestionService, QuestionService>();
+            services.AddTransient<IAnswerService, AnswerService>();
             
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>

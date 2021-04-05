@@ -14,12 +14,10 @@ namespace Quiz2.Controllers
     //[Authorize]
     public class QuestionController: ControllerBase
     {
-        private readonly ApplicationDbContext _context;
         private readonly IQuestionService questionService;
 
-        public QuestionController(IQuestionService questionService, ApplicationDbContext context)
+        public QuestionController(IQuestionService questionService)
         {
-            _context = context;
             this.questionService = questionService;
         }
 

@@ -17,12 +17,10 @@ namespace Quiz2.Services
             this.quizService = quizService;
         }
 
-        /*
-         * Include Quiz object in the returned json
-         */
         public Question GetQuestion(int questionId)
         {
             return _context.Questions.Include(question => question.Quiz)
+                .Include(question => question.Answers)
                 .First(q => q.Id.Equals(questionId));
         }
 

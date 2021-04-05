@@ -12,12 +12,10 @@ namespace Quiz2.Controllers
     //[Authorize]
     public class QuizController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
         private readonly IQuizService quizService;
 
-        public QuizController(IQuizService quizService, ApplicationDbContext context)
+        public QuizController(IQuizService quizService)
         {
-            _context = context;
             this.quizService = quizService;
         }
 

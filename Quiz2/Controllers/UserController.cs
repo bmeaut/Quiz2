@@ -13,12 +13,10 @@ namespace Quiz2.Controllers
     //[Authorize]
     public class UserController: ControllerBase
     {
-        private readonly ApplicationDbContext _context;
         private readonly IApplicationUserService applicationUserService;
 
-        public UserController(IApplicationUserService applicationUserService,ApplicationDbContext context)
+        public UserController(IApplicationUserService applicationUserService)
         {
-            _context = context;
             this.applicationUserService = applicationUserService;
         }
 
