@@ -39,7 +39,6 @@ namespace Quiz2.Services
         {
             var question = _context.Questions.Find(questionId);
             question.Text = updateQuestionDto.Text;
-            question.Quiz = quizService.GetQuiz(updateQuestionDto.QuizId);
             _context.SaveChanges();
             return question;
         }
