@@ -2,6 +2,9 @@ import { createTokenForExternalReference } from '@angular/compiler/src/identifie
 import { Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
 import { PlaceholderDirective } from 'src/directives/placeholder.directive';
 import { QuizLobbyComponent } from '../quiz-lobby/quiz-lobby.component';
+import { QuizOwnerLobbyComponent } from '../quiz-owner-lobby/quiz-owner-lobby.component';
+import { QuizOwnerQuestionComponent } from '../quiz-owner-question/quiz-owner-question.component';
+import { QuizOwnerStatisticsComponent } from '../quiz-owner-statistics/quiz-owner-statistics.component';
 import { QuizQuestionComponent } from '../quiz-question/quiz-question.component';
 import { QuizStatisticsComponent } from '../quiz-statistics/quiz-statistics.component';
 
@@ -19,25 +22,46 @@ export class QuizGameComponent implements OnInit {
   ngOnInit() {
   }
 
-  loadQuestionComponent() {
+  loadQuizQuestionComponent() {
     const questionComponentFactory = this.cfr.resolveComponentFactory(QuizQuestionComponent);
     const hostViewContainerRef = this.gameHost.viewContainerRef;
     hostViewContainerRef.clear();
     hostViewContainerRef.createComponent(questionComponentFactory);
   }
 
-  loadQuizStatistics() {
+  loadQuizStatisticsComponent() {
     const quizStatisticsFactory = this.cfr.resolveComponentFactory(QuizStatisticsComponent);
     const hostViewContainerRef = this.gameHost.viewContainerRef;
     hostViewContainerRef.clear();
     hostViewContainerRef.createComponent(quizStatisticsFactory);
   }
 
-  loadQuizLobby() {
+  loadQuizLobbyComponent() {
     const quizLobbyComponentFactory = this.cfr.resolveComponentFactory(QuizLobbyComponent);
     const hostViewContainerRef = this.gameHost.viewContainerRef;
     hostViewContainerRef.clear();
     hostViewContainerRef.createComponent(quizLobbyComponentFactory);
+  }
+
+  loadQuizOwnerQuestionComponent() {
+    const quizOwnerQuestionFactory = this.cfr.resolveComponentFactory(QuizOwnerQuestionComponent);
+    const hostViewContainerRef = this.gameHost.viewContainerRef;
+    hostViewContainerRef.clear();
+    hostViewContainerRef.createComponent(quizOwnerQuestionFactory);
+  }
+
+  loadQuizOwnerStatisticsComponent() {
+    const quizOwnerStatisticsFactory = this.cfr.resolveComponentFactory(QuizOwnerStatisticsComponent);
+    const hostViewContainerRef = this.gameHost.viewContainerRef;
+    hostViewContainerRef.clear();
+    hostViewContainerRef.createComponent(quizOwnerStatisticsFactory);
+  }
+
+  loadQuizOwnerLobbyComponent() {
+    const quizOwnerLobbyComponentFactory = this.cfr.resolveComponentFactory(QuizOwnerLobbyComponent);
+    const hostViewContainerRef = this.gameHost.viewContainerRef;
+    hostViewContainerRef.clear();
+    hostViewContainerRef.createComponent(quizOwnerLobbyComponentFactory);
   }
 
 }
