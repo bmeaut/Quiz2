@@ -25,6 +25,7 @@ import { QuizOwnerLobbyComponent } from './quiz-owner-lobby/quiz-owner-lobby.com
 import { QuizOwnerQuestionComponent } from './quiz-owner-question/quiz-owner-question.component';
 import { QuizOwnerStatisticsComponent } from './quiz-owner-statistics/quiz-owner-statistics.component';
 import {SRTestComponent} from "./SR-test/SR-test.component";
+import {GamesService} from "./services/games-service";
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import {SRTestComponent} from "./SR-test/SR-test.component";
     ])
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
+    GamesService
   ],
   bootstrap: [AppComponent],
   entryComponents: [
