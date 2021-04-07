@@ -30,10 +30,6 @@ h1 {
     padding: 0.8rem;
 }
 
-.container * {
-    /* margin: 0.2rem; */
-}
-
 .details {
     display: flex;
     background: #A1A5A6;

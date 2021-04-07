@@ -1,0 +1,16 @@
+<div class="main-container">
+    <div class="wrapper">
+        <div class="question">
+            <span class="question-text">{{question.text}}</span>
+        </div>
+        <div class="timer-wrapper">
+            <span class="time">{{ question.timer }}s</span>
+        </div>
+        <div class="questions-left"> 1 / 4</div>
+        <div class="answers-wrapper">
+          <app-quiz-answer *ngFor="let answer of question.answers" [answer]="answer">
+          </app-quiz-answer>
+        </div>
+        <button class="next-button" (click)="loadStatistics()">Next</button>
+    </div>
+  </div>

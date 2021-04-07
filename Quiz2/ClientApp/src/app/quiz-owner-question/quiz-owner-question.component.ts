@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Question } from '../question';
 
 @Component({
-  selector: 'app-quiz-question',
-  templateUrl: './quiz-question.component.html',
-  styleUrls: ['./quiz-question.component.css']
+  selector: 'app-quiz-owner-question',
+  templateUrl: './quiz-owner-question.component.html',
+  styleUrls: ['./quiz-owner-question.component.css']
 })
-export class QuizQuestionComponent implements OnInit {
+export class QuizOwnerQuestionComponent implements OnInit {
 
   question: Question = {
     id: 1, 
