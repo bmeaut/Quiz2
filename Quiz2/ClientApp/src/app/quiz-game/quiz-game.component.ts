@@ -1,4 +1,3 @@
-import { createTokenForExternalReference } from '@angular/compiler/src/identifiers';
 import { Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
 import { PlaceholderDirective } from 'src/directives/placeholder.directive';
 import { QuizLobbyComponent } from '../quiz-lobby/quiz-lobby.component';
@@ -15,11 +14,12 @@ import { QuizStatisticsComponent } from '../quiz-statistics/quiz-statistics.comp
 })
 export class QuizGameComponent implements OnInit {
 
-  @ViewChild(PlaceholderDirective, {static: false}) gameHost: PlaceholderDirective;
+  @ViewChild(PlaceholderDirective, {static: true}) gameHost: PlaceholderDirective;
 
   constructor(private cfr: ComponentFactoryResolver) { }
 
   ngOnInit() {
+    this.loadQuizOwnerQuestionComponent();
   }
 
   loadQuizQuestionComponent() {

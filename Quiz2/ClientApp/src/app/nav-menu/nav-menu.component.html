@@ -1,23 +1,4 @@
 <header>
-
-  <!-- <div class="nav-container">
-    <div class="navbar">
-      <h1 id="navbar-logo">QUIZ</h1>
-      <div class="menu-toggle" id="mobile-menu">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </div>
-      <ul class="nav-menu">
-        <li><a href="#" class="nav-links">Home</a></li>
-        <li><a href="#" class="nav-links">Fetch data</a></li>
-        <li><a href="#" class="nav-links">Question</a></li>
-        <li><a href="#" class="nav-links">Lobby</a></li>
-        <li><a href="#" class="nav-links">Home</a></li>
-      </ul>
-    </div>
-  </div> -->
-
   <nav
     class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow mb-3"
   >
@@ -65,6 +46,11 @@
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/question_list']"
               >List</a
+            >
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/game']"
+              >Game</a
             >
           </li>
         </ul>

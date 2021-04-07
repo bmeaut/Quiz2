@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -21,6 +21,9 @@ import { QuizQuestionListComponent } from './quiz-question-list/quiz-question-li
 import { QuizQuestionListItemComponent } from './quiz-question-list-item/quiz-question-list-item.component';
 import { PlaceholderDirective } from 'src/directives/placeholder.directive';
 import { QuizGameComponent } from './quiz-game/quiz-game.component';
+import { QuizOwnerLobbyComponent } from './quiz-owner-lobby/quiz-owner-lobby.component';
+import { QuizOwnerQuestionComponent } from './quiz-owner-question/quiz-owner-question.component';
+import { QuizOwnerStatisticsComponent } from './quiz-owner-statistics/quiz-owner-statistics.component';
 
 @NgModule({
   declarations: [
@@ -36,11 +39,16 @@ import { QuizGameComponent } from './quiz-game/quiz-game.component';
     QuizQuestionListComponent,
     QuizQuestionListItemComponent,
     FetchDataComponent,
+    QuizGameComponent,
+    QuizOwnerLobbyComponent,
+    QuizOwnerQuestionComponent,
+    QuizOwnerStatisticsComponent,
     PlaceholderDirective
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    ReactiveFormsModule,
     FormsModule,
     ApiAuthorizationModule,
     RouterModule.forRoot([
@@ -50,12 +58,18 @@ import { QuizGameComponent } from './quiz-game/quiz-game.component';
       { path: 'stats', component: QuizStatisticsComponent},
       { path: 'question_list', component: QuizQuestionListComponent},
       { path: 'edit', component: QuizQuestionEditComponent},
+      { path: 'game', component: QuizGameComponent},
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
     ])
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    QuizOwnerLobbyComponent,
+    QuizOwnerQuestionComponent,
+    QuizOwnerStatisticsComponent
+  ]
 })
 export class AppModule { }

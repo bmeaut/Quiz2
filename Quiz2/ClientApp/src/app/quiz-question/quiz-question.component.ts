@@ -8,10 +8,6 @@ import { Question } from '../question';
 })
 export class QuizQuestionComponent implements OnInit {
 
-  // question: string = "Ez egy kérdés?";
-  // answers: string[] = ["Válasz1", "Válasz2", "Válasz3", "Válasz4"];
-  // timer: number = 120;
-
   question: Question = {
     id: 1, 
     quizId: 1, 
