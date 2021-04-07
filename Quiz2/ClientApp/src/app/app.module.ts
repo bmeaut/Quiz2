@@ -24,6 +24,7 @@ import { QuizGameComponent } from './quiz-game/quiz-game.component';
 import { QuizOwnerLobbyComponent } from './quiz-owner-lobby/quiz-owner-lobby.component';
 import { QuizOwnerQuestionComponent } from './quiz-owner-question/quiz-owner-question.component';
 import { QuizOwnerStatisticsComponent } from './quiz-owner-statistics/quiz-owner-statistics.component';
+import { QuizStatisticsAnswerComponent } from './quiz-statistics-answer/quiz-statistics-answer.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { QuizOwnerStatisticsComponent } from './quiz-owner-statistics/quiz-owner
     QuizOwnerLobbyComponent,
     QuizOwnerQuestionComponent,
     QuizOwnerStatisticsComponent,
+    QuizStatisticsAnswerComponent,
     PlaceholderDirective
   ],
   imports: [
@@ -54,8 +56,8 @@ import { QuizOwnerStatisticsComponent } from './quiz-owner-statistics/quiz-owner
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'question', component: QuizQuestionComponent},
-      { path: 'lobby', component: QuizLobbyComponent},
-      { path: 'stats', component: QuizStatisticsComponent},
+      { path: 'lobby', component: QuizOwnerLobbyComponent},
+      { path: 'stats', component: QuizOwnerStatisticsComponent},
       { path: 'question_list', component: QuizQuestionListComponent},
       { path: 'edit', component: QuizQuestionEditComponent},
       { path: 'game', component: QuizGameComponent},

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Chart } from 'chart.js';
+import { Question } from '../question';
 
 @Component({
   selector: 'app-quiz-owner-statistics',
@@ -10,6 +12,7 @@ export class QuizOwnerStatisticsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 }
