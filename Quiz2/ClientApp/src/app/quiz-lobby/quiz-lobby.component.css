@@ -25,4 +25,5 @@ h2 {
     border-bottom-left-radius: 10px;
     display: flex;
     flex-wrap: wrap;
+    padding: 0.6rem;
 }
