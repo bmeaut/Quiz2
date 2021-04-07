@@ -13,7 +13,7 @@ export class QuizOwnerQuestionComponent implements OnInit {
     quizId: 1, 
     text: "Ez egy kérdés?",
     timer: 120,
-    position: 1, 
+    position: 1,
     points: 5, 
     numberOfCorrectAnswers: 1,
     answers: 

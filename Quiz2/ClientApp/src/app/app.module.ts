@@ -26,6 +26,7 @@ import { QuizOwnerQuestionComponent } from './quiz-owner-question/quiz-owner-que
 import { QuizOwnerStatisticsComponent } from './quiz-owner-statistics/quiz-owner-statistics.component';
 import {SRTestComponent} from "./SR-test/SR-test.component";
 import {GamesService} from "./services/games-service";
+import { QuizStatisticsAnswerComponent } from './quiz-statistics-answer/quiz-statistics-answer.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {GamesService} from "./services/games-service";
     QuizOwnerQuestionComponent,
     QuizOwnerStatisticsComponent,
     PlaceholderDirective,
-    SRTestComponent
+    SRTestComponent,
+    QuizStatisticsAnswerComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -57,8 +59,8 @@ import {GamesService} from "./services/games-service";
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'question', component: QuizQuestionComponent},
-      { path: 'lobby', component: QuizLobbyComponent},
-      { path: 'stats', component: QuizStatisticsComponent},
+      { path: 'lobby', component: QuizOwnerLobbyComponent},
+      { path: 'stats', component: QuizOwnerStatisticsComponent},
       { path: 'question_list', component: QuizQuestionListComponent},
       { path: 'edit', component: QuizQuestionEditComponent},
       { path: 'game', component: QuizGameComponent},

@@ -10,3 +10,18 @@
     border: 1px solid #353D40;
     padding: 0.2rem;
 }
+
+.user:hover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem;
+    background-color: #F2B138;
+    font-size: 1.2rem;
+    color: #003F63;
+    border-radius: 10px;
+    border: 1px solid #353D40;
+    padding: 0.2rem;
+    box-shadow: 0px 0px 12px -1px rgba(0,0,0,0.37);
+    transition: all .2s ease-in-out;
+}
