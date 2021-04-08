@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Question } from '../question';
+import { QuizQuestionService } from '../services/quizquestion.service';
 
 @Component({
   selector: 'app-quiz-question-list',
@@ -20,9 +21,23 @@ export class QuizQuestionListComponent implements OnInit {
                             {id: 3, isCorrect: false, text: "Válasz3", questionId: 0},
                             {id: 4, isCorrect: false, text: "Válasz4", questionId: 0}]}];
 
-  constructor() { }
+  constructor(private quizService: QuizQuestionService) { }
 
   ngOnInit() {
+    this.getQuestionList();
+  }
+
+  getQuestionList(): void {
+    this.quizService.getQuestions().subscribe(questions => {
+      this.questions = questions;
+    });
+  }
+
+  deleteQuestion(question: Question): void {
+    this.questions.splice(this.questions.findIndex(_question => _question.id === question.id), 1);
+    this.quizService.deleteQuestion(question.id).subscribe(() => {
+      this.getQuestionList();
+    });
   }
 
 }
