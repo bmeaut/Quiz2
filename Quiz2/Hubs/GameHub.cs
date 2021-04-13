@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json;
 using Quiz2.Data;
 using Quiz2.Models;
 using Quiz2.Services;
@@ -57,8 +58,11 @@ namespace Quiz2.Hubs
 
         public async void NextQuestion(string joinId)
         {
+            Console.WriteLine(joinId);
             var game = gameService.GetGameWithQuestionsByJoinId(joinId);
-            await Clients.Groups(joinId).SendAsync("newQuestion",game.CurrentQuestion);
+            Console.WriteLine(game.CurrentQuestion.Id);
+            //await Clients.Groups(joinId).SendAsync("newQuestion",game.CurrentQuestion);
+            await Clients.All.SendAsync("newQuestion", game.CurrentQuestion);
             game.CurrentQuestion = game.Quiz.Questions[1];
             gameService.Save();
         }

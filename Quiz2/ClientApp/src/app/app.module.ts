@@ -76,7 +76,8 @@ import { QuizStatisticsAnswerComponent } from './quiz-statistics-answer/quiz-sta
   entryComponents: [
     QuizOwnerLobbyComponent,
     QuizOwnerQuestionComponent,
-    QuizOwnerStatisticsComponent
+    QuizOwnerStatisticsComponent,
+    QuizLobbyComponent
   ]
 })
 export class AppModule { }
