@@ -1,0 +1,12 @@
+<div class="main-container container">
+    <div class="lobby-header">
+        <span>Kvízek</span>
+        <div class="btn">
+            <button [routerLink]="['/quiz-edit']">Új kvíz</button>
+        </div>
+    </div>
+    <div class="quiz-container">
+        <app-quiz-list-item *ngFor="let quiz of quizzes" [quiz]="quiz" (deleteQuizListItem)="deleteQuiz(quiz)">
+        </app-quiz-list-item>
+    </div>
+</div>

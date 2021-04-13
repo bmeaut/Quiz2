@@ -12,9 +12,8 @@ export class QuizStatisticsComponent implements OnInit {
   chart: Chart;
   question: Question = {
     id: 1, 
-    quizId: 1, 
     text: "Ez egy kérdés?",
-    timer: 120,
+    secondsToAnswer: 120,
     position: 1,
     points: 5, 
     numberOfCorrectAnswers: 1,

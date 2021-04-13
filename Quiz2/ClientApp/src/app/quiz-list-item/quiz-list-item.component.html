@@ -1,0 +1,14 @@
+<div class="quiz">
+    <span>{{ quiz.name }}</span>
+    <div class="quiz-buttons">
+        <div class="btn">
+            <button type="submit" (click)="showQuestions(quiz)">Kérdések</button>
+        </div>
+        <div class="btn">
+            <button type="submit">Szerkesztés</button>
+        </div>
+        <div class="btn">
+            <button type="submit" (click)="deleteItem(quiz)">Törlés</button>
+        </div>
+    </div>
+</div>

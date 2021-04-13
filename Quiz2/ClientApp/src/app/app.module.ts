@@ -27,6 +27,9 @@ import { QuizOwnerStatisticsComponent } from './quiz-owner-statistics/quiz-owner
 import {SRTestComponent} from "./SR-test/SR-test.component";
 import {GamesService} from "./services/games-service";
 import { QuizStatisticsAnswerComponent } from './quiz-statistics-answer/quiz-statistics-answer.component';
+import { QuizListComponent } from './quiz-list/quiz-list.component';
+import { QuizListItemComponent } from './quiz-list-item/quiz-list-item.component';
+import { QuizEditComponent } from './quiz-edit/quiz-edit.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,9 @@ import { QuizStatisticsAnswerComponent } from './quiz-statistics-answer/quiz-sta
     QuizOwnerLobbyComponent,
     QuizOwnerQuestionComponent,
     QuizOwnerStatisticsComponent,
+    QuizListComponent,
+    QuizEditComponent,
+    QuizListItemComponent,
     PlaceholderDirective,
     SRTestComponent,
     QuizStatisticsAnswerComponent,
@@ -58,12 +64,14 @@ import { QuizStatisticsAnswerComponent } from './quiz-statistics-answer/quiz-sta
     ApiAuthorizationModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'question', component: QuizQuestionComponent},
+      { path: 'question', component: QuizOwnerQuestionComponent},
       { path: 'lobby', component: QuizOwnerLobbyComponent},
       { path: 'stats', component: QuizOwnerStatisticsComponent},
       { path: 'question_list', component: QuizQuestionListComponent},
       { path: 'edit', component: QuizQuestionEditComponent},
       { path: 'game', component: QuizGameComponent},
+      { path: 'quizzes', component: QuizListComponent},
+      { path: 'quiz-edit', component: QuizEditComponent},
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
       { path: 'sr-test', component: SRTestComponent },
     ])

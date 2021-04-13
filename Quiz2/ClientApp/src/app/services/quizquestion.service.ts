@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
 import { Question } from "../question";
 
 @Injectable({
@@ -7,21 +7,21 @@ import { Question } from "../question";
 })
 export class QuizQuestionService {
 
-    constructor(private httpClient: HttpClient) { }
+    constructor(private httpClient: HttpClient, @Inject('BASE_URL') readonly baseUrl: string) { }
 
     getQuestions() {
-        return this.httpClient.get<Question[]>("");
+        return this.httpClient.get<Question[]>(this.baseUrl + "");
     }
 
     getQuestion(id: number) {
-        return this.httpClient.get<Question>("");
+        return this.httpClient.get<Question>(this.baseUrl + "");
     }
 
-    postQuestion(question: Question) {
-        return this.httpClient.post<Question>("", question);
+    putQuestion(question: Question) {
+        return this.httpClient.put<Question>(this.baseUrl + "", question);
     }
 
     deleteQuestion(id: number) {
-        return this.httpClient.delete<Question>("");
+        return this.httpClient.delete<Question>(this.baseUrl + "");
     }
 }
