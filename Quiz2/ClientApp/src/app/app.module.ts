@@ -31,6 +31,7 @@ import { QuizListComponent } from './quiz-list/quiz-list.component';
 import { QuizListItemComponent } from './quiz-list-item/quiz-list-item.component';
 import { QuizEditComponent } from './quiz-edit/quiz-edit.component';
 import { QuizCreateComponent } from './quiz-create/quiz-create.component';
+import { QuizQuestionCreateComponent } from './quiz-question-create/quiz-question-create.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { QuizCreateComponent } from './quiz-create/quiz-create.component';
     NavMenuComponent,
     HomeComponent,
     QuizQuestionComponent,
+    QuizQuestionCreateComponent,
     QuizAnswerComponent,
     QuizLobbyComponent,
     QuizLobbyPlayerComponent,
@@ -74,7 +76,8 @@ import { QuizCreateComponent } from './quiz-create/quiz-create.component';
       { path: 'game', component: QuizGameComponent},
       { path: 'quizzes', component: QuizListComponent },
       { path: 'create-quiz', component: QuizCreateComponent },
-      { path: 'edit-quiz', component: QuizEditComponent},
+      { path: 'edit-quiz', component: QuizEditComponent },
+      { path: 'new-question', component: QuizQuestionCreateComponent },
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
       { path: 'sr-test', component: SRTestComponent },
     ])

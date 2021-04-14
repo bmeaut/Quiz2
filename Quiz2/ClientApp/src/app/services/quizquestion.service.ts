@@ -9,19 +9,15 @@ export class QuizQuestionService {
 
     constructor(private httpClient: HttpClient, @Inject('BASE_URL') readonly baseUrl: string) { }
 
-    getQuestions() {
-        return this.httpClient.get<Question[]>(this.baseUrl + "");
-    }
-
     getQuestion(id: number) {
-        return this.httpClient.get<Question>(this.baseUrl + "");
+        return this.httpClient.get<Question>(this.baseUrl + "api/Question/" + id);
     }
 
     putQuestion(question: Question) {
-        return this.httpClient.put<Question>(this.baseUrl + "", question);
+        return this.httpClient.put<Question>(this.baseUrl + "api/Question", question);
     }
 
     deleteQuestion(id: number) {
-        return this.httpClient.delete<Question>(this.baseUrl + "");
+        return this.httpClient.delete<Question>(this.baseUrl + "api/Question/" + id);
     }
 }

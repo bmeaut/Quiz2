@@ -38,9 +38,8 @@ export class QuizQuestionListComponent implements OnInit {
   }*/
 
   deleteQuestion(question: Question): void {
-    //this.questions.splice(this.questions.findIndex(_question => _question.id === question.id), 1);
     this.questionService.deleteQuestion(question.id).subscribe(() => {
-      //this.getQuestionList();
+      this.getQuestionList();
     });
   }
 
