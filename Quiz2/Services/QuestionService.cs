@@ -20,7 +20,10 @@ namespace Quiz2.Services
         
         public Question GetQuestion(int questionId)
         {
-            return _context.Questions.FirstOrDefault(q => q.Id == questionId);
+            return _context.Questions
+                .Include(q => q.Quiz)
+                .Include(q => q.Answers)
+                .FirstOrDefault(q => q.Id == questionId);
         }
 
         public Question CreateQuestion(CreateQuestionDto createQuestionDto)
@@ -41,7 +44,10 @@ namespace Quiz2.Services
 
         public Question UpdateQuestion(int questionId, UpdateQuestionDto updateQuestionDto)
         {
-            var question = _context.Questions.FirstOrDefault(q => q.Id == questionId);
+            var question = _context.Questions
+                .Include(q => q.Quiz)
+                .Include(q => q.Answers)
+                .FirstOrDefault(q => q.Id == questionId);
             if(question != null)
             {
                 question.Text = updateQuestionDto.Text;
