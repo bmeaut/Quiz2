@@ -39,8 +39,11 @@ namespace Quiz2.Services
         public ApplicationUser UpdateApplicationUser(string userId, UpdateApplicationUserDto updateApplicationUserDto)
         {
             var user = _context.ApplicationUsers.Find(userId);
-            user.UserName = updateApplicationUserDto.Name;
-            _context.SaveChanges();
+            if(user != null)
+            {
+                user.UserName = updateApplicationUserDto.Name;
+                _context.SaveChanges();
+            }
             return user;
         }
     }

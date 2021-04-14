@@ -1,0 +1,16 @@
+<div class="main-container">
+    <h1>Kvíz</h1>
+    <div class="container">
+        <form>
+            <div class="description">
+                <span>Név:</span>
+                <div class="details">
+                    <input name="quizName" type="text" placeholder="Adja meg a kvíz nevét" [(ngModel)]="quiz.name" required>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="btn">
+    <button type="submit" (click)="onSubmit()">Mentés</button>
+</div>

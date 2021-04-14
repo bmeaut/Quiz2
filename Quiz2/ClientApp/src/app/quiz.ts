@@ -5,7 +5,7 @@ import { User } from "./user";
 export class Quiz {
     id: number;
     name: string;
-    users: User[];
-    games: Game[];
     questions: Question[];
+    owner: User;
+    games: Game[];
 }

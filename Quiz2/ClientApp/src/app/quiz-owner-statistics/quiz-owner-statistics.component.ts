@@ -15,4 +15,8 @@ export class QuizOwnerStatisticsComponent implements OnInit {
     
   }
 
+  nextQuestion() {
+    
+  }
+
 }

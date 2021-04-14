@@ -21,46 +21,80 @@ namespace Quiz2.Services
 
         public Quiz GetQuiz(int quizId)
         {
-            return _context.Quizzes.Where(quiz => quiz.Id.Equals(quizId))
+            return _context.Quizzes
                     .Include(quiz => quiz.Owner)
                     .Include(quiz => quiz.Questions)
-                    .First();
+                    .Include(quiz => quiz.Games)
+                    .FirstOrDefault(quiz => quiz.Id == quizId);
         }
 
         public Quiz CreateQuiz(CreateQuizDto createQuizDto)
         {
-            var quiz = new Quiz();
-            quiz.Name = createQuizDto.Name;
-            quiz.Owner = applicationUserService.GetUser(createQuizDto.OwnerId);
-            _context.Quizzes.Add(quiz);
-            _context.SaveChanges();
+            var owner = applicationUserService.GetUser(createQuizDto.OwnerId);
+            if(owner != null)
+            {
+                var quiz = new Quiz()
+                {
+                    Name = createQuizDto.Name,
+                    Owner = owner
+                };
+                _context.Quizzes.Add(quiz);
+                _context.SaveChanges();
+                return quiz;
+            }
+            return null;
             
-            return quiz;
         }
 
         public List<Quiz> GetQuizzes()
         {
-            return _context.Quizzes.Include(quiz => quiz.Owner).ToList();
+            return _context.Quizzes
+                .Include(quiz => quiz.Owner)
+                .Include(quiz => quiz.Questions)
+                .Include(quiz => quiz.Games)
+                .ToList();
         }
 
         public List<Question> GetQuestions(int quizId)
         {
-            var quiz = _context.Quizzes.Where(q => q.Id == quizId).Include(q => q.Questions).First();
-            return quiz.Questions;
+            /*
+            var quiz = _context.Quizzes
+                .Include(q => q.Questions)
+                .FirstOrDefault(q => q.Id == quizId);
+            */
+            if(_context.Quizzes.Find(quizId) != null)
+            {
+                return _context.Questions
+                    .Include(question => question.Answers)
+                    .Where(q => q.Id == quizId)
+                    .ToList();
+            }
+            return null;
         }
 
         public Quiz UpdateQuiz(int quizId, UpdateQuizDto updateQuizDto)
         {
-            var quiz = _context.Quizzes.Find(quizId);
-            quiz.Name = updateQuizDto.Name;
-            _context.SaveChanges();
-            return GetQuiz(quizId);
+            var quiz = _context.Quizzes
+                    .Include(quiz => quiz.Owner)
+                    .Include(quiz => quiz.Questions)
+                    .Include(quiz => quiz.Games)
+                    .FirstOrDefault(quiz => quiz.Id == quizId);
+            if (quiz != null)
+            {
+                quiz.Name = updateQuizDto.Name;
+                _context.SaveChanges();
+            }
+            return quiz;
         }
 
         public void DeleteQuiz(int quizId)
         {
-            _context.Quizzes.Remove(_context.Quizzes.Find(quizId));
-            _context.SaveChanges();
+            var quiz = _context.Quizzes.Find(quizId);
+            if (quiz != null)
+            {
+                _context.Quizzes.Remove(quiz);
+                _context.SaveChanges();
+            }
         }
     }
 }

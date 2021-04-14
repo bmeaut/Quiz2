@@ -1,12 +1,12 @@
 import { Answer } from "./answer";
+import { Quiz } from "./quiz";
 
 export class Question {
     id: number;
-    quizId: number;
+    quiz: Quiz;
     text: string;
-    timer: number;
+    answers: Answer[];
+    secondsToAnswer: number;
     position: number;
     points: number;
-    numberOfCorrectAnswers: number;
-    answers: Answer[];
 }

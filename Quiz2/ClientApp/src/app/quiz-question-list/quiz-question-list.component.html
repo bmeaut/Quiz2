@@ -1,11 +1,11 @@
 <div class="main-container">
     <h1>Kérdések</h1>
     <div class="container">
-        <app-quiz-question-list-item *ngFor="let question of questions" [question]="question">
+        <app-quiz-question-list-item *ngFor="let question of questions" [question]="question" (deleteQuestionListItem)="deleteQuestion(question)">
         </app-quiz-question-list-item>
     </div>
 </div>
 <div class="btn">
-    <button type="submit" [routerLink]="['/edit']">Új kérdés</button>
+    <button type="submit" [routerLink]="['/new-question']">Új kérdés</button>
 </div>
 
