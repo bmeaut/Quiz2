@@ -19,37 +19,53 @@ namespace Quiz2.Services
         
         public Answer GetAnswer(int answerId)
         {
-            return _context.Answers.Where(answer => answer.Id.Equals(answerId))
+            return _context.Answers
                 .Include(answer => answer.Question)
-                .First();
+                .FirstOrDefault(answer => answer.Id == answerId);
         }
 
         public void DeleteAnswer(int answerId)
         {
-            _context.Remove(_context.Answers.Find(answerId));
-            _context.SaveChanges();
+            var answer = _context.Answers.Find(answerId);
+            if (answer != null)
+            {
+                _context.Remove(answer);
+                _context.SaveChanges();
+            }
+            
         }
 
 
         public Answer UpdateAnswer(int answerId, UpdateAnswerDto updateAnswerDto)
         {
-            var answer = _context.Answers.Include(answer => answer.Question)
-                .First(answer => answer.Id.Equals(answerId));
-            answer.Text = updateAnswerDto.Text;
-            answer.Correct = updateAnswerDto.Correct;
-            _context.SaveChanges();
+            var answer = _context.Answers
+                .Include(answer => answer.Question)
+                .FirstOrDefault(answer => answer.Id == answerId);
+            if(answer != null)
+            {
+                answer.Text = updateAnswerDto.Text;
+                answer.Correct = updateAnswerDto.Correct;
+                _context.SaveChanges();
+            }
             return answer;
         }
 
         public Answer CreateAnswer(CreateAnswerDto createAnswerDto)
         {
-            var answer = new Answer();
-            answer.Correct = createAnswerDto.Correct;
-            answer.Text = createAnswerDto.Text;
-            answer.Question = questionService.GetQuestion(createAnswerDto.QuestionId);
-            _context.Answers.Add(answer);
-            _context.SaveChanges();
-            return answer;
+            var question = questionService.GetQuestion(createAnswerDto.QuestionId);
+            if(question != null)
+            {
+                var answer = new Answer()
+                {
+                    Correct = createAnswerDto.Correct,
+                    Text = createAnswerDto.Text,
+                    Question = question
+                };
+                _context.Answers.Add(answer);
+                _context.SaveChanges();
+                return answer;
+            }
+            return null;
         }
     }
 }

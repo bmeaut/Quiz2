@@ -17,36 +17,47 @@ namespace Quiz2.Services
             this.quizService = quizService;
         }
 
-        /*
-         * Include Quiz object in the returned json
-         */
+        
         public Question GetQuestion(int questionId)
         {
-            return _context.Questions.First(q => q.Id.Equals(questionId));
+            return _context.Questions.FirstOrDefault(q => q.Id == questionId);
         }
 
         public Question CreateQuestion(CreateQuestionDto createQuestionDto)
         {
-            var question = new Question();
-            question.Text = createQuestionDto.Text;
+            var question = new Question()
+            {
+                Text = createQuestionDto.Text
+            };
             var quiz = quizService.GetQuiz(createQuestionDto.QuizId);
-            quiz.Questions.Add(question);
-            _context.SaveChanges();
-            return question;
+            if(quiz != null)
+            {
+                quiz.Questions.Add(question);
+                _context.SaveChanges();
+                return question;
+            }
+            return null;
         }
 
         public Question UpdateQuestion(int questionId, UpdateQuestionDto updateQuestionDto)
         {
-            var question = _context.Questions.Find(questionId);
-            question.Text = updateQuestionDto.Text;
-            _context.SaveChanges();
+            var question = _context.Questions.FirstOrDefault(q => q.Id == questionId);
+            if(question != null)
+            {
+                question.Text = updateQuestionDto.Text;
+                _context.SaveChanges();
+            }
             return question;
         }
 
         public void DeleteQuestion(int questionId)
         {
-            _context.Questions.Remove(_context.Questions.Find(questionId));
-            _context.SaveChanges();
+            var question = _context.Questions.Find(questionId);
+            if (question != null)
+            {
+                _context.Questions.Remove(question);
+                _context.SaveChanges();
+            }
         }
         
     }

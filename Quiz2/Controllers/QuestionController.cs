@@ -46,11 +46,6 @@ namespace Quiz2.Controllers
         [HttpDelete("{questionId}")]
         public IActionResult DeleteQuestion(int questionId)
         {
-            var question = questionService.GetQuestion(questionId);
-            if (question == null)
-            {
-                return NotFound();
-            }
             questionService.DeleteQuestion(questionId);
             return NoContent();
         }
