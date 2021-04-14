@@ -3,6 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Quiz2.Models
 {
+    public enum GameStatuses
+    {
+        Created,
+        Started,
+        Finished
+    }  
     public class Game
     {
         [Key]
@@ -13,5 +19,7 @@ namespace Quiz2.Models
         public ApplicationUser Owner { get; set; }
         public ICollection<ApplicationUser> JoinedUsers { get; set; }
         public string JoinId { get; set; }
+
+        public GameStatuses Status { get; set; }
     }
 }
