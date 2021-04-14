@@ -90,6 +90,7 @@ import { QuizQuestionCreateComponent } from './quiz-question-create/quiz-questio
   entryComponents: [
     QuizOwnerLobbyComponent,
     QuizOwnerQuestionComponent,
+    QuizQuestionComponent,
     QuizOwnerStatisticsComponent,
     QuizLobbyComponent
   ]

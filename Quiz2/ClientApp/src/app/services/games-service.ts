@@ -12,6 +12,8 @@ export class GamesService {
 
   public joinedToGame = new EventEmitter();
   public ownerJoinedToGame = new EventEmitter();
+  public gameStartedOwner = new EventEmitter<Question>();
+  public gameStarted = new EventEmitter<Question>();
   constructor(private authorizeService: AuthorizeService) {
 
 
@@ -39,10 +41,15 @@ export class GamesService {
         console.debug("rossz");
       });
 
-      this.connection.on("started", () => {
+      this.connection.on("startedOwner", (question: Question) => {
+        this.gameStartedOwner.emit(question);
         console.debug("elindult");
       });
 
+      this.connection.on("started", (question: Question) => {
+        this.gameStarted.emit(question);
+        console.debug("elindult");
+      });
       this.connection.on("startFailed", () => {
         console.debug("nem indult el");
       });
@@ -71,7 +78,7 @@ export class GamesService {
   }
 
   startGame(){
-    this.connection.send("StartGame", (<HTMLInputElement>document.getElementById("input_join_id")).value);
-    console.debug("start");
+    this.connection.send("StartGame",  "ProbaID");
+    console.debug("startGame");
   }
 }
