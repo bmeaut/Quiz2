@@ -11,12 +11,12 @@ export class QuizStatisticsComponent implements OnInit {
 
   chart: Chart;
   question: Question = {
-    id: 1, 
+    id: 1,
+    quiz: { id: 0, name: "", questions: [], owner: { id: 0 }, games: [] },
     text: "Ez egy kérdés?",
     secondsToAnswer: 120,
     position: 1,
-    points: 5, 
-    numberOfCorrectAnswers: 1,
+    points: 5,
     answers: 
     [{id: 1, isCorrect: true, text: "Válasz1", questionId: 1},
      {id: 2, isCorrect: false, text: "Válasz2", questionId: 1},

@@ -12,6 +12,7 @@ export class QuizQuestionCreateComponent implements OnInit {
 
   question: Question = {
     id: 0,
+    quiz: { id: 0, name: "", questions: [], owner: { id: 0 }, games: [] },
     text: "",
     answers: [{ id: 0, isCorrect: false, text: "", questionId: 0 },
               { id: 0, isCorrect: false, text: "", questionId: 0 },
@@ -19,8 +20,7 @@ export class QuizQuestionCreateComponent implements OnInit {
               { id: 0, isCorrect: false, text: "", questionId: 0 }],
     secondsToAnswer: 0,
     position: 0,
-    points: 0,
-    numberOfCorrectAnswers: 0
+    points: 0
   };
 
   constructor(private router: Router, private questionService: QuizQuestionService) { }

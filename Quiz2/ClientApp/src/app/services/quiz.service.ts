@@ -18,12 +18,12 @@ export class QuizService {
 
     questions: Question[] = [{
       id: 0,
+      quiz: { id: 0, name: "", questions: [], owner: {id: 0}, games: []},
       text: "",
       answers: [],
       secondsToAnswer: 0,
       position: 0,
-      points: 0,
-      numberOfCorrectAnswers: 0
+      points: 0
     }];
 
   constructor(private httpClient: HttpClient, @Inject('BASE_URL') readonly baseUrl: string) { }
