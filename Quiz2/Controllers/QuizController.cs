@@ -30,11 +30,6 @@ namespace Quiz2.Controllers
         [HttpDelete("{quizId}")]
         public IActionResult DeleteQuiz(int quizId)
         {
-            var quiz = quizService.GetQuiz(quizId);
-            if (quiz == null)
-            {
-                return NotFound();
-            }
             quizService.DeleteQuiz(quizId);
             return NoContent();
         }

@@ -16,6 +16,5 @@ namespace Quiz2.Models
         public int SecondsToAnswer { get; set; }
         public int Position { get; set; }
         public int Points { get; set; }
-        public int NumberOfCorrectAnswers { get; set; }
     }
 }
