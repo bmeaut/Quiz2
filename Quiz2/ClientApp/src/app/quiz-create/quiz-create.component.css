@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid #003F63;
+    background: #F2B138;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.main-container {
+    /* border: 1px solid #ddd; */
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.37);
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+.container {
+    background: #D9D9D9;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 0.8rem;
+}
+
+.details {
+    display: flex;
+    background: #A1A5A6;
+    padding: 0.5rem;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    flex-grow: 1;
+}
+
+.description, .description-time, .description-point {
+    display: flex;
+    margin: 0.2rem;
+}
+.description-time, .description-point {
+    flex-basis: 50%;
+}
+
+.description span, .description-time span, .description-point span {
+    display: flex;
+    align-items: center;
+    background: #F2B138;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 0.6rem;
+    border-right: 1px solid #003F63;
+}
+
+.details input {
+    width: 100%;
+    border: none;
+    background: transparent;
+}
+
+.details input:focus {
+    outline: none;
+}
+
+.btn button {
+    border: none;
+    background: #F2B138;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 0.5rem;
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.37);
+}
+
+.btn button:active {
+    box-shadow: none;
+}
+
+.btn button:focus {
+    outline: none;
+}
+
+@media only screen and (max-width: 768px) {
+    .answers {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .answer {
+        width: 100%;
+    }
+}

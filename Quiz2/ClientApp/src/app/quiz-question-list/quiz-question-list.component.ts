@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Question } from '../question';
+import { QuizService } from '../services/quiz.service';
 import { QuizQuestionService } from '../services/quizquestion.service';
 
 @Component({
@@ -20,10 +21,14 @@ export class QuizQuestionListComponent implements OnInit {
                             {id: 3, isCorrect: false, text: "Válasz3", questionId: 0},
                             {id: 4, isCorrect: false, text: "Válasz4", questionId: 0}]}];
 
-  constructor(private questionService: QuizQuestionService) { }
+  constructor(private questionService: QuizQuestionService, private quizService: QuizService) { }
 
   ngOnInit() {
-    //this.getQuestionList();
+    this.getQuestionList();
+  }
+
+  getQuestionList() {
+    this.questions = this.quizService.getQuestions();
   }
 
   /*getQuestionList(): void {

@@ -1,12 +1,15 @@
-<div class="main-container container">
-    <div class="lobby-header">
-        <span>Kvízek</span>
-        <div class="btn">
-            <button [routerLink]="['/quiz-edit']">Új kvíz</button>
-        </div>
+<div class="main-container">
+  <div class="lobby-header">
+    <span>Kvízek</span>
+    <div class="btn">
+      <button [routerLink]="['/create-quiz']">Új kvíz</button>
     </div>
-    <div class="quiz-container">
-        <app-quiz-list-item *ngFor="let quiz of quizzes" [quiz]="quiz" (deleteQuizListItem)="deleteQuiz(quiz)">
-        </app-quiz-list-item>
-    </div>
+  </div>
+  <div class="container" *ngIf="!quizzesLoaded">
+    <span>Loading...</span>
+  </div>
+  <div class="container" *ngIf="quizzesLoaded">
+    <app-quiz-list-item *ngFor="let quiz of quizzes" [quiz]="quiz" (deleteQuizListItem)="deleteQuiz(quiz)">
+    </app-quiz-list-item>
+  </div>
 </div>

@@ -19,15 +19,20 @@ export class QuizListItemComponent implements OnInit {
   }
 
   showQuestions(quiz: Quiz): void {
-    /*this.quizService.getQuestionsOfQuiz(quiz.id).subscribe(questions => {
+    this.quizService.getQuestionsOfQuiz(quiz.id).subscribe(questions => {
       this.quizService.setQuestions(questions);
-      console.log("showQuestion");
       this.router.navigate(["/question_list"]);
-    });*/
+    });
+  }
+
+  modifyQuiz(quiz: Quiz): void {
+    this.quizService.getQuiz(quiz.id).subscribe(quiz => {
+      this.quizService.setModifiedQuiz(quiz);
+      this.router.navigate(["/edit-quiz"]);
+    });
   }
 
   deleteItem(quiz: Quiz): void {
     this.deleteQuizListItem.emit(quiz);
   }
-
 }

@@ -23,8 +23,16 @@ h2 {
 }
 
 .main-container {
-    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.37);
     font-family: 'IBM Plex Mono', monospace;
+}
+
+.container {
+    background: #D9D9D9;
+    padding: 0.7rem;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .lobby-header {
@@ -43,15 +51,6 @@ h2 {
     flex:1;
     display: flex;
     justify-content: center;
-}
-
-.quiz-container {
-    background: #D9D9D9;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0.6rem;
 }
 
 .btn {

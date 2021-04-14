@@ -10,16 +10,19 @@ import { QuizService } from '../services/quiz.service';
 export class QuizListComponent implements OnInit {
 
   quizzes: Quiz[];
+  quizzesLoaded: boolean;
 
   constructor(private quizSerivce: QuizService) { }
 
   ngOnInit() {
     this.getQuizList();
+    this.quizzesLoaded = false;
   }
 
   getQuizList(): void {
     this.quizSerivce.getQuizzes().subscribe(quizzes => {
       this.quizzes = quizzes;
+      this.quizzesLoaded = true;
     });
   }
 

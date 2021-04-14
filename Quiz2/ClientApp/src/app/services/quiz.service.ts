@@ -8,6 +8,14 @@ import { Quiz } from "../quiz";
 })
 export class QuizService {
 
+    modifiedQuiz: Quiz = {
+      id: 0,
+      name: "",
+      questions: [],
+      owner: { id: 0 },
+      games: []
+    };
+
     questions: Question[] = [{
       id: 0,
       text: "",
@@ -18,10 +26,22 @@ export class QuizService {
       numberOfCorrectAnswers: 0
     }];
 
-    constructor(private httpClient: HttpClient, @Inject('BASE_URL') readonly baseUrl: string) { }
+  constructor(private httpClient: HttpClient, @Inject('BASE_URL') readonly baseUrl: string) { }
 
-    setQuestions(questions: Question[]) {
+    setModifiedQuiz(quiz: Quiz): void {
+      this.modifiedQuiz = quiz;
+    } 
+
+    getModifiedQuiz(): Quiz {
+      return this.modifiedQuiz;
+    }
+
+    setQuestions(questions: Question[]): void {
       this.questions = questions;
+    }
+
+    getQuestions(): Question[] {
+      return this.questions;
     }
 
     getQuizzes() {
@@ -29,7 +49,11 @@ export class QuizService {
     }
 
     getQuiz(id: number) {
-       return this.httpClient.get<Quiz>(this.baseUrl + "");
+       return this.httpClient.get<Quiz>(this.baseUrl + "api/Quiz/" + id);
+    }
+
+    editQuiz(quiz: Quiz) {
+      return this.httpClient.put<Quiz>(this.baseUrl + "api/Quiz/" + quiz.id, quiz);
     }
 
     putQuiz(quiz: Quiz) {

@@ -10,22 +10,20 @@ import { QuizService } from '../services/quiz.service';
 })
 export class QuizEditComponent implements OnInit {
 
-  quiz: Quiz = {
-    id: 0,
-    name: "",
-    questions: [],
-    owner: { id: 0 },
-    games: [],
-  };
+  quiz: Quiz;
 
-  constructor(private quizSerivce: QuizService, private router: Router) { }
+  constructor(private router: Router, private quizService: QuizService) { }
 
   ngOnInit() {
+    this.getModifiedQuiz();
   }
 
-  onSubmit(): void {
-    console.log(this.quiz);
-    this.quizSerivce.putQuiz(this.quiz).subscribe(quiz => {
+  getModifiedQuiz(): void {
+    this.quiz = this.quizService.getModifiedQuiz();
+  }
+
+  modifyQuiz(): void {
+    this.quizService.editQuiz(this.quiz).subscribe(quiz => {
       this.router.navigate(['/quizzes']);
     });
   }

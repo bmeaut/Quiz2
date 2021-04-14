@@ -30,6 +30,7 @@ import { QuizStatisticsAnswerComponent } from './quiz-statistics-answer/quiz-sta
 import { QuizListComponent } from './quiz-list/quiz-list.component';
 import { QuizListItemComponent } from './quiz-list-item/quiz-list-item.component';
 import { QuizEditComponent } from './quiz-edit/quiz-edit.component';
+import { QuizCreateComponent } from './quiz-create/quiz-create.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { QuizEditComponent } from './quiz-edit/quiz-edit.component';
     QuizOwnerStatisticsComponent,
     QuizListComponent,
     QuizEditComponent,
+    QuizCreateComponent,
     QuizListItemComponent,
     PlaceholderDirective,
     SRTestComponent,
@@ -70,8 +72,9 @@ import { QuizEditComponent } from './quiz-edit/quiz-edit.component';
       { path: 'question_list', component: QuizQuestionListComponent},
       { path: 'edit', component: QuizQuestionEditComponent},
       { path: 'game', component: QuizGameComponent},
-      { path: 'quizzes', component: QuizListComponent},
-      { path: 'quiz-edit', component: QuizEditComponent},
+      { path: 'quizzes', component: QuizListComponent },
+      { path: 'create-quiz', component: QuizCreateComponent },
+      { path: 'edit-quiz', component: QuizEditComponent},
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
       { path: 'sr-test', component: SRTestComponent },
     ])
