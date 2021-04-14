@@ -11,6 +11,7 @@ export class GamesService {
   private connection;
 
   public joinedToGame = new EventEmitter();
+  public ownerJoinedToGame = new EventEmitter();
   constructor(private authorizeService: AuthorizeService) {
 
 
@@ -28,7 +29,11 @@ export class GamesService {
 
       this.connection.on("joined", () => {
         this.joinedToGame.emit();
-        console.debug("siker");
+        console.debug("joined");
+      });
+      this.connection.on("ownerJoined", () => {
+        this.ownerJoinedToGame.emit();
+        console.debug("ownerJoined");
       });
       this.connection.on("joinFailed", () => {
         console.debug("rossz");

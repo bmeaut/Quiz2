@@ -31,8 +31,16 @@ namespace Quiz2.Hubs
             {
                 Console.WriteLine(Context.UserIdentifier);
                 var game = gameService.GetGameByJoinId(joinId);
-                Groups.AddToGroupAsync(Context.ConnectionId, joinId);
-                Clients.Caller.SendAsync("joined");
+                if (game.Owner.Id == Context.UserIdentifier)
+                {
+                    Groups.AddToGroupAsync(Context.ConnectionId, joinId+"Owner");
+                    Clients.Caller.SendAsync("ownerJoined");
+                }
+                else
+                {
+                    Groups.AddToGroupAsync(Context.ConnectionId, joinId);
+                    Clients.Caller.SendAsync("joined");
+                }
             }
             catch(Exception e)
             {

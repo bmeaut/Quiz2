@@ -26,6 +26,10 @@ export class QuizGameComponent implements OnInit {
       console.debug("lobby betöltése")
         this.loadQuizLobbyComponent();
     });
+    this.gameService.ownerJoinedToGame.subscribe( () => {
+      console.debug("owner lobby betöltése")
+      this.loadQuizOwnerLobbyComponent();
+    });
   }
   loadQuizQuestionComponent() {
     const questionComponentFactory = this.cfr.resolveComponentFactory(QuizQuestionComponent);

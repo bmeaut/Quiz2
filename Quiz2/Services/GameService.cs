@@ -18,7 +18,9 @@ namespace Quiz2.Services
 
         public Game GetGameByJoinId(string joinId)
         {
-            return _context.Games.First(g => g.JoinId == joinId);
+            return _context.Games.Where(g => g.JoinId == joinId)
+                .Include(g => g.Owner)
+                .FirstOrDefault();
         }
         
         public Game GetGameWithQuestionsByJoinId(string joinId)
