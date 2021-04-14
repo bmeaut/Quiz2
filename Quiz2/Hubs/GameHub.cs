@@ -11,6 +11,7 @@ using Quiz2.Services;
 
 namespace Quiz2.Hubs
 {
+    [Authorize]
     public class GameHub : Hub {
         private readonly IGameService gameService;
 
@@ -28,6 +29,7 @@ namespace Quiz2.Hubs
         {
             try
             {
+                Console.WriteLine(Context.UserIdentifier);
                 var game = gameService.GetGameByJoinId(joinId);
                 Groups.AddToGroupAsync(Context.ConnectionId, joinId);
                 Clients.Caller.SendAsync("joined");
