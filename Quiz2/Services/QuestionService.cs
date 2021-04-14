@@ -71,9 +71,16 @@ namespace Quiz2.Services
 
         public void DeleteQuestion(int questionId)
         {
-            var question = _context.Questions.Find(questionId);
+            var question = _context.Questions
+                .Include(q => q.Quiz)
+                .Include(q => q.Answers)
+                .FirstOrDefault(q => q.Id == questionId);
             if (question != null)
             {
+                while(question.Answers.FirstOrDefault() == null)
+                {
+                    answerService.DeleteAnswer(question.Answers.First().Id);
+                }
                 _context.Questions.Remove(question);
                 _context.SaveChanges();
             }
