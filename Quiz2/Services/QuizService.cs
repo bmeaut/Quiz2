@@ -57,17 +57,12 @@ namespace Quiz2.Services
 
         public List<Question> GetQuestions(int quizId)
         {
-            /*
             var quiz = _context.Quizzes
                 .Include(q => q.Questions)
                 .FirstOrDefault(q => q.Id == quizId);
-            */
-            if(_context.Quizzes.Find(quizId) != null)
+            if(quiz != null)
             {
-                return _context.Questions
-                    .Include(question => question.Answers)
-                    .Where(q => q.Id == quizId)
-                    .ToList();
+                return quiz.Questions;
             }
             return null;
         }

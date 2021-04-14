@@ -9,12 +9,12 @@ namespace Quiz2.Services
     public class QuestionService: IQuestionService
     {
         private readonly ApplicationDbContext _context;
-        private readonly IQuizService quizService;
+        private readonly IAnswerService answerService;
 
-        public QuestionService(IQuizService quizService, ApplicationDbContext context)
+        public QuestionService(IAnswerService answerService, ApplicationDbContext context)
         {
             _context = context;
-            this.quizService = quizService;
+            this.answerService = answerService;
         }
 
         
@@ -28,16 +28,29 @@ namespace Quiz2.Services
 
         public Question CreateQuestion(CreateQuestionDto createQuestionDto)
         {
-            var question = new Question()
-            {
-                Text = createQuestionDto.Text
-            };
-            var quiz = quizService.GetQuiz(createQuestionDto.QuizId);
+            
+            var quiz = _context.Quizzes
+                    .Include(quiz => quiz.Owner)
+                    .Include(quiz => quiz.Questions)
+                    .Include(quiz => quiz.Games)
+                    .FirstOrDefault(quiz => quiz.Id == createQuestionDto.QuizId);
             if(quiz != null)
             {
+                var question = new Question()
+                {
+                    Text = createQuestionDto.Text,
+                    SecondsToAnswer = createQuestionDto.SecondsToAnswer,
+                    Points = createQuestionDto.Points,
+                    Position = createQuestionDto.Position
+                };
                 quiz.Questions.Add(question);
                 _context.SaveChanges();
-                return question;
+                foreach (CreateAnswerDto createAnswerDto in createQuestionDto.CreateAnswerDtoList)
+                {
+                    createAnswerDto.QuestionId = question.Id;
+                    answerService.CreateAnswer(createAnswerDto);
+                }
+                return GetQuestion(question.Id);
             }
             return null;
         }

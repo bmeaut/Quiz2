@@ -9,12 +9,10 @@ namespace Quiz2.Services
     public class AnswerService: IAnswerService
     {
         private readonly ApplicationDbContext _context;
-        private readonly IQuestionService questionService;
 
-        public AnswerService(ApplicationDbContext context, IQuestionService questionService)
+        public AnswerService(ApplicationDbContext context)
         {
             _context = context;
-            this.questionService = questionService;
         }
         
         public Answer GetAnswer(int answerId)
@@ -52,7 +50,10 @@ namespace Quiz2.Services
 
         public Answer CreateAnswer(CreateAnswerDto createAnswerDto)
         {
-            var question = questionService.GetQuestion(createAnswerDto.QuestionId);
+            var question = _context.Questions
+                .Include(q => q.Quiz)
+                .Include(q => q.Answers)
+                .FirstOrDefault(q => q.Id == createAnswerDto.QuestionId);
             if(question != null)
             {
                 var answer = new Answer()
@@ -61,7 +62,7 @@ namespace Quiz2.Services
                     Text = createAnswerDto.Text,
                     Question = question
                 };
-                _context.Answers.Add(answer);
+                question.Answers.Add(answer);
                 _context.SaveChanges();
                 return answer;
             }
