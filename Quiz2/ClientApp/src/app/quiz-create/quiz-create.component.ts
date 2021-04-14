@@ -15,7 +15,7 @@ export class QuizCreateComponent implements OnInit {
     name: "",
     questions: [],
     owner: { id: 0 },
-    games: [],
+    games: []
   };
 
   constructor(private quizSerivce: QuizService, private router: Router) { }
