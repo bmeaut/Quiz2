@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
+import {Component, ComponentFactoryResolver, Injectable, OnInit, ViewChild} from '@angular/core';
 import { PlaceholderDirective } from 'src/directives/placeholder.directive';
 import { QuizLobbyComponent } from '../quiz-lobby/quiz-lobby.component';
 import { QuizOwnerLobbyComponent } from '../quiz-owner-lobby/quiz-owner-lobby.component';
@@ -6,22 +6,27 @@ import { QuizOwnerQuestionComponent } from '../quiz-owner-question/quiz-owner-qu
 import { QuizOwnerStatisticsComponent } from '../quiz-owner-statistics/quiz-owner-statistics.component';
 import { QuizQuestionComponent } from '../quiz-question/quiz-question.component';
 import { QuizStatisticsComponent } from '../quiz-statistics/quiz-statistics.component';
+import {GamesService} from "../services/games-service";
 
 @Component({
   selector: 'app-quiz-game',
   templateUrl: './quiz-game.component.html',
-  styleUrls: ['./quiz-game.component.css']
+  styleUrls: ['./quiz-game.component.css'],
+  providers:  [ GamesService ]
 })
 export class QuizGameComponent implements OnInit {
 
   @ViewChild(PlaceholderDirective, {static: true}) gameHost: PlaceholderDirective;
 
-  constructor(private cfr: ComponentFactoryResolver) { }
+  constructor(private cfr: ComponentFactoryResolver, public gameService: GamesService) { }
 
   ngOnInit() {
-    this.loadQuizOwnerQuestionComponent();
-  }
 
+    this.gameService.joinedToGame.subscribe( () => {
+      console.debug("lobby betöltése")
+        this.loadQuizLobbyComponent();
+    });
+  }
   loadQuizQuestionComponent() {
     const questionComponentFactory = this.cfr.resolveComponentFactory(QuizQuestionComponent);
     const hostViewContainerRef = this.gameHost.viewContainerRef;
