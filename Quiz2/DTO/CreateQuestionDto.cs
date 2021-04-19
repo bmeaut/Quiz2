@@ -7,6 +7,9 @@ namespace Quiz2.DTO
     {
         public string Text { get; set; }
         public int QuizId { get; set; }
-        //public ICollection<Answer> Answers { get; set; }
+        public ICollection<CreateAnswerDto> CreateAnswerDtoList { get; set; }
+        public int SecondsToAnswer { get; set; }
+        public int Position { get; set; }
+        public int Points { get; set; }
     }
 }

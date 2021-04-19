@@ -12,11 +12,13 @@ namespace Quiz2.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly IApplicationUserService applicationUserService;
+        private readonly IQuestionService questionService;
 
-        public QuizService(IApplicationUserService applicationUserService, ApplicationDbContext context)
+        public QuizService(IQuestionService questionService, IApplicationUserService applicationUserService, ApplicationDbContext context)
         {
             _context = context;
             this.applicationUserService = applicationUserService;
+            this.questionService = questionService;
         }
 
         public Quiz GetQuiz(int quizId)
@@ -57,17 +59,12 @@ namespace Quiz2.Services
 
         public List<Question> GetQuestions(int quizId)
         {
-            /*
             var quiz = _context.Quizzes
                 .Include(q => q.Questions)
                 .FirstOrDefault(q => q.Id == quizId);
-            */
-            if(_context.Quizzes.Find(quizId) != null)
+            if(quiz != null)
             {
-                return _context.Questions
-                    .Include(question => question.Answers)
-                    .Where(q => q.Id == quizId)
-                    .ToList();
+                return quiz.Questions;
             }
             return null;
         }
@@ -89,9 +86,17 @@ namespace Quiz2.Services
 
         public void DeleteQuiz(int quizId)
         {
-            var quiz = _context.Quizzes.Find(quizId);
+            var quiz = _context.Quizzes
+                    .Include(quiz => quiz.Owner)
+                    .Include(quiz => quiz.Questions)
+                    .Include(quiz => quiz.Games)
+                    .FirstOrDefault(quiz => quiz.Id == quizId);
             if (quiz != null)
             {
+                while (quiz.Questions.FirstOrDefault() == null)
+                {
+                    questionService.DeleteQuestion(quiz.Questions.First().Id);
+                }
                 _context.Quizzes.Remove(quiz);
                 _context.SaveChanges();
             }
