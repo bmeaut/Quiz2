@@ -11,16 +11,16 @@ import { QuizQuestionService } from '../services/quizquestion.service';
 export class QuizQuestionListComponent implements OnInit {
 
   questions: Question[] = [{
-                            id: 0,
-                            quiz: { id: 0, name: "", questions: [], owner: { id: 0 }, games: [] },
+                            id: 1,
+                            quiz: { id: 1, name: "", questions: [], owner: { id: "" }, games: [] },
                             text: "Ez egy kérdés?",
                             secondsToAnswer: 0,
                             position: 0,
                             points: 0,
-                            answers: [{id: 1, isCorrect: true, text: "Válasz1", questionId: 0},
-                            {id: 2, isCorrect: false, text: "Válasz2", questionId: 0},
-                            {id: 3, isCorrect: false, text: "Válasz3", questionId: 0},
-                            {id: 4, isCorrect: false, text: "Válasz4", questionId: 0}]}];
+                            answers: [{id: 1, isCorrect: true, text: "Válasz1", questionId: 1},
+                            {id: 2, isCorrect: false, text: "Válasz2", questionId: 1},
+                            {id: 3, isCorrect: false, text: "Válasz3", questionId: 1},
+                            {id: 4, isCorrect: false, text: "Válasz4", questionId: 1}]}];
 
   constructor(private questionService: QuizQuestionService, private quizService: QuizService) { }
 

@@ -11,13 +11,13 @@ import { QuizQuestionService } from '../services/quizquestion.service';
 export class QuizQuestionCreateComponent implements OnInit {
 
   question: Question = {
-    id: 0,
-    quiz: { id: 0, name: "", questions: [], owner: { id: 0 }, games: [] },
+    id: 1,
+    quiz: { id: 1, name: "", questions: [], owner: { id: "" }, games: [] },
     text: "",
-    answers: [{ id: 0, isCorrect: false, text: "", questionId: 0 },
-              { id: 0, isCorrect: false, text: "", questionId: 0 },
-              { id: 0, isCorrect: false, text: "", questionId: 0 },
-              { id: 0, isCorrect: false, text: "", questionId: 0 }],
+    answers: [{ id: 1, isCorrect: false, text: "", questionId: 1 },
+              { id: 1, isCorrect: false, text: "", questionId: 1 },
+              { id: 1, isCorrect: false, text: "", questionId: 1 },
+              { id: 1, isCorrect: false, text: "", questionId: 1 }],
     secondsToAnswer: 0,
     position: 0,
     points: 0

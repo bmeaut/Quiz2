@@ -9,16 +9,16 @@ import { Quiz } from "../quiz";
 export class QuizService {
 
     modifiedQuiz: Quiz = {
-      id: 0,
+      id: 1,
       name: "",
       questions: [],
-      owner: { id: 0 },
+      owner: { id: "" },
       games: []
     };
 
     questions: Question[] = [{
-      id: 0,
-      quiz: { id: 0, name: "", questions: [], owner: {id: 0}, games: []},
+      id: 1,
+      quiz: { id: 1, name: "", questions: [], owner: {id: ""}, games: []},
       text: "",
       answers: [],
       secondsToAnswer: 0,
