@@ -10,7 +10,7 @@ import {GamesService} from "../services/games-service";
 })
 export class QuizOwnerLobbyComponent implements OnInit {
 
-  users: User[] = [{id: 1}, {id: 2}, {id: 3}, {id: 4}];
+  users: User[] = [{id: "1"}, {id: "2"}, {id: "3"}, {id: "4"}];
 
   constructor(public gameService: GamesService) { }
 

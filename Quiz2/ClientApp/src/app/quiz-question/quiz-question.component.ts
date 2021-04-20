@@ -12,7 +12,7 @@ export class QuizQuestionComponent implements OnInit {
   question: Question = {
     id: 1,
     text: "Ez egy kérdés?",
-    quiz: { id: 0, name: "", questions: [], owner: { id: 0 }, games: [] },
+    quiz: { id: 0, name: "", questions: [], owner: { id: "" }, games: [] },
     secondsToAnswer: 120,
     position: 1,
     points: 5,

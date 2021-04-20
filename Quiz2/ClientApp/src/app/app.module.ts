@@ -32,6 +32,8 @@ import { QuizListItemComponent } from './quiz-list-item/quiz-list-item.component
 import { QuizEditComponent } from './quiz-edit/quiz-edit.component';
 import { QuizCreateComponent } from './quiz-create/quiz-create.component';
 import { QuizQuestionCreateComponent } from './quiz-question-create/quiz-question-create.component';
+import { AppRoutingModule } from './app-routing.module';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,7 @@ import { QuizQuestionCreateComponent } from './quiz-question-create/quiz-questio
     PlaceholderDirective,
     SRTestComponent,
     QuizStatisticsAnswerComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -66,21 +69,7 @@ import { QuizQuestionCreateComponent } from './quiz-question-create/quiz-questio
     ReactiveFormsModule,
     FormsModule,
     ApiAuthorizationModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'question', component: QuizOwnerQuestionComponent},
-      { path: 'lobby', component: QuizOwnerLobbyComponent},
-      { path: 'stats', component: QuizOwnerStatisticsComponent},
-      { path: 'question_list', component: QuizQuestionListComponent},
-      { path: 'edit', component: QuizQuestionEditComponent},
-      { path: 'game', component: QuizGameComponent},
-      { path: 'quizzes', component: QuizListComponent },
-      { path: 'create-quiz', component: QuizCreateComponent },
-      { path: 'edit-quiz', component: QuizEditComponent },
-      { path: 'new-question', component: QuizQuestionCreateComponent },
-      { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
-      { path: 'sr-test', component: SRTestComponent },
-    ])
+    AppRoutingModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
