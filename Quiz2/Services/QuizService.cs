@@ -38,6 +38,7 @@ namespace Quiz2.Services
                 var quiz = new Quiz()
                 {
                     Name = createQuizDto.Name,
+                    //useridentifier + authorizization
                     Owner = owner
                 };
                 _context.Quizzes.Add(quiz);
