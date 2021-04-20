@@ -11,7 +11,7 @@ namespace Quiz2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class QuestionController: ControllerBase
     {
         private readonly IQuestionService questionService;

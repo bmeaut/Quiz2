@@ -37,8 +37,8 @@ namespace Quiz2.Services
         public Answer UpdateAnswer(int answerId, UpdateAnswerDto updateAnswerDto)
         {
             var answer = _context.Answers
-                .Include(answer => answer.Question)
-                .FirstOrDefault(answer => answer.Id == answerId);
+                .Include(a => a.Question)
+                .FirstOrDefault(a => a.Id == answerId);
             if(answer != null)
             {
                 answer.Text = updateAnswerDto.Text;

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Quiz2.Data;
 using Quiz2.DTO;
@@ -10,7 +11,7 @@ namespace Quiz2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class UserController: ControllerBase
     {
         private readonly IApplicationUserService applicationUserService;

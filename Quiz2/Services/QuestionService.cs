@@ -28,12 +28,11 @@ namespace Quiz2.Services
 
         public Question CreateQuestion(CreateQuestionDto createQuestionDto)
         {
-            //javitas
             var quiz = _context.Quizzes
-                    .Include(quiz => quiz.Owner)
-                    .Include(quiz => quiz.Questions)
-                    .Include(quiz => quiz.Games)
-                    .FirstOrDefault(quiz => quiz.Id == createQuestionDto.QuizId);
+                    .Include(q => q.Owner)
+                    .Include(q => q.Questions)
+                    .Include(q => q.Games)
+                    .FirstOrDefault(q => q.Id == createQuestionDto.QuizId);
             if(quiz != null)
             {
                 var question = new Question()

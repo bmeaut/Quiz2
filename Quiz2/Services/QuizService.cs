@@ -30,15 +30,14 @@ namespace Quiz2.Services
                     .FirstOrDefault(quiz => quiz.Id == quizId);
         }
 
-        public Quiz CreateQuiz(CreateQuizDto createQuizDto)
+        public Quiz CreateQuiz(CreateQuizDto createQuizDto, string currentUserId)
         {
-            var owner = applicationUserService.GetUser(createQuizDto.OwnerId);
+            var owner = applicationUserService.GetUser(currentUserId);
             if(owner != null)
             {
                 var quiz = new Quiz()
                 {
                     Name = createQuizDto.Name,
-                    //useridentifier + authorizization
                     Owner = owner
                 };
                 _context.Quizzes.Add(quiz);
@@ -73,10 +72,10 @@ namespace Quiz2.Services
         public Quiz UpdateQuiz(int quizId, UpdateQuizDto updateQuizDto)
         {
             var quiz = _context.Quizzes
-                    .Include(quiz => quiz.Owner)
-                    .Include(quiz => quiz.Questions)
-                    .Include(quiz => quiz.Games)
-                    .FirstOrDefault(quiz => quiz.Id == quizId);
+                    .Include(q => q.Owner)
+                    .Include(q => q.Questions)
+                    .Include(q => q.Games)
+                    .FirstOrDefault(q => q.Id == quizId);
             if (quiz != null)
             {
                 quiz.Name = updateQuizDto.Name;
@@ -88,10 +87,10 @@ namespace Quiz2.Services
         public void DeleteQuiz(int quizId)
         {
             var quiz = _context.Quizzes
-                    .Include(quiz => quiz.Owner)
-                    .Include(quiz => quiz.Questions)
-                    .Include(quiz => quiz.Games)
-                    .FirstOrDefault(quiz => quiz.Id == quizId);
+                    .Include(q => q.Owner)
+                    .Include(q => q.Questions)
+                    .Include(q => q.Games)
+                    .FirstOrDefault(q => q.Id == quizId);
             if (quiz != null)
             {
                 while (quiz.Questions.FirstOrDefault() == null)

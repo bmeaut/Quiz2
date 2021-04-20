@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using IdentityServer4.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Quiz2.Data;
 using Quiz2.DTO;
 using Quiz2.Models;
@@ -9,7 +13,7 @@ namespace Quiz2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class QuizController : ControllerBase
     {
         private readonly IQuizService quizService;
@@ -44,8 +48,8 @@ namespace Quiz2.Controllers
         // PUT: api/Quiz
         [HttpPut]
         public ActionResult<Quiz> CreateQuiz(CreateQuizDto createQuizDto)
-        {
-            return quizService.CreateQuiz(createQuizDto);
+        { 
+            return quizService.CreateQuiz(createQuizDto, HttpContext.User.Identity.GetSubjectId());
         }
 
         // GET: api/Quiz
