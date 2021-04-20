@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Question } from '../question';
+import {GamesService} from "../services/games-service";
 
 @Component({
   selector: 'app-quiz-owner-question',
@@ -15,13 +16,13 @@ export class QuizOwnerQuestionComponent implements OnInit {
     secondsToAnswer: 120,
     position: 1,
     points: 5,
-    answers: 
+    answers:
     [{id: 1, isCorrect: true, text: "Válasz1", questionId: 1},
      {id: 2, isCorrect: false, text: "Válasz2", questionId: 1},
      {id: 3, isCorrect: false, text: "Válasz3", questionId: 1},
      {id: 4, isCorrect: false, text: "Válasz4", questionId: 1}]};
 
-  constructor() { }
+  constructor(public gameService: GamesService) { }
 
   ngOnInit() {
   }

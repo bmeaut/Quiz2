@@ -14,11 +14,16 @@ namespace Quiz2.Hubs
     [Authorize]
     public class GameHub : Hub {
         private readonly IGameService gameService;
+        private readonly IAnswerService answerService;
+        private readonly IApplicationUserService applicationUserService;
+        private readonly IUserAnswerService userAnswerService;
 
-        public GameHub(IGameService gameService)
+        public GameHub(IGameService gameService, IAnswerService answerService, IApplicationUserService applicationUserService, IUserAnswerService userAnswerService)
         {
-
             this.gameService = gameService;
+            this.answerService = answerService;
+            this.applicationUserService = applicationUserService;
+            this.userAnswerService = userAnswerService;
         }
         public async Task GroupTest() {
             await Clients.Groups("group1").SendAsync("groupTestAnswer","gruop1 jóóóó");
@@ -70,12 +75,18 @@ namespace Quiz2.Hubs
         public async void NextQuestion(string joinId)
         {
             Console.WriteLine(joinId);
-            var game = gameService.GetGameWithQuestionsByJoinId(joinId);
-            Console.WriteLine(game.CurrentQuestion.Id);
-            //await Clients.Groups(joinId).SendAsync("newQuestion",game.CurrentQuestion);
-            await Clients.All.SendAsync("newQuestion", game.CurrentQuestion);
-            game.CurrentQuestion = game.Quiz.Questions[1];
-            gameService.Save();
+            var game = gameService.GetGameByJoinIdWithCurrentQuestion(joinId);
+            if (game != null)
+            {
+                Console.WriteLine(game.CurrentQuestion.Id);
+                await Clients.All.SendAsync("newQuestion", game.CurrentQuestion);
+                gameService.SetNextQuestion(game);
+            }
+        }
+
+        public void SendAnswer(string joinId, int answerId)
+        {
+            userAnswerService.CreateUserAnswer(joinId, answerId, Context.UserIdentifier);
         }
 
     }

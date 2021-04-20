@@ -45,6 +45,7 @@ namespace Quiz2
             services.AddTransient<IQuestionService, QuestionService>();
             services.AddTransient<IGameService, GameService>();
             services.AddTransient<IAnswerService, AnswerService>();
+            services.AddTransient<IUserAnswerService, UserAnswerService>();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );

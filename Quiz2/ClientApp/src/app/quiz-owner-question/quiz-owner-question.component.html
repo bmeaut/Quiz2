@@ -6,7 +6,7 @@
         <div class="timer-wrapper">
             <span class="time">{{ question.timer }}s</span>
         </div>
-        <button>Next</button>
+        <button (click)="gameService.nextQuestion()">Next</button>
     </div>
     <div class="answers-wrapper">
         <app-quiz-answer *ngFor="let answer of question.answers" [answer]="answer">

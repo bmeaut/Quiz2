@@ -12,11 +12,18 @@ namespace Quiz2.Models
     public class Game
     {
         [Key]
-        public int GameId { get; set; }
+        public int Id { get; set; }
+        
+        public int QuizId { get; set; }
         [Required]
         public Quiz Quiz { get; set; }
+        
+        //public int CurrentQuestionId { get; set; }
         public Question CurrentQuestion { get; set; }
+        
+        public string OwnerId { get; set; }
         public ApplicationUser Owner { get; set; }
+        
         public ICollection<ApplicationUser> JoinedUsers { get; set; }
         public string JoinId { get; set; }
 

@@ -29,11 +29,11 @@ namespace Quiz2.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       
-        modelBuilder.Entity<Answer>().ToTable("Answers");
+       /* modelBuilder.Entity<Answer>().ToTable("Answers");
         modelBuilder.Entity<Game>().ToTable("Games");
         modelBuilder.Entity<Question>().ToTable("Questions");
         modelBuilder.Entity<Quiz>().ToTable("Quizzes");
-        modelBuilder.Entity<UserAnswer>().ToTable("UserAnswers");
+        modelBuilder.Entity<UserAnswer>().ToTable("UserAnswers");*/
        // modelBuilder.Entity<GameUsers>()
         //    .HasKey(bc => new { bc.GameId, bc.ApplicationUserId });
         base.OnModelCreating(modelBuilder);

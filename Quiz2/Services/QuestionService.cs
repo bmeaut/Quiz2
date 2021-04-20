@@ -85,6 +85,14 @@ namespace Quiz2.Services
                 _context.SaveChanges();
             }
         }
+
+        public Question GetNextQuestion(int quizId, int currentPosition)
+        {
+            return _context.Questions.Where(question => question.Quiz.Id == quizId)
+                .Where(question => question.Position > currentPosition)
+                .OrderBy(question => question.Position)
+                .FirstOrDefault();
+        }
         
     }
 }

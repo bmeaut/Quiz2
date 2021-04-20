@@ -8,7 +8,7 @@ namespace Quiz2.Models
         public int GameId { get; set; }
         public Game Game { get; set; }
         [Key]
-        public int ApplicationUserId { get; set; }
+        public string ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
     }
 }

@@ -14,6 +14,7 @@ export class GamesService {
   public ownerJoinedToGame = new EventEmitter();
   public gameStartedOwner = new EventEmitter<Question>();
   public gameStarted = new EventEmitter<Question>();
+  public newQuestion = new EventEmitter<Question>();
   constructor(private authorizeService: AuthorizeService) {
 
 
@@ -54,8 +55,8 @@ export class GamesService {
         console.debug("nem indult el");
       });
       this.connection.on("newQuestion", (question :Question) => {
-        //   this.gameComponent.loadQuizQuestionComponent()
-        console.debug(question);
+        this.newQuestion.emit(question)
+        console.debug("newQuestion");
       });
       this.connection.start().catch(err => document.write(err));
     });
@@ -80,5 +81,10 @@ export class GamesService {
   startGame(){
     this.connection.send("StartGame",  "ProbaID");
     console.debug("startGame");
+  }
+
+  sendAnswer(answerId: number){
+    this.connection.send("SendAnswer",  "ProbaID", answerId);
+    console.debug("sendAnswer");
   }
 }
