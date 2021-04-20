@@ -8,8 +8,11 @@ namespace Quiz2.Models
         public int Id { get; set; }
         [Required]
         public bool Correct { get; set; }
+        
+        public int QuestionId { get; set; }
         [Required]
         public Question Question { get; set; }
+        
         [Required]
         public string Text { get; set; }
     }

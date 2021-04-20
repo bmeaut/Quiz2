@@ -7,6 +7,7 @@ import { QuizOwnerStatisticsComponent } from '../quiz-owner-statistics/quiz-owne
 import { QuizQuestionComponent } from '../quiz-question/quiz-question.component';
 import { QuizStatisticsComponent } from '../quiz-statistics/quiz-statistics.component';
 import {GamesService} from "../services/games-service";
+import {Question} from "../question";
 
 @Component({
   selector: 'app-quiz-game',
@@ -26,12 +27,25 @@ export class QuizGameComponent implements OnInit {
       console.debug("lobby betöltése")
         this.loadQuizLobbyComponent();
     });
+    this.gameService.ownerJoinedToGame.subscribe( () => {
+      console.debug("owner lobby betöltése")
+      this.loadQuizOwnerLobbyComponent();
+    });
+    this.gameService.gameStartedOwner.subscribe( (question: Question) => {
+      console.debug("owner question betöltése")
+      this.loadQuizOwnerQuestionComponent(question);
+    });
+    this.gameService.gameStarted.subscribe( (question: Question) => {
+      console.debug("question betöltése")
+      this.loadQuizQuestionComponent(question);
+    });
   }
-  loadQuizQuestionComponent() {
+  loadQuizQuestionComponent(question: Question) {
     const questionComponentFactory = this.cfr.resolveComponentFactory(QuizQuestionComponent);
     const hostViewContainerRef = this.gameHost.viewContainerRef;
     hostViewContainerRef.clear();
-    hostViewContainerRef.createComponent(questionComponentFactory);
+    const quizQuestionComponent = <QuizQuestionComponent>hostViewContainerRef.createComponent(questionComponentFactory).instance;
+    quizQuestionComponent.question=question;
   }
 
   loadQuizStatisticsComponent() {
@@ -48,11 +62,12 @@ export class QuizGameComponent implements OnInit {
     hostViewContainerRef.createComponent(quizLobbyComponentFactory);
   }
 
-  loadQuizOwnerQuestionComponent() {
+  loadQuizOwnerQuestionComponent(question: Question) {
     const quizOwnerQuestionFactory = this.cfr.resolveComponentFactory(QuizOwnerQuestionComponent);
     const hostViewContainerRef = this.gameHost.viewContainerRef;
     hostViewContainerRef.clear();
-    hostViewContainerRef.createComponent(quizOwnerQuestionFactory);
+    const quizOwnerQuestionComponent = <QuizOwnerQuestionComponent>hostViewContainerRef.createComponent(quizOwnerQuestionFactory).instance;
+    quizOwnerQuestionComponent.question=question;
   }
 
   loadQuizOwnerStatisticsComponent() {

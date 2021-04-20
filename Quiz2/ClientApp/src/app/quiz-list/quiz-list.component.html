@@ -1,0 +1,18 @@
+<div class="main-container">
+  <div class="lobby-header">
+    <span>Kvízek</span>
+    <div class="btn">
+      <button [routerLink]="['/create-quiz']">Új kvíz</button>
+    </div>
+  </div>
+  <div class="container" *ngIf="!quizzesLoaded">
+    <span>Loading...</span>
+  </div>
+  <div class="container" *ngIf="quizzes.length == 0 && quizzesLoaded">
+    <span>Jelenleg nincsenek kvízeid!</span>
+  </div>
+  <div class="container" *ngIf="quizzesLoaded && quizzes.length > 0">
+    <app-quiz-list-item *ngFor="let quiz of quizzes" [quiz]="quiz" (deleteQuizListItem)="deleteQuiz(quiz)">
+    </app-quiz-list-item>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quiz-question-edit',
@@ -11,7 +12,8 @@ export class QuizQuestionEditComponent implements OnInit {
   questionEditForm: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) { 
     this.questionEditForm = this.formBuilder.group({
       question: ['', [Validators.required]],
@@ -25,6 +27,7 @@ export class QuizQuestionEditComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.router.navigate(['/question_list']);
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Answer } from '../answer';
+import {GamesService} from "../services/games-service";
 
 @Component({
   selector: 'app-quiz-answer',
@@ -9,7 +10,7 @@ import { Answer } from '../answer';
 export class QuizAnswerComponent implements OnInit {
 
   @Input() answer: Answer;
-  constructor() { }
+  constructor(public gameService: GamesService) { }
 
   ngOnInit() {
   }

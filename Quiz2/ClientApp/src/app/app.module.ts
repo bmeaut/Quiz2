@@ -27,6 +27,13 @@ import { QuizOwnerStatisticsComponent } from './quiz-owner-statistics/quiz-owner
 import {SRTestComponent} from "./SR-test/SR-test.component";
 import {GamesService} from "./services/games-service";
 import { QuizStatisticsAnswerComponent } from './quiz-statistics-answer/quiz-statistics-answer.component';
+import { QuizListComponent } from './quiz-list/quiz-list.component';
+import { QuizListItemComponent } from './quiz-list-item/quiz-list-item.component';
+import { QuizEditComponent } from './quiz-edit/quiz-edit.component';
+import { QuizCreateComponent } from './quiz-create/quiz-create.component';
+import { QuizQuestionCreateComponent } from './quiz-question-create/quiz-question-create.component';
+import { AppRoutingModule } from './app-routing.module';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +41,7 @@ import { QuizStatisticsAnswerComponent } from './quiz-statistics-answer/quiz-sta
     NavMenuComponent,
     HomeComponent,
     QuizQuestionComponent,
+    QuizQuestionCreateComponent,
     QuizAnswerComponent,
     QuizLobbyComponent,
     QuizLobbyPlayerComponent,
@@ -46,9 +54,14 @@ import { QuizStatisticsAnswerComponent } from './quiz-statistics-answer/quiz-sta
     QuizOwnerLobbyComponent,
     QuizOwnerQuestionComponent,
     QuizOwnerStatisticsComponent,
+    QuizListComponent,
+    QuizEditComponent,
+    QuizCreateComponent,
+    QuizListItemComponent,
     PlaceholderDirective,
     SRTestComponent,
     QuizStatisticsAnswerComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -56,17 +69,7 @@ import { QuizStatisticsAnswerComponent } from './quiz-statistics-answer/quiz-sta
     ReactiveFormsModule,
     FormsModule,
     ApiAuthorizationModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'question', component: QuizQuestionComponent},
-      { path: 'lobby', component: QuizOwnerLobbyComponent},
-      { path: 'stats', component: QuizOwnerStatisticsComponent},
-      { path: 'question_list', component: QuizQuestionListComponent},
-      { path: 'edit', component: QuizQuestionEditComponent},
-      { path: 'game', component: QuizGameComponent},
-      { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
-      { path: 'sr-test', component: SRTestComponent },
-    ])
+    AppRoutingModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
@@ -76,6 +79,7 @@ import { QuizStatisticsAnswerComponent } from './quiz-statistics-answer/quiz-sta
   entryComponents: [
     QuizOwnerLobbyComponent,
     QuizOwnerQuestionComponent,
+    QuizQuestionComponent,
     QuizOwnerStatisticsComponent,
     QuizLobbyComponent
   ]

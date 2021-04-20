@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Question } from '../question';
 
 @Component({
@@ -9,9 +9,15 @@ import { Question } from '../question';
 export class QuizQuestionListItemComponent implements OnInit {
 
   @Input() question: Question;
+  @Output() deleteQuestionListItem: EventEmitter<any> = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  deleteItem(question: Question): void {
+    this.deleteQuestionListItem.emit(question);
   }
 
 }

@@ -11,6 +11,10 @@ export class GamesService {
   private connection;
 
   public joinedToGame = new EventEmitter();
+  public ownerJoinedToGame = new EventEmitter();
+  public gameStartedOwner = new EventEmitter<Question>();
+  public gameStarted = new EventEmitter<Question>();
+  public newQuestion = new EventEmitter<Question>();
   constructor(private authorizeService: AuthorizeService) {
 
 
@@ -28,22 +32,31 @@ export class GamesService {
 
       this.connection.on("joined", () => {
         this.joinedToGame.emit();
-        console.debug("siker");
+        console.debug("joined");
+      });
+      this.connection.on("ownerJoined", () => {
+        this.ownerJoinedToGame.emit();
+        console.debug("ownerJoined");
       });
       this.connection.on("joinFailed", () => {
         console.debug("rossz");
       });
 
-      this.connection.on("started", () => {
+      this.connection.on("startedOwner", (question: Question) => {
+        this.gameStartedOwner.emit(question);
         console.debug("elindult");
       });
 
+      this.connection.on("started", (question: Question) => {
+        this.gameStarted.emit(question);
+        console.debug("elindult");
+      });
       this.connection.on("startFailed", () => {
         console.debug("nem indult el");
       });
       this.connection.on("newQuestion", (question :Question) => {
-        //   this.gameComponent.loadQuizQuestionComponent()
-        console.debug(question);
+        this.newQuestion.emit(question)
+        console.debug("newQuestion");
       });
       this.connection.start().catch(err => document.write(err));
     });
@@ -66,7 +79,12 @@ export class GamesService {
   }
 
   startGame(){
-    this.connection.send("StartGame", (<HTMLInputElement>document.getElementById("input_join_id")).value);
-    console.debug("start");
+    this.connection.send("StartGame",  "ProbaID");
+    console.debug("startGame");
+  }
+
+  sendAnswer(answerId: number){
+    this.connection.send("SendAnswer",  "ProbaID", answerId);
+    console.debug("sendAnswer");
   }
 }

@@ -10,5 +10,7 @@ namespace Quiz2.Services
         public Question CreateQuestion(CreateQuestionDto createQuestionDto);
         public Question UpdateQuestion(int questionId, UpdateQuestionDto updateQuestionDto);
         public void DeleteQuestion(int questionId);
+
+        public Question GetNextQuestion(int gameId, int currentPosition);
     }
 }
