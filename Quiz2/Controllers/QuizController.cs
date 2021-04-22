@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Quiz2.Data;
 using Quiz2.DTO;
+using Quiz2.Helper;
 using Quiz2.Models;
 using Quiz2.Services;
 
@@ -49,7 +51,7 @@ namespace Quiz2.Controllers
         [HttpPut]
         public ActionResult<Quiz> CreateQuiz(CreateQuizDto createQuizDto)
         { 
-            return quizService.CreateQuiz(createQuizDto, HttpContext.User.Identity.GetSubjectId());
+            return quizService.CreateQuiz(createQuizDto, HttpContext.User.GetUserId());
         }
 
         // GET: api/Quiz
