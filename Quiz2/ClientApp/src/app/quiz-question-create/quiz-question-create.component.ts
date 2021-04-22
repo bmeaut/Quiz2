@@ -30,8 +30,9 @@ export class QuizQuestionCreateComponent implements OnInit {
   }
 
   createQuestion() {
+    let id = this.route.snapshot.paramMap.get('id');
+    this.question.quizId = +id;
     this.questionService.putQuestion(this.question).subscribe(res => {
-      console.log(res);
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

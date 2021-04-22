@@ -11,6 +11,8 @@ import { QuizQuestionService } from '../services/quizquestion.service';
 })
 export class QuizQuestionListComponent implements OnInit {
 
+  isLoaded: boolean = false;
+
   questions: Question[] = [{
                             id: 1,
                             quizId: 1,
@@ -36,6 +38,7 @@ export class QuizQuestionListComponent implements OnInit {
 
   getQuestionList() {
     this.questions = this.quizService.getQuestions();
+    this.isLoaded = true;
   }
 
   /*getQuestionList(): void {
