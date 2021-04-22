@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { stringify } from 'querystring';
+import { AuthorizeService } from '../../api-authorization/authorize.service';
 import { Quiz } from '../quiz';
 import { QuizService } from '../services/quiz.service';
-import { QuizUserService } from '../services/user.service';
 
 @Component({
   selector: 'app-quiz-create',
@@ -11,28 +12,17 @@ import { QuizUserService } from '../services/user.service';
 })
 export class QuizCreateComponent implements OnInit {
 
-  quiz: Quiz;
+  quiz: Quiz = {
+    id: 1,
+    name: "",
+    questions: [],
+    owner: { id: "" },
+    games: []
+  };;
 
-  constructor(private quizSerivce: QuizService, private router: Router, private userService: QuizUserService) { }
+  constructor(private quizSerivce: QuizService, private router: Router, private authService: AuthorizeService) { }
 
   ngOnInit() {
-    this.quiz = {
-      id: 1,
-      name: "",
-      questions: [],
-      owner: { id: "" },
-      games: []
-    };
-    this.getUserID();
-    console.log(this.quiz.owner.id);
-  }
-
-  getUserID(): void {
-    this.userService.getUser().subscribe(user => {
-      console.log(user);
-      this.quiz.owner.id = user[0].id;
-      console.log(this.quiz.owner.id);
-    });
   }
 
   onSubmit(): void {
