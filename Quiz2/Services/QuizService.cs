@@ -95,7 +95,7 @@ namespace Quiz2.Services
             {
                 while (quiz.Questions.FirstOrDefault() == null)
                 {
-                    questionService.DeleteQuestion(quiz.Questions.First().Id);
+                    questionService.DeleteQuestion(quiz.Questions.FirstOrDefault().Id);
                 }
                 _context.Quizzes.Remove(quiz);
                 _context.SaveChanges();
