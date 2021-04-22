@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Quiz } from '../quiz';
 import { QuizService } from '../services/quiz.service';
+import { AuthorizeService } from '../../api-authorization/authorize.service';
 
 @Component({
   selector: 'app-quiz-list',
@@ -12,7 +13,7 @@ export class QuizListComponent implements OnInit {
   quizzes: Quiz[];
   quizzesLoaded: boolean;
 
-  constructor(private quizSerivce: QuizService) { }
+  constructor(private quizSerivce: QuizService, private authService: AuthorizeService) { }
 
   ngOnInit() {
     this.quizzes = [];

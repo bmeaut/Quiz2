@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { AuthorizeGuard } from "src/api-authorization/authorize.guard";
+import { AuthorizeGuard } from "../api-authorization/authorize.guard";
 import { FetchDataComponent } from "./fetch-data/fetch-data.component";
 import { HomeComponent } from "./home/home.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
@@ -24,12 +24,12 @@ const appRoutes: Routes = [
     { path: 'lobby', component: QuizOwnerLobbyComponent},
     { path: 'game', component: QuizGameComponent},
     { path: 'stats', component: QuizOwnerStatisticsComponent},
-    { path: 'questions', component: QuizQuestionListComponent},
-    { path: 'questions/new', component: QuizQuestionCreateComponent},
-    { path: 'questions/:id/edit', component: QuizQuestionEditComponent},
-    { path: 'quizzes', component: QuizListComponent},
-    { path: 'quizzes/new', component: QuizCreateComponent},
-    { path: 'quizzes/:id/edit', component: QuizEditComponent},
+    { path: 'questions', component: QuizQuestionListComponent, canActivate: [AuthorizeGuard] },
+    { path: 'questions/new', component: QuizQuestionCreateComponent, canActivate: [AuthorizeGuard]},
+    { path: 'questions/:id/edit', component: QuizQuestionEditComponent, canActivate: [AuthorizeGuard]},
+    { path: 'quizzes', component: QuizListComponent, canActivate: [AuthorizeGuard]},
+    { path: 'quizzes/new', component: QuizCreateComponent, canActivate: [AuthorizeGuard]},
+    { path: 'quizzes/:id/edit', component: QuizEditComponent, canActivate: [AuthorizeGuard]},
     { path: 'not-found', component: PageNotFoundComponent },
     { path: '**', redirectTo: '/not-found' }
   ];

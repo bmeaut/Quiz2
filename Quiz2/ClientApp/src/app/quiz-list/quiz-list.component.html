@@ -2,11 +2,11 @@
   <div class="lobby-header">
     <span>Kvízek</span>
     <div class="btn">
-      <button [routerLink]="['/create-quiz']">Új kvíz</button>
+      <button [routerLink]="['/quizzes/new']">Új kvíz</button>
     </div>
   </div>
   <div class="container" *ngIf="!quizzesLoaded">
-    <span>Loading...</span>
+    <span>Kvízek betöltése...</span>
   </div>
   <div class="container" *ngIf="quizzes.length == 0 && quizzesLoaded">
     <span>Jelenleg nincsenek kvízeid!</span>
