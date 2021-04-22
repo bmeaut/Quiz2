@@ -44,10 +44,13 @@ namespace Quiz2.Services
                 };
                 quiz.Questions.Add(question);
                 _context.SaveChanges();
-                foreach (CreateAnswerDto createAnswerDto in createQuestionDto.CreateAnswerDtoList)
+                if (createQuestionDto.CreateAnswerDtoList.Any())
                 {
-                    createAnswerDto.QuestionId = question.Id;
-                    answerService.CreateAnswer(createAnswerDto);
+                    foreach (CreateAnswerDto createAnswerDto in createQuestionDto.CreateAnswerDtoList)
+                    {
+                        createAnswerDto.QuestionId = question.Id;
+                        answerService.CreateAnswer(createAnswerDto);
+                    }
                 }
                 return GetQuestion(question.Id);
             }
