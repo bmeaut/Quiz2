@@ -76,7 +76,7 @@ namespace Quiz2.Services
                 .FirstOrDefault(q => q.Id == questionId);
             if (question != null)
             {
-                while(question.Answers.FirstOrDefault() == null)
+                while(question.Answers.FirstOrDefault() != null)
                 {
                     answerService.DeleteAnswer(question.Answers.FirstOrDefault().Id);
                 }
