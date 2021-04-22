@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from '../question';
 import { QuizQuestionService } from '../services/quizquestion.service';
 
@@ -12,6 +12,7 @@ export class QuizQuestionCreateComponent implements OnInit {
 
   question: Question = {
     id: 1,
+    quizId: 1,
     quiz: { id: 1, name: "", questions: [], owner: { id: "" }, games: [] },
     text: "",
     answers: [{ id: 1, isCorrect: false, text: "", questionId: 1 },
@@ -23,14 +24,15 @@ export class QuizQuestionCreateComponent implements OnInit {
     points: 0
   };
 
-  constructor(private router: Router, private questionService: QuizQuestionService) { }
+  constructor(private router: Router, private questionService: QuizQuestionService, private route: ActivatedRoute) { }
 
   ngOnInit() {
   }
 
   createQuestion() {
-    this.questionService.putQuestion(this.question).subscribe(() => {
-      //this.router.navigate(["/quizzes"]);
+    this.questionService.putQuestion(this.question).subscribe(res => {
+      console.log(res);
+      this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
 

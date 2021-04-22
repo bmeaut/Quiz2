@@ -21,14 +21,16 @@ export class QuizListItemComponent implements OnInit {
   showQuestions(quiz: Quiz): void {
     this.quizService.getQuestionsOfQuiz(quiz.id).subscribe(questions => {
       this.quizService.setQuestions(questions);
-      this.router.navigate(["/question_list"]);
+      console.log(this.quiz.id);
+      console.log(questions);
+      this.router.navigate(["/quizzes", this.quiz.id, "questions"]);
     });
   }
 
   modifyQuiz(quiz: Quiz): void {
     this.quizService.getQuiz(quiz.id).subscribe(quiz => {
       this.quizService.setModifiedQuiz(quiz);
-      this.router.navigate(["/edit-quiz"]);
+      this.router.navigate(["/quizzes", this.quiz.id, "edit"]);
     });
   }
 

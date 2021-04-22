@@ -19,6 +19,7 @@ export class QuizService {
 
     questions: Question[] = [{
       id: 1,
+      quizId: 1,
       quiz: { id: 1, name: "", questions: [], owner: {id: ""}, games: []},
       text: "",
       answers: [],

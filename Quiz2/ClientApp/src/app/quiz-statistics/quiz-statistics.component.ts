@@ -12,6 +12,7 @@ export class QuizStatisticsComponent implements OnInit {
   chart: Chart;
   question: Question = {
     id: 1,
+    quizId: 1,
     quiz: { id: 1, name: "", questions: [], owner: { id: "" }, games: [] },
     text: "Ez egy kérdés?",
     secondsToAnswer: 120,

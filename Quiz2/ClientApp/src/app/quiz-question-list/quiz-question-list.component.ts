@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from '../question';
 import { QuizService } from '../services/quiz.service';
 import { QuizQuestionService } from '../services/quizquestion.service';
@@ -12,6 +13,7 @@ export class QuizQuestionListComponent implements OnInit {
 
   questions: Question[] = [{
                             id: 1,
+                            quizId: 1,
                             quiz: { id: 1, name: "", questions: [], owner: { id: "" }, games: [] },
                             text: "Ez egy kérdés?",
                             secondsToAnswer: 0,
@@ -22,10 +24,14 @@ export class QuizQuestionListComponent implements OnInit {
                             {id: 3, isCorrect: false, text: "Válasz3", questionId: 1},
                             {id: 4, isCorrect: false, text: "Válasz4", questionId: 1}]}];
 
-  constructor(private questionService: QuizQuestionService, private quizService: QuizService) { }
+  constructor(private questionService: QuizQuestionService, private quizService: QuizService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.getQuestionList();
+  }
+
+  newQuestion() {
+    this.router.navigate(["new"], {relativeTo: this.route});
   }
 
   getQuestionList() {
