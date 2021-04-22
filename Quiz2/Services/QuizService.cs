@@ -93,7 +93,7 @@ namespace Quiz2.Services
                     .FirstOrDefault(q => q.Id == quizId);
             if (quiz != null)
             {
-                while (quiz.Questions.FirstOrDefault() == null)
+                while (quiz.Questions.FirstOrDefault() != null)
                 {
                     questionService.DeleteQuestion(quiz.Questions.FirstOrDefault().Id);
                 }
