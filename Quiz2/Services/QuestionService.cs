@@ -78,7 +78,7 @@ namespace Quiz2.Services
             {
                 while(question.Answers.FirstOrDefault() == null)
                 {
-                    answerService.DeleteAnswer(question.Answers.First().Id);
+                    answerService.DeleteAnswer(question.Answers.FirstOrDefault().Id);
                 }
                 _context.Questions.Remove(question);
                 _context.SaveChanges();
