@@ -8,7 +8,12 @@
       </div>
   </div>
   <div class="answers-wrapper">
-      <app-quiz-answer *ngFor="let answer of question.answers" [answer]="answer">
+      <app-quiz-answer 
+        *ngFor="let answer of question.answers" [answer]="answer"
+        [timeIsOver]="timeIsOver"
+        [disableAnswer]="disableAnswers"
+        (answerHasBeenSelected)="answerSelectedHandler($event)"
+      >
       </app-quiz-answer>
   </div>
 </div>

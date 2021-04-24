@@ -4,6 +4,9 @@
     align-items: center;
     padding: 0.4rem;
     height: 4.3rem;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
     font-family: 'IBM Plex Mono', monospace;
     color: #003F63;
     background-color: #F2B138;
@@ -13,4 +16,17 @@
 .answer:hover {
     border: 1px solid #003F63;
     cursor: pointer;
+}
+
+.answer-disabled {
+    opacity: .70;
+}
+
+.answer-disabled:hover {
+    border: none;
+    cursor: not-allowed;
+}
+
+.answer-disabled:focus {
+    outline: none;
 }

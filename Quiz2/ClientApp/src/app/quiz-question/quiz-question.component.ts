@@ -13,13 +13,15 @@ export class QuizQuestionComponent implements OnInit {
 
   subscriptionToTimer: Subscription;
   displayTime: string;
+  timeIsOver: boolean = false;
+  disableAnswers: boolean = false;
 
   question: Question = {
     id: 1,
     quizId: 1,
     text: "Ez egy kérdés?",
     quiz: { id: 0, name: "", questions: [], owner: { id: "" }, games: [] },
-    secondsToAnswer: 115,
+    secondsToAnswer: 5,
     position: 1,
     points: 5,
     answers:
@@ -52,8 +54,13 @@ export class QuizQuestionComponent implements OnInit {
         this.displayTime += seconds < 10 ? "0" + seconds : seconds;
       } else {
         this.subscriptionToTimer.unsubscribe();
+        this.timeIsOver = true;
       }
     });
+  }
+
+  answerSelectedHandler(disableAnswers: boolean): void {
+    this.disableAnswers = disableAnswers;
   }
 
 }
