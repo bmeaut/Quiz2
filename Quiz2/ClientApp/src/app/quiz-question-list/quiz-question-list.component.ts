@@ -13,18 +13,7 @@ export class QuizQuestionListComponent implements OnInit {
 
   isLoaded: boolean = false;
 
-  questions: Question[] = [{
-                            id: 1,
-                            quizId: 1,
-                            quiz: { id: 1, name: "", questions: [], owner: { id: "" }, games: [] },
-                            text: "Ez egy kérdés?",
-                            secondsToAnswer: 0,
-                            position: 0,
-                            points: 0,
-                            answers: [{id: 1, isCorrect: true, text: "Válasz1", questionId: 1},
-                            {id: 2, isCorrect: false, text: "Válasz2", questionId: 1},
-                            {id: 3, isCorrect: false, text: "Válasz3", questionId: 1},
-                            {id: 4, isCorrect: false, text: "Válasz4", questionId: 1}]}];
+  questions: Question[] = [];
 
   constructor(private questionService: QuizQuestionService, private quizService: QuizService, private router: Router, private route: ActivatedRoute) { }
 
@@ -32,20 +21,17 @@ export class QuizQuestionListComponent implements OnInit {
     this.getQuestionList();
   }
 
-  newQuestion() {
+  newQuestion(): void{
     this.router.navigate(["new"], {relativeTo: this.route});
   }
 
-  getQuestionList() {
-    this.questions = this.quizService.getQuestions();
-    this.isLoaded = true;
-  }
-
-  /*getQuestionList(): void {
-    this.questionService.getQuestions().subscribe(questions => {
+  getQuestionList(): void {
+    let id = +this.route.snapshot.paramMap.get('id');
+    this.quizService.getQuestionsOfQuiz(id).subscribe(questions => {
       this.questions = questions;
     });
-  }*/
+    this.isLoaded = true;
+  }
 
   deleteQuestion(question: Question): void {
     this.questionService.deleteQuestion(question.id).subscribe(() => {

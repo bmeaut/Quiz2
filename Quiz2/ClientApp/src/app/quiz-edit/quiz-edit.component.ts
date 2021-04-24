@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Quiz } from '../quiz';
 import { QuizService } from '../services/quiz.service';
 
@@ -12,14 +12,17 @@ export class QuizEditComponent implements OnInit {
 
   quiz: Quiz;
 
-  constructor(private router: Router, private quizService: QuizService) { }
+  constructor(private router: Router, private quizService: QuizService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.getModifiedQuiz();
   }
 
   getModifiedQuiz(): void {
-    this.quiz = this.quizService.getModifiedQuiz();
+    let id = +this.route.snapshot.paramMap.get('id');
+    this.quizService.getQuiz(id).subscribe(quiz => {
+      this.quiz = quiz;
+    });
   }
 
   modifyQuiz(): void {

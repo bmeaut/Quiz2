@@ -14,19 +14,20 @@ import { QuizOwnerStatisticsComponent } from "./quiz-owner-statistics/quiz-owner
 import { QuizQuestionCreateComponent } from "./quiz-question-create/quiz-question-create.component";
 import { QuizQuestionEditComponent } from "./quiz-question-edit/quiz-question-edit.component";
 import { QuizQuestionListComponent } from "./quiz-question-list/quiz-question-list.component";
+import { QuizQuestionComponent } from "./quiz-question/quiz-question.component";
 import { SRTestComponent } from "./SR-test/SR-test.component";
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
     { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
     { path: 'sr-test', component: SRTestComponent },
-    { path: 'question', component: QuizOwnerQuestionComponent},
+    { path: 'question', component: QuizQuestionComponent},
     { path: 'lobby', component: QuizOwnerLobbyComponent},
     { path: 'game', component: QuizGameComponent},
     { path: 'stats', component: QuizOwnerStatisticsComponent},
     { path: 'quizzes/:id/questions', component: QuizQuestionListComponent, canActivate: [AuthorizeGuard] },
     { path: 'quizzes/:id/questions/new', component: QuizQuestionCreateComponent, canActivate: [AuthorizeGuard]},
-    { path: 'quizzes/:id/questions/:id/edit', component: QuizQuestionEditComponent, canActivate: [AuthorizeGuard]},
+    { path: 'quizzes/:id/questions/:questionid/edit', component: QuizQuestionEditComponent, canActivate: [AuthorizeGuard]},
     { path: 'quizzes', component: QuizListComponent, canActivate: [AuthorizeGuard]},
     { path: 'quizzes/new', component: QuizCreateComponent, canActivate: [AuthorizeGuard]},
     { path: 'quizzes/:id/edit', component: QuizEditComponent, canActivate: [AuthorizeGuard]},

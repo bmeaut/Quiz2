@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Question } from '../question';
+import { QuizQuestionService } from '../services/quizquestion.service';
 
 @Component({
   selector: 'app-quiz-question-edit',
@@ -9,25 +10,32 @@ import { Router } from '@angular/router';
 })
 export class QuizQuestionEditComponent implements OnInit {
 
-  questionEditForm: FormGroup;
+  question: Question;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private router: Router
-  ) { 
-    this.questionEditForm = this.formBuilder.group({
-      question: ['', [Validators.required]],
-      point: ['', [Validators.required]],
-      time: ['', [Validators.required]],
-      number: ['', [Validators.required]]
+    private router: Router,
+    private route: ActivatedRoute,
+    private questionService: QuizQuestionService
+  ) { }
+
+  ngOnInit() {
+    this.getQuestion();
+  }
+
+  getQuestion(): void {
+    this.questionService.getQuestion(this.question.id).subscribe(question => {
+      this.question = question;
+      console.log(question);
     });
   }
 
-  ngOnInit() {
-  }
-
   onSubmit(): void {
-    this.router.navigate(['/question_list']);
+    for(let answer of this.question.answers) {
+      answer.questionId = this.question.id;
+    }
+    this.questionService.putQuestion(this.question).subscribe(() => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
 
 }

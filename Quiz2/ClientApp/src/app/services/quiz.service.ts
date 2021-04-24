@@ -17,17 +17,6 @@ export class QuizService {
       games: []
     };
 
-    questions: Question[] = [{
-      id: 1,
-      quizId: 1,
-      quiz: { id: 1, name: "", questions: [], owner: {id: ""}, games: []},
-      text: "",
-      answers: [],
-      secondsToAnswer: 0,
-      position: 0,
-      points: 0
-    }];
-
   constructor(private httpClient: HttpClient, @Inject('BASE_URL') readonly baseUrl: string) { }
 
     setModifiedQuiz(quiz: Quiz): void {
@@ -36,14 +25,6 @@ export class QuizService {
 
     getModifiedQuiz(): Quiz {
       return this.modifiedQuiz;
-    }
-
-    setQuestions(questions: Question[]): void {
-      this.questions = questions;
-    }
-
-    getQuestions(): Question[] {
-      return this.questions;
     }
 
     getQuizzes() {
