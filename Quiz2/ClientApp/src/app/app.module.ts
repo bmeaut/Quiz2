@@ -8,9 +8,8 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
-import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
-import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
+import { ApiAuthorizationModule } from '../../src/api-authorization/api-authorization.module';
+import { AuthorizeInterceptor } from '../../src/api-authorization/authorize.interceptor';
 import { QuizQuestionComponent } from './quiz-question/quiz-question.component';
 import { QuizAnswerComponent } from './quiz-answer/quiz-answer.component';
 import { QuizLobbyComponent } from './quiz-lobby/quiz-lobby.component';
@@ -19,7 +18,7 @@ import { QuizStatisticsComponent } from './quiz-statistics/quiz-statistics.compo
 import { QuizQuestionEditComponent } from './quiz-question-edit/quiz-question-edit.component';
 import { QuizQuestionListComponent } from './quiz-question-list/quiz-question-list.component';
 import { QuizQuestionListItemComponent } from './quiz-question-list-item/quiz-question-list-item.component';
-import { PlaceholderDirective } from 'src/directives/placeholder.directive';
+import { PlaceholderDirective } from '../../src/directives/placeholder.directive';
 import { QuizGameComponent } from './quiz-game/quiz-game.component';
 import { QuizOwnerLobbyComponent } from './quiz-owner-lobby/quiz-owner-lobby.component';
 import { QuizOwnerQuestionComponent } from './quiz-owner-question/quiz-owner-question.component';
@@ -34,12 +33,14 @@ import { QuizCreateComponent } from './quiz-create/quiz-create.component';
 import { QuizQuestionCreateComponent } from './quiz-question-create/quiz-question-create.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { JoinGameComponent } from './join-game/join-game.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
+    JoinGameComponent,
     QuizQuestionComponent,
     QuizQuestionCreateComponent,
     QuizAnswerComponent,

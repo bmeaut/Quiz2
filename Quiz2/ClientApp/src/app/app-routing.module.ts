@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { AuthorizeGuard } from "../api-authorization/authorize.guard";
 import { FetchDataComponent } from "./fetch-data/fetch-data.component";
 import { HomeComponent } from "./home/home.component";
+import { JoinGameComponent } from "./join-game/join-game.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { QuizCreateComponent } from "./quiz-create/quiz-create.component";
 import { QuizEditComponent } from "./quiz-edit/quiz-edit.component";
@@ -25,6 +26,7 @@ const appRoutes: Routes = [
     { path: 'lobby', component: QuizOwnerLobbyComponent},
     { path: 'game', component: QuizGameComponent},
     { path: 'stats', component: QuizOwnerStatisticsComponent},
+    { path: 'join', component: JoinGameComponent, canActivate: [AuthorizeGuard]},
     { path: 'quizzes/:id/questions', component: QuizQuestionListComponent, canActivate: [AuthorizeGuard] },
     { path: 'quizzes/:id/questions/new', component: QuizQuestionCreateComponent, canActivate: [AuthorizeGuard]},
     { path: 'quizzes/:id/questions/:questionid/edit', component: QuizQuestionEditComponent, canActivate: [AuthorizeGuard]},
