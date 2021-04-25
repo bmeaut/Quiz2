@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { time } from 'console';
 import { Subscription, timer } from 'rxjs';
 import { Question } from '../question';
 import {GamesService} from "../services/games-service";

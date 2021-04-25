@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription, timer } from 'rxjs';
 import { Question } from '../question';
 import {GamesService} from "../services/games-service";
 
@@ -9,12 +10,16 @@ import {GamesService} from "../services/games-service";
 })
 export class QuizOwnerQuestionComponent implements OnInit {
 
+  subscriptionToTimer: Subscription;
+  displayTime: string;
+  timeIsOver: boolean;
+
   question: Question = {
     id: 1,
     quizId: 1,
     quiz: { id: 1, name: "", questions: [], owner: { id: "" }, games: [] },
     text: "Ez egy kérdés?",
-    secondsToAnswer: 120,
+    secondsToAnswer: 5,
     position: 1,
     points: 5,
     answers:
@@ -26,6 +31,27 @@ export class QuizOwnerQuestionComponent implements OnInit {
   constructor(public gameService: GamesService) { }
 
   ngOnInit() {
+    this.startTimer();
+  }
+
+  startTimer(): void {
+    let timeToAnswer = this.question.secondsToAnswer;
+    timeToAnswer += 1;
+    let timerObservable = timer(0,1000);
+    this.subscriptionToTimer = timerObservable.subscribe(() => {
+      timeToAnswer--;
+      console.log(timeToAnswer);
+      if(timeToAnswer >= 0) {
+        let minutes = Math.floor(timeToAnswer % 3600 / 60);
+        let seconds = Math.floor(timeToAnswer % 3600 % 60);
+        
+        this.displayTime = minutes < 10 ? "0" + minutes + ":" : minutes + ":";
+        this.displayTime += seconds < 10 ? "0" + seconds : seconds;
+      } else {
+        this.subscriptionToTimer.unsubscribe();
+        this.timeIsOver = true;
+      }
+    });
   }
 
 }

@@ -22,7 +22,7 @@ const appRoutes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
     { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
     { path: 'sr-test', component: SRTestComponent },
-    { path: 'question', component: QuizQuestionComponent},
+    { path: 'question', component: QuizOwnerQuestionComponent},
     { path: 'lobby', component: QuizOwnerLobbyComponent},
     { path: 'game', component: QuizGameComponent},
     { path: 'stats', component: QuizOwnerStatisticsComponent},
