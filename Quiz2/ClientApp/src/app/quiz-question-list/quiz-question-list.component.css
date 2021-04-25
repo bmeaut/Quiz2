@@ -13,6 +13,25 @@ h1 {
     border-top-right-radius: 10px;
 }
 
+button {
+    border: none;
+    background: #F2B138;
+    font-family: 'IBM Plex Mono', monospace;
+    margin-right: 0.7rem;
+    padding: 0.5rem;
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.37);
+}
+
+button:active {
+    box-shadow: none;
+}
+
+button:focus {
+    outline: none;
+}
+
 .main-container {
     border-radius: 10px;
     margin-bottom: 1rem;
@@ -25,22 +44,4 @@ h1 {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     padding: 0.8rem;
-}
-
-.btn button {
-    border: none;
-    background: #F2B138;
-    font-family: 'IBM Plex Mono', monospace;
-    padding: 0.5rem;
-    border-radius: 10px;
-    transition: all 0.2s ease-in-out;
-    box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.37);
-}
-
-.btn button:active {
-    box-shadow: none;
-}
-
-.btn button:focus {
-    outline: none;
 }

@@ -11,6 +11,5 @@
         </app-quiz-question-list-item>
       </div>
 </div>
-<div class="btn">
-    <button type="submit" (click)="newQuestion()">Új kérdés</button>
-</div>
+<button type="submit" (click)="newQuestion()">Új kérdés</button>
+<button type="submit" [routerLink]="['../../']">Vissza</button>
