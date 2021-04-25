@@ -38,7 +38,7 @@
               >Csatlakozás</a
             >
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="isAuthenticated">
             <a class="nav-link text-dark" [routerLink]="['/quizzes']"
               >Kvízek</a
             >

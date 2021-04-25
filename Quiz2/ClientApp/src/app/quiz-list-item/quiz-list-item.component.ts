@@ -18,6 +18,10 @@ export class QuizListItemComponent implements OnInit {
   ngOnInit() {
   }
 
+  startQuiz(): void {
+    
+  }
+
   showQuestions(quiz: Quiz): void {
     this.router.navigate(["/quizzes", this.quiz.id, "questions"]);
   }
