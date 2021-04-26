@@ -5,10 +5,13 @@ import {QuizGameComponent} from "../quiz-game/quiz-game.component";
 import {AuthorizeService} from "../../api-authorization/authorize.service";
 import {async} from "@angular/core/testing";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class GamesService {
 
   private connection;
+  private joinId: string
 
   public joinedToGame = new EventEmitter();
   public ownerJoinedToGame = new EventEmitter();
@@ -34,7 +37,8 @@ export class GamesService {
         this.joinedToGame.emit();
         console.debug("joined");
       });
-      this.connection.on("ownerJoined", () => {
+      this.connection.on("ownerJoined", (joinId: string) => {
+        this.joinId = joinId;
         this.ownerJoinedToGame.emit();
         console.debug("ownerJoined");
       });
@@ -74,17 +78,27 @@ export class GamesService {
   }
 
   nextQuestion(){
-    this.connection.send("NextQuestion", "ProbaID");
+    this.connection.send("NextQuestion", this.joinId);
     console.debug("új kérdés");
   }
 
   startGame(){
-    this.connection.send("StartGame",  "ProbaID");
+    this.connection.send("StartGame",  this.joinId);
     console.debug("startGame");
   }
 
   sendAnswer(answerId: number){
-    this.connection.send("SendAnswer",  "ProbaID", answerId);
+    this.connection.send("SendAnswer",  this.joinId, answerId);
     console.debug("sendAnswer");
   }
+
+  createGame(quizId: number){
+    this.connection.send("CreateGame",  quizId);
+    console.debug("createGame");
+  }
+
+  getJoinId(): string{
+    return this.joinId;
+  }
+
 }

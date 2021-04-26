@@ -13,7 +13,6 @@ import {Question} from "../question";
   selector: 'app-quiz-game',
   templateUrl: './quiz-game.component.html',
   styleUrls: ['./quiz-game.component.css'],
-  providers:  [ GamesService ]
 })
 export class QuizGameComponent implements OnInit {
 
@@ -39,6 +38,7 @@ export class QuizGameComponent implements OnInit {
       console.debug("question betöltése")
       this.loadQuizQuestionComponent(question);
     });
+    console.debug("ngOnInit vége")
   }
   loadQuizQuestionComponent(question: Question) {
     const questionComponentFactory = this.cfr.resolveComponentFactory(QuizQuestionComponent);

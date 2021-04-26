@@ -6,7 +6,6 @@ import {GamesService} from "../services/games-service";
   selector: 'app-quiz-owner-lobby',
   templateUrl: './quiz-owner-lobby.component.html',
   styleUrls: ['./quiz-owner-lobby.component.css'],
-  providers:  [ GamesService ]
 })
 export class QuizOwnerLobbyComponent implements OnInit {
 

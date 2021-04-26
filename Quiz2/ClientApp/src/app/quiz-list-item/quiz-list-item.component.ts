@@ -2,24 +2,26 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Quiz } from '../quiz';
 import { QuizService } from '../services/quiz.service';
+import {GamesService} from "../services/games-service";
 
 @Component({
   selector: 'app-quiz-list-item',
   templateUrl: './quiz-list-item.component.html',
-  styleUrls: ['./quiz-list-item.component.css']
+  styleUrls: ['./quiz-list-item.component.css'],
 })
 export class QuizListItemComponent implements OnInit {
 
   @Input() quiz: Quiz;
   @Output() deleteQuizListItem: EventEmitter<any> = new EventEmitter();
 
-  constructor(private router: Router, private quizService: QuizService) { }
+  constructor(private router: Router, private quizService: QuizService, private gameService: GamesService) { }
 
   ngOnInit() {
   }
 
   startQuiz(): void {
-    
+    this.gameService.createGame(this.quiz.id)
+    this.router.navigate(["/game"]);
   }
 
   showQuestions(quiz: Quiz): void {

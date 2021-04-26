@@ -11,7 +11,7 @@ using Quiz2.Services;
 
 namespace Quiz2.Hubs
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "Identity.Application")]
     public class GameHub : Hub {
         private readonly IGameService gameService;
         private readonly IAnswerService answerService;
@@ -87,6 +87,13 @@ namespace Quiz2.Hubs
         public void SendAnswer(string joinId, int answerId)
         {
             userAnswerService.CreateUserAnswer(joinId, answerId, Context.UserIdentifier);
+        }
+        
+        public void CreateGame(int quizId)
+        {
+            var game = gameService.CreateGame(quizId, Context.UserIdentifier);
+            Groups.AddToGroupAsync(Context.ConnectionId, game.JoinId+"Owner");
+            Clients.Caller.SendAsync("ownerJoined", game.JoinId);
         }
 
     }
