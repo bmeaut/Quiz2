@@ -11,7 +11,7 @@ using Quiz2.Services;
 
 namespace Quiz2.Hubs
 {
-    [Authorize(AuthenticationSchemes = "Identity.Application")]
+    [Authorize]
     public class GameHub : Hub {
         private readonly IGameService gameService;
         private readonly IAnswerService answerService;
@@ -49,6 +49,7 @@ namespace Quiz2.Hubs
             }
             catch(Exception e)
             {
+                Console.WriteLine(e.Message);
                 Clients.Caller.SendAsync("joinFailed");
             }
 

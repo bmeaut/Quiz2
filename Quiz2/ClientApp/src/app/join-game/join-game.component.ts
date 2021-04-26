@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {GamesService} from "../services/games-service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-join-game',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JoinGameComponent implements OnInit {
 
-  constructor() { }
+  joinId: string;
+
+  constructor(private router: Router, private gameService: GamesService) { }
 
   ngOnInit() {
   }
 
+  join(){
+    this.gameService.joinGame(this.joinId);
+    this.router.navigate(["/game"]);
+  }
 }

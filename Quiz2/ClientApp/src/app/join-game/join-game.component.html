@@ -5,8 +5,8 @@
         </div>
         <div class="wrapper">
             <form>
-                <input type="text" placeholder="PIN">
-                <button>Csatlakozás</button>
+                <input name="input_join_id" id="input_join_id" type="text" placeholder="PIN" [(ngModel)]="joinId">
+                <button type="submit" (click)="join()">Csatlakozás</button>
             </form>
         </div>
     </div>

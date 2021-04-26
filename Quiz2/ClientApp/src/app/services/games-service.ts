@@ -33,7 +33,8 @@ export class GamesService {
         console.debug(text);
       });
 
-      this.connection.on("joined", () => {
+      this.connection.on("joined", (joinId: string) => {
+        this.joinId = joinId;
         this.joinedToGame.emit();
         console.debug("joined");
       });
@@ -66,10 +67,10 @@ export class GamesService {
     });
   }
 
-  joinGroup(joinId: string){
+  joinGame(joinId: string){
 
     this.connection.send("JoinGame", joinId);
-    console.debug("group1");
+    console.debug("joinGame " + joinId);
   }
 
   keres(){
