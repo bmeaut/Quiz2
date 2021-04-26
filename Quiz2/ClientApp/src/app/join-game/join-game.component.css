@@ -1,0 +1,82 @@
+* {
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+form > * {
+    margin: 0.2rem;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+input {
+    border: 1px solid #003F63;
+    border-radius: 10px;
+    padding: 0.2rem;
+    width: 55%;
+}
+
+input:focus {
+    outline: none;
+}
+
+button {
+    width: 55%;
+    border: none;
+    color: #ddd;
+    background: #003F63;
+    padding: 0.5rem;
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.37);
+}
+
+button:active {
+    box-shadow: none;
+}
+
+button:focus {
+    outline: none;
+}
+
+.wrapper {
+    background: #ddd;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 0.3rem;
+}
+
+.center {
+    padding: 0;
+    border-radius: 10px;
+    box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.37);
+    font-family: 'IBM Plex Mono', monospace;
+    width: 50%;
+}
+
+.join-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #F2B138;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom: 1px solid #003F63;
+    padding: 0.5rem;
+}
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media only screen and (max-width: 992px) {
+    .center {
+        width: 80%;
+    }
+}

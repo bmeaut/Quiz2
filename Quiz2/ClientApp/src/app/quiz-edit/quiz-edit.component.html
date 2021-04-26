@@ -5,12 +5,11 @@
             <div class="description">
                 <span>Név:</span>
                 <div class="details">
-                    <input name="quizName" type="text" placeholder="Adja meg a kvíz nevét" [(ngModel)]="quiz.name" required>
+                    <input name="quizName" type="text" placeholder="Adja meg a kvíz nevét" [(ngModel)]="quiz.name" minlength="3" required #quizName="ngModel">
                 </div>
             </div>
         </form>
     </div>
 </div>
-<div class="btn">
-    <button type="submit" (click)="modifyQuiz()">Mentés</button>
-</div>
+<button type="submit" (click)="modifyQuiz()">Mentés</button>
+<button type="submit" [routerLink]="['../../']">Vissza</button>

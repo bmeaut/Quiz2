@@ -1,3 +1,6 @@
-<button class="answer d-flex justify-content-center btn w-100" (click)="gameService.sendAnswer(answer.id)">
-    {{ answer.text }}
+<button class="answer"
+        (click)="gameService.sendAnswer(answer.id)"
+        (click)="answerSelected()"
+        [ngClass]="{'answer-disabled' : timeIsOver == true || disableAnswer == true}">
+        {{ answer.text }}
 </button>

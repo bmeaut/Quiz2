@@ -4,43 +4,76 @@
     box-sizing: border-box;
 }
 
-h1 {
-    text-align: center;
-    padding: 0.5rem;
-    border-bottom: 1px solid #003F63;
-    background: #F2B138;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-.main-container {
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.37);
-    font-family: 'IBM Plex Mono', monospace;
-}
-
-.container {
-    background: #D9D9D9;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    padding: 0.8rem;
-}
-
-.btn button {
+button {
     border: none;
     background: #F2B138;
     font-family: 'IBM Plex Mono', monospace;
+    margin-right: 0.7rem;
     padding: 0.5rem;
     border-radius: 10px;
     transition: all 0.2s ease-in-out;
     box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.37);
 }
 
-.btn button:active {
+button:active {
     box-shadow: none;
 }
 
-.btn button:focus {
+button:focus {
     outline: none;
+}
+
+h1 {
+    text-align: center;
+    padding: 0.5rem;
+    background: #F2B138;
+    border-radius: 10px;
+    margin: 0.5rem 0rem 0.5rem 0rem;
+}
+
+h2 {
+    text-align: center;
+    padding: 0.5rem;
+    background: #003F63;
+    border-bottom: 1px solid #A1A5A6;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: #D9D9D9;
+}
+
+.main-container {
+    margin-bottom: 0.7rem;
+    border-radius: 10px;
+    box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.37);
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+.container {
+    background: #D9D9D9;
+    padding: 0.7rem;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.questions-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #F2B138;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom: 1px solid #003F63;
+    padding: 0.5rem;
+}
+
+.questions-header span {
+    font-size: 2rem;
+    flex:1;
+    display: flex;
+    justify-content: center;
+}
+
+#btn-new-question {
+    color: #ddd;
+    background: #003F63;
 }

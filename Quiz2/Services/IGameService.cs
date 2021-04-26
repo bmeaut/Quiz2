@@ -8,6 +8,7 @@ namespace Quiz2.Services
         public Game GetGameWithQuestionsByJoinId(string joinId);
         public Game GetGameByJoinIdWithCurrentQuestion(string joinId);
         public void SetNextQuestion(Game game);
+        public Game CreateGame(int quizId, string applicationUserId);
         public void Save();
     }
 }

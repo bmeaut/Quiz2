@@ -1,11 +1,7 @@
 <div class="question">
     <span>{{ question.text }}</span>
     <div class="question-buttons">
-        <div class="btn">
-            <button type="submit" [routerLink]="['/edit']">Szerkesztés</button>
-        </div>
-        <div class="btn">
-            <button type="submit" (click)="deleteItem(question)">Törlés</button>
-        </div>
+        <button type="submit" (click)="editItem()">Szerkesztés</button>
+        <button type="submit" (click)="deleteItem(question)">Törlés</button>
     </div>
 </div>

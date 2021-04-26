@@ -15,6 +15,25 @@ h1 {
     border-top-right-radius: 10px;
 }
 
+button {
+    border: none;
+    background: #F2B138;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 0.5rem;
+    margin-right: 0.7rem;
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.37);
+}
+
+button:active {
+    box-shadow: none;
+}
+
+button:focus {
+    outline: none;
+}
+
 .main-container {
     /* border: 1px solid #ddd; */
     border-radius: 10px;
@@ -65,33 +84,4 @@ h1 {
 
 .details input:focus {
     outline: none;
-}
-
-.btn button {
-    border: none;
-    background: #F2B138;
-    font-family: 'IBM Plex Mono', monospace;
-    padding: 0.5rem;
-    border-radius: 10px;
-    transition: all 0.2s ease-in-out;
-    box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.37);
-}
-
-.btn button:active {
-    box-shadow: none;
-}
-
-.btn button:focus {
-    outline: none;
-}
-
-@media only screen and (max-width: 768px) {
-    .answers {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .answer {
-        width: 100%;
-    }
 }

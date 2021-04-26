@@ -49,6 +49,7 @@ namespace Quiz2.Hubs
             }
             catch(Exception e)
             {
+                Console.WriteLine(e.Message);
                 Clients.Caller.SendAsync("joinFailed");
             }
 
@@ -87,6 +88,13 @@ namespace Quiz2.Hubs
         public void SendAnswer(string joinId, int answerId)
         {
             userAnswerService.CreateUserAnswer(joinId, answerId, Context.UserIdentifier);
+        }
+        
+        public void CreateGame(int quizId)
+        {
+            var game = gameService.CreateGame(quizId, Context.UserIdentifier);
+            Groups.AddToGroupAsync(Context.ConnectionId, game.JoinId+"Owner");
+            Clients.Caller.SendAsync("ownerJoined", game.JoinId);
         }
 
     }

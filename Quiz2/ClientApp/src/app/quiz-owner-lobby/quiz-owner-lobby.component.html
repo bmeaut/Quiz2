@@ -1,6 +1,6 @@
 <div class="main-container container">
     <div class="lobby-header">
-        <span>PIN: 123123123</span>
+        <span>PIN: {{ gameService.getJoinId() }}</span>
         <div class="btn">
             <button (click)="gameService.startGame()">Start</button>
         </div>

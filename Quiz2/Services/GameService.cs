@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.IO;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Quiz2.Data;
 using Quiz2.Models;
@@ -53,6 +55,31 @@ namespace Quiz2.Services
         public void Save()
         {
             _context.SaveChanges();
+        }
+
+        public Game CreateGame(int quizId, string ownerId)
+        {
+            var game = new Game()
+            {
+                QuizId = quizId,
+                OwnerId = ownerId,
+                JoinId = GenerateJoinId(),
+                Status = GameStatuses.Created
+            };
+            _context.Games.Add(game);
+            _context.SaveChanges();
+            return game;
+        }
+
+        private string GenerateJoinId()
+        {
+            string joinId;
+            do {
+                joinId = Path.GetRandomFileName();
+                joinId = joinId.Substring(0, 8);
+            } while (GetGameByJoinId(joinId) != null);
+
+            return joinId;
         }
     }
 }

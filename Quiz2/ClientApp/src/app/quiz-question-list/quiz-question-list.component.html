@@ -1,16 +1,17 @@
 <div class="main-container">
-    <h1>Kérdések</h1>
-    <div class="container" *ngIf="!isLoaded">
-        <span>Kérdések betöltése...</span>
-      </div>
-      <div class="container" *ngIf="questions.length == 0 && isLoaded">
-        <span>Jelenleg nincsenek kérdéseid!</span>
-      </div>
-      <div class="container" *ngIf="isLoaded && questions.length > 0">
-        <app-quiz-question-list-item *ngFor="let question of questions" [question]="question" (deleteQuestionListItem)="deleteQuestion(question)">
-        </app-quiz-question-list-item>
-      </div>
+  <div class="questions-header">
+    <span>Kérdések</span>
+    <button id="btn-new-question" (click)="newQuestion()">Új kérdés</button>
+  </div>
+  <div class="container" *ngIf="!isLoaded">
+    <span>Kérdések betöltése...</span>
+  </div>
+  <div class="container" *ngIf="questions.length == 0 && isLoaded">
+    <span>Jelenleg nincsenek kérdéseid!</span>
+  </div>
+  <div class="container" *ngIf="isLoaded && questions.length > 0">
+    <app-quiz-question-list-item *ngFor="let question of questions" [question]="question" (deleteQuestionListItem)="deleteQuestion(question)">
+    </app-quiz-question-list-item>
+  </div>
 </div>
-<div class="btn">
-    <button type="submit" (click)="newQuestion()">Új kérdés</button>
-</div>
+<button type="submit" [routerLink]="['../../']">Vissza</button>

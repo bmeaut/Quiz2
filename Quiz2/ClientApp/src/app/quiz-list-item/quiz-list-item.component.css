@@ -1,3 +1,21 @@
+button {
+    border: none;
+    background: #F2B138;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 0.5rem;
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.37);
+}
+
+button:active {
+    box-shadow: none;
+}
+
+button:focus {
+    outline: none;
+}
+
 .quiz {
     border: 1px solid #003F63;
     border-radius: 10px;
@@ -15,27 +33,10 @@
 }
 
 .quiz-buttons * {
-    margin: 0rem 0.1rem 0rem 0.1rem;
+    margin: 0rem 0.1rem 0rem 0.4rem;
 }
 
-.btn {
-    padding: 0;
-}
-
-.btn button {
-    border: none;
-    background: #F2B138;
-    font-family: 'IBM Plex Mono', monospace;
-    padding: 0.5rem;
-    border-radius: 10px;
-    transition: all 0.2s ease-in-out;
-    box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.37);
-}
-
-.btn button:active {
-    box-shadow: none;
-}
-
-.btn button:focus {
-    outline: none;
+#start-button {
+    color: #ddd;
+    background-color: red;
 }

@@ -50,22 +50,19 @@ namespace Quiz2.Services
 
         public Answer CreateAnswer(CreateAnswerDto createAnswerDto)
         {
-            var question = _context.Questions
-                .Include(q => q.Quiz)
-                .Include(q => q.Answers)
-                .FirstOrDefault(q => q.Id == createAnswerDto.QuestionId);
-            if(question != null)
+            if (_context.Questions.Any(q => q.Id == createAnswerDto.QuestionId))
             {
                 var answer = new Answer()
-                {
-                    Correct = createAnswerDto.Correct,
-                    Text = createAnswerDto.Text,
-                    Question = question
-                };
-                question.Answers.Add(answer);
-                _context.SaveChanges();
-                return answer;
+                    {
+                        Correct = createAnswerDto.Correct,
+                        Text = createAnswerDto.Text,
+                        QuestionId = createAnswerDto.QuestionId
+                    };
+                     _context.Answers.Add(answer);
+                    _context.SaveChanges();
+                    return answer;
             }
+
             return null;
         }
     }
