@@ -44,7 +44,7 @@ namespace Quiz2.Services
                 };
                 quiz.Questions.Add(question);
                 _context.SaveChanges();
-                foreach (CreateAnswerDto createAnswerDto in createQuestionDto.CreateAnswerDtoList)
+                foreach (CreateAnswerDto createAnswerDto in createQuestionDto.Answers)
                 {
                     createAnswerDto.QuestionId = question.Id;
                     answerService.CreateAnswer(createAnswerDto);
