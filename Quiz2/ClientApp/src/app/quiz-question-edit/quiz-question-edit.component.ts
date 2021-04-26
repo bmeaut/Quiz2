@@ -23,9 +23,9 @@ export class QuizQuestionEditComponent implements OnInit {
   }
 
   getQuestion(): void {
-    this.questionService.getQuestion(this.question.id).subscribe(question => {
+    let id = +this.route.snapshot.paramMap.get('questionid');
+    this.questionService.getQuestion(id).subscribe(question => {
       this.question = question;
-      console.log(question);
     });
   }
 
