@@ -20,6 +20,9 @@ namespace Quiz2.Services
         }
         public UserAnswer CreateUserAnswer(string joinId, int answerId, string applicationUserId)
         {
+            Console.WriteLine("joinId: "+joinId);
+            Console.WriteLine("answerId: "+answerId);
+            Console.WriteLine("applicationUserId: "+applicationUserId);
             var game = gameService.GetGameByJoinId(joinId);
             var answer = answerService.GetAnswer(answerId);
             var user = applicationUserService.GetUser(applicationUserId);
@@ -28,13 +31,13 @@ namespace Quiz2.Services
                 var userAnswer = new UserAnswer() 
                 {
                     Game = game,
-                    ApplicationUser = user,
+                    ApplicationUserId = applicationUserId,
                     Answer = answer,
                     TimeOfSubmit = 0
                 };
                 _context.UserAnswers.Add(userAnswer);
                 _context.SaveChanges();
-                Console.WriteLine(userAnswer);
+                Console.WriteLine("user válasza: "+userAnswer.ApplicationUser.Id);
                 return userAnswer;
             }
             Console.WriteLine("null");

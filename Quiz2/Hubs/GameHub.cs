@@ -44,7 +44,7 @@ namespace Quiz2.Hubs
                 else
                 {
                     Groups.AddToGroupAsync(Context.ConnectionId, joinId);
-                    Clients.Caller.SendAsync("joined");
+                    Clients.Caller.SendAsync("joined", joinId);
                 }
             }
             catch(Exception e)

@@ -90,7 +90,7 @@ export class GamesService {
 
   sendAnswer(answerId: number){
     this.connection.send("SendAnswer",  this.joinId, answerId);
-    console.debug("sendAnswer");
+    console.debug("sendAnswer "+this.joinId);
   }
 
   createGame(quizId: number){

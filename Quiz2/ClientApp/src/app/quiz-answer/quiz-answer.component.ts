@@ -16,9 +16,11 @@ export class QuizAnswerComponent implements OnInit {
   constructor(public gameService: GamesService) { }
 
   ngOnInit() {
+    console.debug("QuizQuestionComponent ngOnInit "+ this.gameService.getJoinId())
   }
 
   answerSelected(): void {
+    this.gameService.sendAnswer(this.answer.id)
     this.answerHasBeenSelected.emit(true);
   }
 
