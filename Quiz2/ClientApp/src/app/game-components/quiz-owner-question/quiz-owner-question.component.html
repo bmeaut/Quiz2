@@ -1,0 +1,53 @@
+<div class="main-container">
+    <div class="wrapper">
+        <div class="question">
+            <span class="question-text">{{question.text}}</span>
+        </div>
+        <div class="timer-wrapper">
+            <span class="time">{{ displayTime }}</span>
+        </div>
+        <button class="next-btn" (click)="gameService.nextQuestion()">Következő kérdés</button>
+        <!-- <div class="question-stats">
+            <div class="answer-stat" *ngFor="let answer of question.answers; let i = index">
+                <div>
+                    <span class="letter">{{ letters[i] }}</span>
+                    <span>{{ answer.text }}</span>
+                </div>
+                <span>10</span>
+            </div>
+        </div> -->
+        <div id="answerA" class="answer">
+            <div>
+                <span class="letter">{{ letters[0] }}</span>
+                <span>{{ question.answers[0].text }}</span>
+            </div>
+        </div>
+        <span class="answer-counter">10</span>
+        <div id="answerB" class="answer">
+            <div>
+                <span class="letter">{{ letters[1] }}</span>
+                <span class="answer-text">{{ question.answers[1].text }}</span>
+            </div>
+        </div>
+        <span class="answer-counter">10</span>
+        <div id="answerC" class="answer">
+            <div>
+                <span class="letter">{{ letters[2] }}</span>
+                <span>{{ question.answers[2].text }}</span>
+            </div>
+        </div>
+        <span class="answer-counter">10</span>
+        <div id="answerD" class="answer">
+            <div>
+                <span class="letter">{{ letters[3] }}</span>
+                <span>{{ question.answers[3].text }}</span>
+            </div>
+        </div>
+        <span class="answer-counter">10</span>
+        <div class="chart">
+            <div class="chart-container">
+                <canvas id="canvas"></canvas>
+            </div>
+        </div>
+    </div>
+</div>

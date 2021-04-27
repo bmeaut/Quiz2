@@ -1,6 +1,6 @@
 export class Answer {
     id: number;
+    questionID?: Number;
     correct: boolean;
-    questionId: number;
     text: string;
 }

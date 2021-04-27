@@ -1,0 +1,49 @@
+button {
+    border: none;
+    background: #F2B138;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 0.5rem;
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.37);
+}
+
+button:active {
+    box-shadow: none;
+}
+
+button:focus {
+    outline: none;
+}
+
+.quiz {
+    border: 1px solid #003F63;
+    border-radius: 10px;
+    padding: 0.5rem;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    background: #A1A5A6;
+    margin-bottom: 0.5rem;
+}
+
+.quiz > span {
+    width: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.quiz > span > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.quiz-buttons * {
+    margin: 0rem 0.1rem 0rem 0.4rem;
+}
+
+#start-button {
+    color: #ddd;
+    background-color: red;
+}
