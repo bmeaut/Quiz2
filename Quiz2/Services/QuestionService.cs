@@ -28,21 +28,18 @@ namespace Quiz2.Services
 
         public Question CreateQuestion(CreateQuestionDto createQuestionDto)
         {
-            var quiz = _context.Quizzes
-                    .Include(q => q.Owner)
-                    .Include(q => q.Questions)
-                    .Include(q => q.Games)
-                    .FirstOrDefault(q => q.Id == createQuestionDto.QuizId);
-            if(quiz != null)
+            if(_context.Quizzes
+                .Any(q => q.Id == createQuestionDto.QuizId))
             {
                 var question = new Question()
                 {
                     Text = createQuestionDto.Text,
                     SecondsToAnswer = createQuestionDto.SecondsToAnswer,
                     Points = createQuestionDto.Points,
+                    QuizId = createQuestionDto.QuizId,
                     Position = createQuestionDto.Position
                 };
-                quiz.Questions.Add(question);
+                _context.Questions.Add(question);
                 _context.SaveChanges();
                 foreach (CreateAnswerDto createAnswerDto in createQuestionDto.Answers)
                 {
@@ -57,21 +54,32 @@ namespace Quiz2.Services
         public Question UpdateQuestion(int questionId, UpdateQuestionDto updateQuestionDto)
         {
             var question = _context.Questions
-                .Include(q => q.Quiz)
                 .Include(q => q.Answers)
                 .FirstOrDefault(q => q.Id == questionId);
             if(question != null)
             {
                 question.Text = updateQuestionDto.Text;
-                _context.SaveChanges();
+                question.SecondsToAnswer = updateQuestionDto.SecondsToAnswer;
+                question.Points = updateQuestionDto.Points;
+                question.Position = updateQuestionDto.Position;
+                foreach (var questionAnswer in question.Answers)
+                {
+                    var answer = updateQuestionDto.Answers
+                        .FirstOrDefault(a => a.Id == questionAnswer.Id);
+                    if (answer != null)
+                    {
+                        answer.Text = questionAnswer.Text;
+                        answer.Correct = questionAnswer.Correct;
+                    }
+                    _context.SaveChanges();
+                }
             }
-            return question;
+            return GetQuestion(question.Id);
         }
 
         public void DeleteQuestion(int questionId)
         {
             var question = _context.Questions
-                .Include(q => q.Quiz)
                 .Include(q => q.Answers)
                 .FirstOrDefault(q => q.Id == questionId);
             if (question != null)

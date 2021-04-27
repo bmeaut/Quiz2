@@ -72,9 +72,6 @@ namespace Quiz2.Services
         public Quiz UpdateQuiz(int quizId, UpdateQuizDto updateQuizDto)
         {
             var quiz = _context.Quizzes
-                    .Include(q => q.Owner)
-                    .Include(q => q.Questions)
-                    .Include(q => q.Games)
                     .FirstOrDefault(q => q.Id == quizId);
             if (quiz != null)
             {
@@ -87,9 +84,7 @@ namespace Quiz2.Services
         public void DeleteQuiz(int quizId)
         {
             var quiz = _context.Quizzes
-                    .Include(q => q.Owner)
                     .Include(q => q.Questions)
-                    .Include(q => q.Games)
                     .FirstOrDefault(q => q.Id == quizId);
             if (quiz != null)
             {

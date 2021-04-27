@@ -14,7 +14,7 @@ namespace Quiz2.Services
         {
             _context = context;
         }
-        
+
         public Answer GetAnswer(int answerId)
         {
             return _context.Answers
@@ -32,22 +32,6 @@ namespace Quiz2.Services
             }
             
         }
-
-
-        public Answer UpdateAnswer(int answerId, UpdateAnswerDto updateAnswerDto)
-        {
-            var answer = _context.Answers
-                .Include(a => a.Question)
-                .FirstOrDefault(a => a.Id == answerId);
-            if(answer != null)
-            {
-                answer.Text = updateAnswerDto.Text;
-                answer.Correct = updateAnswerDto.Correct;
-                _context.SaveChanges();
-            }
-            return answer;
-        }
-
         public Answer CreateAnswer(CreateAnswerDto createAnswerDto)
         {
             if (_context.Questions.Any(q => q.Id == createAnswerDto.QuestionId))
