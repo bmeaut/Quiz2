@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription, timer } from 'rxjs';
+import { Answer } from '../../answer';
 import { Question } from '../../question';
 import {GamesService} from "../../services/games-service";
 
@@ -18,11 +19,11 @@ export class QuizQuestionComponent implements OnInit {
   question: Question = {
     id: 1,
     text: "Ez egy kérdés?",
-    secondsToAnswer: 5,
+    secondsToAnswer: 400,
     position: 1,
     points: 5,
     answers:
-    [{id: 1, correct: true, text: "Válasz1"},
+    [{id: 1, correct: false, text: "Válasz1"},
      {id: 2, correct: false, text: "Válasz2"},
      {id: 3, correct: false, text: "Válasz3"},
      {id: 4, correct: false, text: "Válasz4"}]};
@@ -59,6 +60,13 @@ export class QuizQuestionComponent implements OnInit {
       } else {
         this.subscriptionToTimer.unsubscribe();
       }
+    });
+  }
+
+  answerIsCheckedHandler(checkedAnswer: Answer): void {
+    this.question.answers.forEach(answer => {
+      if(answer.id == checkedAnswer.id)
+        answer.correct = checkedAnswer.correct;
     });
   }
 }

@@ -13,14 +13,18 @@ export class QuizAnswerComponent implements OnInit {
   @Input() timeIsOver: boolean;
   @Input() disableAnswer: boolean;
   @Input() index: number;
+  @Output() answerIsChecked = new EventEmitter<Answer>();
 
   letters: string[];
-  isChecked: boolean;
 
   constructor(public gameService: GamesService) { }
 
   ngOnInit() {
     this.letters  = ['A', 'B', 'C', 'D'];
-    this.isChecked = false;
+  }
+
+  sendAnswerToParentComponent(isChecked: boolean): void {
+    this.answer.correct = isChecked;
+    this.answerIsChecked.emit(this.answer);
   }
 }
