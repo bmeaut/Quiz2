@@ -1,6 +1,6 @@
 import { Answer } from "./answer";
 
-export class Question {
+export interface Question {
     id: number;
     quizId?: number;
     text: string;
