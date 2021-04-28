@@ -14,14 +14,15 @@ namespace Quiz2.Hubs
 {
     [Authorize]
     public class GameHub : Hub {
-        private readonly IGameService gameService;
+        private static  IGameService gameService;
         private readonly IAnswerService answerService;
         private readonly IApplicationUserService applicationUserService;
         private readonly IUserAnswerService userAnswerService;
-
-        public GameHub(IGameService gameService, IAnswerService answerService, IApplicationUserService applicationUserService, IUserAnswerService userAnswerService)
+        public static IHubContext<GameHub> GlobalContext { get; private set; }
+        public GameHub(IHubContext<GameHub> ctx, IGameService gameServic, IAnswerService answerService, IApplicationUserService applicationUserService, IUserAnswerService userAnswerService)
         {
-            this.gameService = gameService;
+            GlobalContext = ctx;
+            gameService = gameServic;
             this.answerService = answerService;
             this.applicationUserService = applicationUserService;
             this.userAnswerService = userAnswerService;
@@ -67,8 +68,15 @@ namespace Quiz2.Hubs
                 gameService.Save();
                 Clients.Group(game.JoinId+"Owner").SendAsync("startedOwner",  game.CurrentQuestion);
                 Clients.Group(game.JoinId).SendAsync("started",  game.CurrentQuestion);
-                EndingQuestion(game);
-                //Task.Run(() => EndingQuestion(game) );
+                /*var timer = new System.Timers.Timer(game.CurrentQuestion.SecondsToAnswer * 1000);
+                timer.Elapsed +=  ( sender, e ) => EndingQuestion(game);
+                timer.AutoReset = false;
+                timer.Start();*/
+                //EndingQuestion(game);
+                Task task = Task.Run(() => EndingQuestion(game) );
+                task.Wait();
+                NextQuestion(game.JoinId);
+                
             }
             catch(Exception e)
             {
@@ -77,26 +85,37 @@ namespace Quiz2.Hubs
             }
         }
 
-        public void NextQuestion(string joinId)
+        public async Task NextQuestion(string joinId)
         {
             Console.WriteLine(joinId);
+            Console.WriteLine(gameService.ToString());
             var game = gameService.GetGameByJoinIdWithCurrentQuestion(joinId);
+            Console.WriteLine("GetGameByJoinIdWithCurrentQuestion után" );
+            Console.WriteLine(game?.Id );
             if (game != null)
             {
                 Console.WriteLine(game.CurrentQuestion.Id);
                 gameService.SetNextQuestion(game);
+                Console.WriteLine("SetNextQuestion után" );
                 if (game.CurrentQuestion != null)
                 {
-                    Clients.Group(game.JoinId + "Owner").SendAsync("newQuestion", game.CurrentQuestion);
-                    Clients.Group(game.JoinId).SendAsync("newQuestion", game.CurrentQuestion);
-                    EndingQuestion(game);
-                    //Task.Run(() => EndingQuestion(game) );
+                    await GlobalContext.Clients.Group(game.JoinId + "Owner").SendAsync("newQuestion", game.CurrentQuestion);
+                    await GlobalContext.Clients.Group(game.JoinId).SendAsync("newQuestion", game.CurrentQuestion);
+                    /*var timer = new System.Timers.Timer(game.CurrentQuestion.SecondsToAnswer * 1000);
+                    timer.AutoReset = false;
+                    timer.Elapsed +=  ( sender, e ) => EndingQuestion(game);
+                    timer.Start();*/
+                    //EndingQuestion(game);
+                    Task task = Task.Run(() => EndingQuestion(game) );
+                    task.Wait();
+                    NextQuestion(game.JoinId);
                 }
                 else
                 {
-                    Clients.Group(game.JoinId + "Owner").SendAsync("endGame");
-                    Clients.Group(game.JoinId).SendAsync("endGame");
+                    await GlobalContext.Clients.Group(game.JoinId + "Owner").SendAsync("endGame");
+                    await GlobalContext.Clients.Group(game.JoinId).SendAsync("endGame");
                 }
+                Console.WriteLine("NextQuestion vége");
             }
         }
 
@@ -114,14 +133,14 @@ namespace Quiz2.Hubs
 
         private void EndingQuestion(Game game)
         {
-            Console.WriteLine("slepp előtt");
+            //Console.WriteLine("slepp előtt");
             Task.Delay(game.CurrentQuestion.SecondsToAnswer * 1000).Wait();
             Console.WriteLine("slepp után");
-            Clients.Group(game.JoinId+"Owner").SendAsync("endQuestion");
-            Clients.Group(game.JoinId).SendAsync("endQuestion");
-            Console.WriteLine("NextQuestion előtt");
-            NextQuestion(game.JoinId);
-            Console.WriteLine("függvény végén");
+           // var hub = GetHubContext();
+           GlobalContext.Clients.Group(game.JoinId+"Owner").SendAsync("endQuestion");
+           GlobalContext.Clients.Group(game.JoinId).SendAsync("endQuestion");
+           
+           
         }
     }
 }
