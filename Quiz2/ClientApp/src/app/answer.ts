@@ -1,6 +1,6 @@
 export interface Answer {
     id: number;
-    questionID?: Number;
+    questionID?: number;
     correct: boolean;
     text: string;
 }
