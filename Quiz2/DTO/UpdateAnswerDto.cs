@@ -5,7 +5,8 @@ namespace Quiz2.DTO
     public class UpdateAnswerDto
     {
         public readonly int Id;
-        public string Text { get; set; }
+        public readonly int QuestionId;
         public bool Correct { get; set; }
+        public string Text { get; set; }
     }
 }
