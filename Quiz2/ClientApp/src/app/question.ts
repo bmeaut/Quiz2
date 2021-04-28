@@ -1,7 +1,7 @@
 import { Answer } from "./answer";
 
 export interface Question {
-    id: number;
+    id?: number;
     quizId?: number;
     text: string;
     answers: Answer[];

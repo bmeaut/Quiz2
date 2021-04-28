@@ -19,15 +19,16 @@ export class QuizOwnerQuestionComponent implements OnInit {
 
   question: Question = {
     id: 1,
+    quizId: 0,
     text: "Ez egy kérdés?",
     secondsToAnswer: 5,
     position: 1,
     points: 5,
     answers:
-    [{id: 1, correct: true, text: "Válasz1"},
-     {id: 2, correct: false, text: "Válasz2"},
-     {id: 3, correct: false, text: "Válasz3"},
-     {id: 4, correct: false, text: "Válasz4"}]};
+    [{id: 1, questionID: 0, correct: true, text: "Válasz1"},
+     {id: 2, questionID: 0, correct: false, text: "Válasz2"},
+     {id: 3, questionID: 0,correct: false, text: "Válasz3"},
+     {id: 4, questionID: 0,correct: false, text: "Válasz4"}]};
 
   letters: string[];
 

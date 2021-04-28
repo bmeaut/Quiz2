@@ -17,8 +17,8 @@ export class QuizQuestionService {
         return this.httpClient.put<Question>(this.baseUrl + "api/Question", question);
     }
 
-    patchQuestion(question: Question) {
-        return this.httpClient.patch<Question>(this.baseUrl + "api/Question/" + question.id, question);
+    patchQuestion(question: Question, id: number) {
+        return this.httpClient.patch<Question>(this.baseUrl + "api/Question/" + id, question);
     }
 
     deleteQuestion(id: number) {

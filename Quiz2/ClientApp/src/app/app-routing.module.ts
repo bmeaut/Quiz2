@@ -26,12 +26,12 @@ const appRoutes: Routes = [
     { path: 'lobby', component: QuizOwnerLobbyComponent},
     { path: 'game', component: QuizGameComponent},
     { path: 'join', component: JoinGameComponent, canActivate: [AuthorizeGuard]},
-    { path: 'quizzes/:id/questions', component: QuizQuestionListComponent, canActivate: [AuthorizeGuard]},
-    { path: 'quizzes/:id/questions/new', component: QuizQuestionCreateComponent, canActivate: [AuthorizeGuard]},
-    { path: 'quizzes/:id/questions/:questionid/edit', component: QuizQuestionEditComponent, canActivate: [AuthorizeGuard]},
-    { path: 'quizzes', component: QuizListComponent, canActivate: [AuthorizeGuard]},
-    { path: 'quizzes/new', component: QuizCreateComponent, canActivate: [AuthorizeGuard]},
-    { path: 'quizzes/:id/edit', component: QuizEditComponent, canActivate: [AuthorizeGuard]},
+    { path: 'quizzes/:id/questions', component: QuizQuestionListComponent},
+    { path: 'quizzes/:id/questions/new', component: QuizQuestionCreateComponent},
+    { path: 'quizzes/:id/questions/:questionid/edit', component: QuizQuestionEditComponent},
+    { path: 'quizzes', component: QuizListComponent},
+    { path: 'quizzes/new', component: QuizCreateComponent},
+    { path: 'quizzes/:id/edit', component: QuizEditComponent},
     { path: 'not-found', component: PageNotFoundComponent },
     { path: '**', redirectTo: '/not-found' }
   ];

@@ -22,7 +22,7 @@ export class QuizCreateComponent implements OnInit {
     games: []
   };
 
-  constructor(private quizSerivce: QuizService, private router: Router, private authService: AuthorizeService) { }
+  constructor(private quizSerivce: QuizService, private router: Router) { }
 
   ngOnInit() {
     this.quizForm = new FormGroup({

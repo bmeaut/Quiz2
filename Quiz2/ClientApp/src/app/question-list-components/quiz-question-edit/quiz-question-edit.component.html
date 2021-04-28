@@ -30,22 +30,22 @@
         <div class="answer">
           <span>A:</span>
           <input name="answerA" type="text" placeholder="Adja meg a választ" [(ngModel)]="question.answers[0].text" required>
-          <input name="answerA.isCorrect" type="checkbox" [(ngModel)]="question.answers[0].isCorrect">
+          <input name="answerAcorrect" type="checkbox" [(ngModel)]="question.answers[0].correct">
         </div>
         <div class="answer">
           <span>B:</span>
           <input name="answerB" type="text" placeholder="Adja meg a választ" [(ngModel)]="question.answers[1].text" required>
-          <input name="answerB.isCorrect" type="checkbox" [(ngModel)]="question.answers[1].isCorrect">
+          <input name="answerBcorrect" type="checkbox" [(ngModel)]="question.answers[1].correct">
         </div>
         <div class="answer">
           <span>C:</span>
           <input name="answerC" type="text" placeholder="Adja meg a választ" [(ngModel)]="question.answers[2].text">
-          <input name="answerC.isCorrect" type="checkbox" [(ngModel)]="question.answers[2].isCorrect">
+          <input name="answerCcorrect" type="checkbox" [(ngModel)]="question.answers[2].correct">
         </div>
         <div class="answer">
           <span>D:</span>
           <input name="answerD" type="text" placeholder="Adja meg a választ" [(ngModel)]="question.answers[3].text">
-          <input name="answerD.isCorrect" type="checkbox" [(ngModel)]="question.answers[3].isCorrect">
+          <input name="answerDcorrect" type="checkbox" [(ngModel)]="question.answers[3].correct">
         </div>
       </div>
     </form>
