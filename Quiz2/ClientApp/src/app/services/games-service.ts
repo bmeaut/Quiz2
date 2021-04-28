@@ -1,7 +1,7 @@
 ﻿import * as signalR from "@microsoft/signalr";
 import {Question} from "../question";
 import {ComponentFactoryResolver, EventEmitter, Injectable} from "@angular/core";
-import {QuizGameComponent} from "../quiz-game/quiz-game.component";
+import {QuizGameComponent} from "../game-components/quiz-game/quiz-game.component";
 import {AuthorizeService} from "../../api-authorization/authorize.service";
 import {async} from "@angular/core/testing";
 

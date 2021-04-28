@@ -34,13 +34,6 @@ namespace Quiz2.Controllers
             return NoContent();
         }
 
-        // PATCH: api/Answer/5
-        [HttpPatch("{answerId}")]
-        public ActionResult<Answer> UpdateAnswer(int answerId, UpdateAnswerDto updateAnswerDto)
-        {
-            return answerService.UpdateAnswer(answerId, updateAnswerDto);
-        }
-        
         //PUT: api/Answer
         [HttpPut]
         public ActionResult<Answer> CreateAnswer(CreateAnswerDto createAnswerDto)

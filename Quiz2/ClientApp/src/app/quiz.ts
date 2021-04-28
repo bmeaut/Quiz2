@@ -2,7 +2,7 @@ import { Game } from "./game";
 import { Question } from "./question";
 import { User } from "./user";
 
-export class Quiz {
+export interface Quiz {
     id: number;
     name: string;
     questions: Question[];

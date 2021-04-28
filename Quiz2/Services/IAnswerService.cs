@@ -7,7 +7,6 @@ namespace Quiz2.Services
     {
         public Answer GetAnswer(int answerId);
         public void DeleteAnswer(int answerId);
-        public Answer UpdateAnswer(int answerId, UpdateAnswerDto updateAnswerDto);
         public Answer CreateAnswer(CreateAnswerDto createAnswerDto);
     }
 }

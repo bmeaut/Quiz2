@@ -1,10 +1,8 @@
 import { Answer } from "./answer";
-import { Quiz } from "./quiz";
 
-export class Question {
-    id: number;
-    quizId: Number;
-    quiz: Quiz;
+export interface Question {
+    id?: number;
+    quizId?: number;
     text: string;
     answers: Answer[];
     secondsToAnswer: number;

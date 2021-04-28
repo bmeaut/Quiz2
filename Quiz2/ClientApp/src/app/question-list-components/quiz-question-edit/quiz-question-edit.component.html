@@ -1,0 +1,55 @@
+<div class="main-container">
+  <h1>Kérdés</h1>
+  <div class="container">
+    <form>
+      <div class="description">
+        <span>Kérdés:</span>
+        <div class="details">
+          <input name="question" type="text" placeholder="Adja meg a kérdést" [(ngModel)]="question.text" required>
+        </div>
+      </div>
+      <div class="number-data">
+        <div class="description-point">
+          <span>Pontszám:</span>
+          <div class="details">
+            <input name="score" type="number" placeholder="Adja meg a kérdésre kapható pontszámot" [(ngModel)]="question.points" required>
+          </div>
+        </div>
+        <div class="description-time">
+          <span>Idő:</span>
+          <div class="details">
+            <input name="time" type="number" placeholder="Adja meg a kérdés idejét" [(ngModel)]="question.secondsToAnswer" required>
+          </div>
+          <span class="question-number">Sorszám:</span>
+          <div class="details">
+            <input name="position" type="number" placeholder="Adja meg a kérdés sorszámát" [(ngModel)]="question.position" required>
+          </div>
+        </div>
+      </div>
+      <div class="answers">
+        <div class="answer">
+          <span>A:</span>
+          <input name="answerA" type="text" placeholder="Adja meg a választ" [(ngModel)]="question.answers[0].text" required>
+          <input name="answerAcorrect" type="checkbox" [(ngModel)]="question.answers[0].correct">
+        </div>
+        <div class="answer">
+          <span>B:</span>
+          <input name="answerB" type="text" placeholder="Adja meg a választ" [(ngModel)]="question.answers[1].text" required>
+          <input name="answerBcorrect" type="checkbox" [(ngModel)]="question.answers[1].correct">
+        </div>
+        <div class="answer">
+          <span>C:</span>
+          <input name="answerC" type="text" placeholder="Adja meg a választ" [(ngModel)]="question.answers[2].text">
+          <input name="answerCcorrect" type="checkbox" [(ngModel)]="question.answers[2].correct">
+        </div>
+        <div class="answer">
+          <span>D:</span>
+          <input name="answerD" type="text" placeholder="Adja meg a választ" [(ngModel)]="question.answers[3].text">
+          <input name="answerDcorrect" type="checkbox" [(ngModel)]="question.answers[3].correct">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<button type="submit" (click)="modifyQuestion()">Mentés</button>
+<button type="submit" [routerLink]="['../../']">Vissza</button>

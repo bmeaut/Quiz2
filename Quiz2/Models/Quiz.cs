@@ -11,6 +11,7 @@ namespace Quiz2.Models
         [Required]
         public string Name { get; set; }
         public virtual List<Question> Questions { get; set; }
+        public string OwnerId { get; set; }
         public virtual ApplicationUser Owner { get; set; }
         public virtual ICollection<Game> Games { get; set; }
 
