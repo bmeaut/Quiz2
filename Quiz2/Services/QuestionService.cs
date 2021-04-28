@@ -68,11 +68,11 @@ namespace Quiz2.Services
                         .FirstOrDefault(a => a.Id == questionAnswer.Id);
                     if (answer != null)
                     {
-                        answer.Text = questionAnswer.Text;
-                        answer.Correct = questionAnswer.Correct;
+                        questionAnswer.Text = answer.Text;
+                        questionAnswer.Correct = answer.Correct;
                     }
-                    _context.SaveChanges();
                 }
+                _context.SaveChanges();
             }
             return GetQuestion(question.Id);
         }
