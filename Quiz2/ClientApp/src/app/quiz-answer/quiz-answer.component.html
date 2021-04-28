@@ -1,6 +1,0 @@
-<button class="answer"
-        (click)="gameService.sendAnswer(answer.id)"
-        (click)="answerSelected()"
-        [ngClass]="{'answer-disabled' : timeIsOver == true || disableAnswer == true}">
-        {{ answer.text }}
-</button>

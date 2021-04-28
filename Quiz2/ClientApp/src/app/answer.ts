@@ -1,6 +1,6 @@
-export class Answer {
+export interface Answer {
     id: number;
+    questionID: number;
     correct: boolean;
-    questionId: number;
     text: string;
 }

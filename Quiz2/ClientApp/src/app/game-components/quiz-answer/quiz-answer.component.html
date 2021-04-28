@@ -1,0 +1,10 @@
+<div class="answer" [ngClass]="{'answer-disabled' : timeIsOver == true || disableAnswer == true}">
+        <div class="center">
+                <span class="letter">{{ letters[index] }}</span>
+                <span class="answer-text">{{ answer.text }}</span>
+        </div>
+        <label class="switch">
+                <input type="checkbox" [disabled]="timeIsOver || disableAnswer" [(ngModel)]="isChecked" (change)="sendAnswerToParentComponent(isChecked)">
+                <span class="slider round"></span>
+        </label>
+</div>

@@ -1,0 +1,27 @@
+<div class="main-container">
+  <div class="wrapper">
+      <div class="question">
+          <span class="question-text" [ngClass]="{'question-text-long' : question.text.length > 100, 'question-text' : question.text.length <= 100}">{{ question.text }}</span>
+      </div>
+      <div class="timer-wrapper">
+          <span class="time">{{ displayTime }}</span>
+      </div>
+      <button
+        class="save-btn"
+        (click)="saveAnswer()"
+        [disabled]="timeIsOver || disableAnswers"
+        [ngClass]="{'save-btn-disabled' : timeIsOver == true || disableAnswers == true}"
+      >Válasz mentése</button>
+  </div>
+  <div class="answers-wrapper">
+    <app-quiz-answer 
+    *ngFor="let answer of question.answers; let i = index" 
+    [answer]="answer"
+    [index]="i"
+    [timeIsOver]="timeIsOver"
+    [disableAnswer]="disableAnswers"
+    (answerIsChecked)="answerIsCheckedHandler($event)"
+  >
+  </app-quiz-answer>
+  </div>
+</div>

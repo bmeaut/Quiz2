@@ -1,0 +1,26 @@
+<div class="main-container">
+    <h1>Kvíz</h1>
+    <div class="container">
+        <form [formGroup]="quizForm">
+            <div class="description">
+                <span>Név:</span>
+                <div class="details">
+                    <input id="quiznev" formControlName="quiznev" type="text" placeholder="Adja meg a kvíz nevét" [(ngModel)]="quiz.name" required>
+                </div>
+            </div>
+            <div *ngIf="quizForm.get('quiznev').invalid && quizForm.get('quiznev').dirty">
+                <span *ngIf="quizForm.get('quiznev').hasError('required')">
+                    *A név megadása kötelező!
+                </span>
+                <span *ngIf="quizForm.get('quiznev').hasError('minlength')">
+                    *A kvíz neve túl rövid!
+                </span>
+                <span *ngIf="quizForm.get('quiznev').hasError('maxlength')">
+                    *A kvíz neve túl hosszú!
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+<button type="submit" (click)="onSubmit()" [disabled]="quizForm.invalid">Mentés</button>
+<button type="submit" [routerLink]="['../']">Vissza</button>

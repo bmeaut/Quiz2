@@ -65,7 +65,7 @@ namespace Quiz2.Services
                 foreach (var questionAnswer in question.Answers)
                 {
                     var answer = updateQuestionDto.Answers
-                        .FirstOrDefault(a => a.Id == questionAnswer.Id);
+                        .Find(a => a.Id == questionAnswer.Id);
                     if (answer != null)
                     {
                         questionAnswer.Text = answer.Text;
