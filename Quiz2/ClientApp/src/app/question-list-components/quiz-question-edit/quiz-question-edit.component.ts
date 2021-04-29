@@ -32,7 +32,6 @@ export class QuizQuestionEditComponent implements OnInit {
 
   ngOnInit() {
     this.getQuestion();
-    console.log(this.question.answers[0].correct);
   }
 
   getQuestion(): void {
@@ -43,25 +42,8 @@ export class QuizQuestionEditComponent implements OnInit {
   }
 
   modifyQuestion(): void {
-    let question: Question = {
-      text: "",
-      answers: [{id: 0, questionID: 0, correct: true, text: ""},
-      {id: 0, questionID: 0 , correct: true, text: ""},
-      {id: 0, questionID: 0, correct: true, text: ""},
-      {id: 0, questionID: 0, correct: true, text: ""}
-      ],
-      secondsToAnswer: 0,
-      position: 0,
-      points: 0
-    };
-    question.text = this.question.text;
-    question.answers = this.question.answers;
-    question.points = this.question.points;
-    question.position = this.question.position;
-    question.secondsToAnswer = this.question.secondsToAnswer;
-    console.log(question);
     let id = +this.route.snapshot.paramMap.get('questionid');
-    this.questionService.patchQuestion(question, id).subscribe(res => {
+    this.questionService.patchQuestion(this.question, id).subscribe(res => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
