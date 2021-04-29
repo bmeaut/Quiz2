@@ -38,6 +38,8 @@ export class QuizOwnerQuestionComponent implements OnInit {
     this.gameService.newQuestion.subscribe( (question: Question) => {
       console.debug("new question betöltése")
       this.question=question;
+      this.timeIsOver = false;
+      this.startTimer();
     });
     this.letters = ['A', 'B', 'C', 'D'];
     this.startTimer();
@@ -52,6 +54,7 @@ export class QuizOwnerQuestionComponent implements OnInit {
       timeToAnswer--;
       if(timeToAnswer == 0) {
         this.timeIsOver = true;
+        this.subscriptionToTimer.unsubscribe();
       }
       if(timeToAnswer >= 0) {
         let minutes = Math.floor(timeToAnswer % 3600 / 60);

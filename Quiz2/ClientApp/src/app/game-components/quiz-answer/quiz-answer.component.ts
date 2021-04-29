@@ -17,19 +17,22 @@ export class QuizAnswerComponent implements OnInit {
 
   letters: string[];
 
-  constructor(public gameService: GamesService) { }
+  constructor(public gameService: GamesService) {
+  }
 
   ngOnInit() {
-    console.debug("QuizQuestionComponent ngOnInit "+ this.gameService.getJoinId())
-    this.letters  = ['A', 'B', 'C', 'D'];
+    console.debug("QuizQuestionComponent ngOnInit " + this.gameService.getJoinId())
+    this.letters = ['A', 'B', 'C', 'D'];
   }
 
   answerSelected(): void {
     this.gameService.sendAnswer(this.answer.id)
-    this.answerHasBeenSelected.emit(true);
+    //this.answerHasBeenSelected.emit(true);
+
+  }
   sendAnswerToParentComponent(isChecked: boolean): void {
+
     this.answer.correct = isChecked;
     this.answerIsChecked.emit(this.answer);
   }
-
 }
