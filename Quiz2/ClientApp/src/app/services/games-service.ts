@@ -18,6 +18,8 @@ export class GamesService {
   public gameStartedOwner = new EventEmitter<Question>();
   public gameStarted = new EventEmitter<Question>();
   public newQuestion = new EventEmitter<Question>();
+  public endQuestion = new EventEmitter();
+  public endGame = new EventEmitter();
   constructor(private authorizeService: AuthorizeService) {
 
 
@@ -63,6 +65,14 @@ export class GamesService {
         this.newQuestion.emit(question)
         console.debug("newQuestion");
       });
+      this.connection.on("endQuestion", () => {
+        this.endQuestion.emit()
+        console.debug("endQuestion");
+      });
+      this.connection.on("endGame", () => {
+        this.endGame.emit()
+        console.debug("endGame");
+      });
       this.connection.start().catch(err => document.write(err));
     });
   }
@@ -90,7 +100,7 @@ export class GamesService {
 
   sendAnswer(answerId: number){
     this.connection.send("SendAnswer",  this.joinId, answerId);
-    console.debug("sendAnswer");
+    console.debug("sendAnswer "+this.joinId);
   }
 
   createGame(quizId: number){

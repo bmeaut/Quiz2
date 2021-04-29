@@ -46,10 +46,22 @@ namespace Quiz2.Services
 
         public void SetNextQuestion(Game game)
         {
-            var question = questionService.GetNextQuestion(game.QuizId, game.Id);
-            _context.SaveChanges();
-           
-            
+            var question = questionService.GetNextQuestion(game.QuizId, game.CurrentQuestion.Position);
+            if (question != null)
+            {
+                Console.WriteLine("question != null");
+                game.CurrentQuestion = question;
+                _context.SaveChanges();
+            }
+            else
+            {
+                Console.WriteLine("question == null");
+                game.CurrentQuestion = null;
+                game.Status = GameStatuses.Finished;
+                _context.SaveChanges();
+            }
+
+
         }
 
         public void Save()

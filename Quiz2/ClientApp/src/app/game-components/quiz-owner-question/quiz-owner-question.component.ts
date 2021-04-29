@@ -35,6 +35,12 @@ export class QuizOwnerQuestionComponent implements OnInit {
   constructor(public gameService: GamesService) { }
 
   ngOnInit() {
+    this.gameService.newQuestion.subscribe( (question: Question) => {
+      console.debug("new question betöltése")
+      this.question=question;
+      this.timeIsOver = false;
+      this.startTimer();
+    });
     this.letters = ['A', 'B', 'C', 'D'];
     this.startTimer();
     this.drawChart();
@@ -48,11 +54,12 @@ export class QuizOwnerQuestionComponent implements OnInit {
       timeToAnswer--;
       if(timeToAnswer == 0) {
         this.timeIsOver = true;
+        this.subscriptionToTimer.unsubscribe();
       }
       if(timeToAnswer >= 0) {
         let minutes = Math.floor(timeToAnswer % 3600 / 60);
         let seconds = Math.floor(timeToAnswer % 3600 % 60);
-        
+
         this.displayTime = minutes < 10 ? "0" + minutes + ":" : minutes + ":";
         this.displayTime += seconds < 10 ? "0" + seconds : seconds;
       } else {
