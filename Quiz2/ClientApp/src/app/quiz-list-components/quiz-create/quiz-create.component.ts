@@ -30,7 +30,8 @@ export class QuizCreateComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
+  createQuiz(): void {
+    this.quiz.name = this.quizForm.get("quiznev").value;
     this.quizSerivce.putQuiz(this.quiz).subscribe(quiz => {
       this.router.navigate(['/quizzes']);
     });

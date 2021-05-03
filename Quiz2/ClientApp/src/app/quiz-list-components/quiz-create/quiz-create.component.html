@@ -1,11 +1,11 @@
 <div class="main-container">
-    <h1>Kvíz</h1>
+    <h1>Kvíz létrehozása</h1>
     <div class="container">
         <form [formGroup]="quizForm">
             <div class="description">
                 <span>Név:</span>
                 <div class="details">
-                    <input id="quiznev" formControlName="quiznev" type="text" placeholder="Adja meg a kvíz nevét" [(ngModel)]="quiz.name" required>
+                    <input id="quiznev" formControlName="quiznev" type="text" placeholder="Adja meg a kvíz nevét" required>
                 </div>
             </div>
             <div *ngIf="quizForm.get('quiznev').invalid && quizForm.get('quiznev').dirty">
@@ -22,5 +22,5 @@
         </form>
     </div>
 </div>
-<button type="submit" (click)="onSubmit()" [disabled]="quizForm.invalid">Mentés</button>
-<button type="submit" [routerLink]="['../']">Vissza</button>
+<button type="submit" (click)="createQuiz()" [disabled]="quizForm.invalid">Mentés</button>
+<button [routerLink]="['../']">Vissza</button>
