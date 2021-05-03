@@ -33,7 +33,7 @@ namespace Quiz2.Services
                     Game = game,
                     ApplicationUserId = applicationUserId,
                     Answer = answer,
-                    TimeOfSubmit = 0
+                    TimeOfSubmit = (DateTime.Now-game.CurrentQuestionStarted).TotalSeconds
                 };
                 _context.UserAnswers.Add(userAnswer);
                 _context.SaveChanges();

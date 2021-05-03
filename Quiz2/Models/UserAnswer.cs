@@ -17,6 +17,6 @@ namespace Quiz2.Models
         public int AnswerId { get; set; }
         public Answer Answer { get; set; }
         
-        public int TimeOfSubmit { get; set; }
+        public double TimeOfSubmit { get; set; }
     }
 }

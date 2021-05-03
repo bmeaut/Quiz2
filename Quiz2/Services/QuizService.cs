@@ -97,5 +97,20 @@ namespace Quiz2.Services
                 _context.SaveChanges();
             }
         }
+        
+        public Question GetFirstQuestion(int quizId)
+        {
+            var questions = _context.Quizzes
+                .Where(q => q.Id == quizId)
+                .Include(q => q.Questions.OrderBy(question => question.Position).Take(1))
+                .Select(q => q.Questions)
+                .FirstOrDefault();
+            if (questions== null || questions.Count == 0)
+            {
+                return null;
+            }
+
+            return questions[0];
+        }
     }
 }

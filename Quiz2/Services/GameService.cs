@@ -14,12 +14,14 @@ namespace Quiz2.Services
         private readonly ApplicationDbContext _context;
         private readonly IApplicationUserService applicationUserService;
         private readonly IQuestionService questionService;
+        private readonly IQuizService quizService;
 
-        public GameService(IApplicationUserService applicationUserService, ApplicationDbContext context, IQuestionService questionService)
+        public GameService(IApplicationUserService applicationUserService, ApplicationDbContext context, IQuestionService questionService, IQuizService quizService)
         {
             _context = context;
             this.applicationUserService = applicationUserService;
             this.questionService = questionService;
+            this.quizService = quizService;
         }
 
         public Game GetGameByJoinId(string joinId)
@@ -53,6 +55,7 @@ namespace Quiz2.Services
             {
                 Console.WriteLine("question != null");
                 game.CurrentQuestion = question;
+                game.CurrentQuestionStarted = DateTime.Now;
                 _context.SaveChanges();
             }
             else
@@ -73,12 +76,15 @@ namespace Quiz2.Services
 
         public Game CreateGame(int quizId, string ownerId)
         {
+            var question = quizService.GetFirstQuestion(quizId);
             var game = new Game()
             {
                 QuizId = quizId,
                 OwnerId = ownerId,
                 JoinId = GenerateJoinId(),
-                Status = GameStatuses.Created
+                Status = GameStatuses.Created,
+                CurrentQuestion = question,
+                CurrentQuestionStarted = DateTime.MinValue
             };
             _context.Games.Add(game);
             _context.SaveChanges();

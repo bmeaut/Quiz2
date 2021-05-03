@@ -66,8 +66,8 @@ namespace Quiz2.Hubs
             try
             {
                 var game = gameService.GetGameWithQuestionsByJoinId(joinId);
-                game.CurrentQuestion = game.Quiz.Questions[0];
                 game.Status = GameStatuses.Started;
+                game.CurrentQuestionStarted = DateTime.Now;
                 gameService.Save();
                 Clients.Group(game.JoinId+"Owner").SendAsync("startedOwner",  game.CurrentQuestion);
                 Clients.Group(game.JoinId).SendAsync("started",  game.CurrentQuestion);

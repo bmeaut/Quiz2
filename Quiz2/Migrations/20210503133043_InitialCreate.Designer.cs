@@ -10,7 +10,7 @@ using Quiz2.Data;
 namespace Quiz2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210503123806_InitialCreate")]
+    [Migration("20210503133043_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -479,18 +479,18 @@ namespace Quiz2.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1462c699-a988-40ae-8193-73f53df74c9c",
+                            Id = "26812dc3-0407-4b00-802d-a17405fcb1ed",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "156677ec-6dd3-477d-a269-cdf58709ba7f",
+                            ConcurrencyStamp = "fa81434e-9a33-4f34-baf0-65e412cfe7fe",
                             Email = "user@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "user@gmail.com",
                             NormalizedUserName = "user@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFxgWzCztIxiqd8ibVxRGsx/xOnJT+DaLc+ZeSnGsIX/VJO0pTSL09VY+dqGylm8IA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELg8K+cMFFzsEaqQ2NESwq52x58JuaLS4rSIBoxWBt3B23JIZioFx3F/4VsgnS2b8g==",
                             PhoneNumber = "",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0cafaa9e-34f5-4620-95f6-cec73d48cbf7",
+                            SecurityStamp = "41baf5b7-1a18-423b-a932-5889dbc133e8",
                             TwoFactorEnabled = false,
                             UserName = "user@gmail.com"
                         });
@@ -625,13 +625,13 @@ namespace Quiz2.Migrations
                         {
                             Id = 1,
                             Name = "Quiz 1",
-                            OwnerId = "1462c699-a988-40ae-8193-73f53df74c9c"
+                            OwnerId = "26812dc3-0407-4b00-802d-a17405fcb1ed"
                         },
                         new
                         {
                             Id = 2,
                             Name = "Quiz 2",
-                            OwnerId = "1462c699-a988-40ae-8193-73f53df74c9c"
+                            OwnerId = "26812dc3-0407-4b00-802d-a17405fcb1ed"
                         });
                 });
 
@@ -652,8 +652,8 @@ namespace Quiz2.Migrations
                     b.Property<int>("GameId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TimeOfSubmit")
-                        .HasColumnType("int");
+                    b.Property<double>("TimeOfSubmit")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 

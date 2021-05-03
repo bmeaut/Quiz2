@@ -19,5 +19,7 @@ namespace Quiz2.Services
         public List<Question> GetQuestions(int quizId);
         public Quiz UpdateQuiz(int quizId, UpdateQuizDto updateQuizDto);
         public void DeleteQuiz(int quizId);
+        public Question GetFirstQuestion(int quizId);
+
     }
 }
