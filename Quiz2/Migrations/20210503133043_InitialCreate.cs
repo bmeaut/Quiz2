@@ -324,7 +324,7 @@ namespace Quiz2.Migrations
                     GameId = table.Column<int>(type: "int", nullable: false),
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     AnswerId = table.Column<int>(type: "int", nullable: false),
-                    TimeOfSubmit = table.Column<int>(type: "int", nullable: false)
+                    TimeOfSubmit = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -352,17 +352,17 @@ namespace Quiz2.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1462c699-a988-40ae-8193-73f53df74c9c", 0, "156677ec-6dd3-477d-a269-cdf58709ba7f", "user@gmail.com", true, false, null, "user@gmail.com", "user@gmail.com", "AQAAAAEAACcQAAAAEFxgWzCztIxiqd8ibVxRGsx/xOnJT+DaLc+ZeSnGsIX/VJO0pTSL09VY+dqGylm8IA==", "", false, "0cafaa9e-34f5-4620-95f6-cec73d48cbf7", false, "user@gmail.com" });
+                values: new object[] { "26812dc3-0407-4b00-802d-a17405fcb1ed", 0, "fa81434e-9a33-4f34-baf0-65e412cfe7fe", "user@gmail.com", true, false, null, "user@gmail.com", "user@gmail.com", "AQAAAAEAACcQAAAAELg8K+cMFFzsEaqQ2NESwq52x58JuaLS4rSIBoxWBt3B23JIZioFx3F/4VsgnS2b8g==", "", false, "41baf5b7-1a18-423b-a932-5889dbc133e8", false, "user@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "Quizzes",
                 columns: new[] { "Id", "Name", "OwnerId" },
-                values: new object[] { 1, "Quiz 1", "1462c699-a988-40ae-8193-73f53df74c9c" });
+                values: new object[] { 1, "Quiz 1", "26812dc3-0407-4b00-802d-a17405fcb1ed" });
 
             migrationBuilder.InsertData(
                 table: "Quizzes",
                 columns: new[] { "Id", "Name", "OwnerId" },
-                values: new object[] { 2, "Quiz 2", "1462c699-a988-40ae-8193-73f53df74c9c" });
+                values: new object[] { 2, "Quiz 2", "26812dc3-0407-4b00-802d-a17405fcb1ed" });
 
             migrationBuilder.InsertData(
                 table: "Questions",
