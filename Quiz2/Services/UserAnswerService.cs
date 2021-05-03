@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Quiz2.Data;
 using Quiz2.Models;
 
@@ -42,6 +44,13 @@ namespace Quiz2.Services
             }
             Console.WriteLine("null");
             return null;
+        }
+        
+        public int GetNumberOfUserAnswers(int answerId)
+        {
+            return _context.UserAnswers
+                .Include(userAnswer => userAnswer.Answer)
+                .Count(userAnswer => userAnswer.Answer.Id == answerId);
         }
     }
 }
