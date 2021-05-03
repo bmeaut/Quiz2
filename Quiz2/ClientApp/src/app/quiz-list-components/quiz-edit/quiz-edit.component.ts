@@ -7,7 +7,7 @@ import { QuizService } from '../../services/quiz.service';
 @Component({
   selector: 'app-quiz-edit',
   templateUrl: './quiz-edit.component.html',
-  styleUrls: ['./quiz-edit.component.css']
+  styleUrls: ['../shared-create-and-edit-style.css']
 })
 export class QuizEditComponent implements OnInit {
 

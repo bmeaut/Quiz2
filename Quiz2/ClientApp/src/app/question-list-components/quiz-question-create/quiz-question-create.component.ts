@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from '../../question';
 import { QuizQuestionService } from '../../services/quizquestion.service';
@@ -7,7 +7,7 @@ import { QuizQuestionService } from '../../services/quizquestion.service';
 @Component({
   selector: 'app-quiz-question-create',
   templateUrl: './quiz-question-create.component.html',
-  styleUrls: ['./quiz-question-create.component.css']
+  styleUrls: ['../shared-create-and-edit-style.css']
 })
 export class QuizQuestionCreateComponent implements OnInit {
 

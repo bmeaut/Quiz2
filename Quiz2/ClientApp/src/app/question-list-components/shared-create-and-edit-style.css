@@ -35,7 +35,6 @@ button:focus {
 }
 
 .main-container {
-  /* border: 1px solid #ddd; */
   border-radius: 10px;
   margin-bottom: 1rem;
   box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.37);
@@ -56,6 +55,20 @@ button:focus {
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   flex-grow: 1;
+}
+
+.details input {
+  width: 100%;
+  border: none;
+  background: transparent;
+}
+
+.details input:focus {
+  outline: none;
+}
+
+.details-invalid {
+  border: 1px solid red;
 }
 
 .description, .description-time, .description-point {
@@ -81,19 +94,9 @@ button:focus {
   flex-basis: 50%;
 }
 
-.number-data {
+.numeric-data {
   display: flex;
   justify-content: space-between;
-}
-
-.details input {
-  width: 100%;
-  border: none;
-  background: transparent;
-}
-
-.details input:focus {
-  outline: none;
 }
 
 .answers {
@@ -109,6 +112,10 @@ button:focus {
   padding: 0.5rem;
   border-radius: 10px;
   width: calc((100% - 13px) / 2);
+}
+
+.answer-invalid {
+  border: 1px solid red;
 }
 
 .answer span {
