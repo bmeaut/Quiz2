@@ -22,6 +22,7 @@ export class GamesService {
   public endQuestion = new EventEmitter();
   public endGame = new EventEmitter();
   public newPlayer = new EventEmitter<User[]>();
+  public currentQuestionStat = new EventEmitter<number[]>();
   constructor(private authorizeService: AuthorizeService) {
 
 
@@ -78,6 +79,10 @@ export class GamesService {
       this.connection.on("newPlayer", (players :User[]) => {
         this.newPlayer.emit(players)
         console.debug("newPlayer");
+      });
+      this.connection.on("currentQuestionStat", (stats :number[]) => {
+        this.currentQuestionStat.emit(stats)
+        console.debug("currentQuestionStat");
       });
       this.connection.start().catch(err => document.write(err));
     });

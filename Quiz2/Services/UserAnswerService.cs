@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Quiz2.Data;
+using Quiz2.DTO;
 using Quiz2.Models;
 
 namespace Quiz2.Services
@@ -44,6 +46,17 @@ namespace Quiz2.Services
             }
             Console.WriteLine("null");
             return null;
+        }
+
+        public List<int> getCurrentQuestionStat(string joinId)
+        {
+            var game = gameService.GetGameByJoinIdWithCurrentQuestion(joinId);
+            var stats = _context.UserAnswers
+                .Where(userAnswer => game.CurrentQuestion.Answers.Contains(userAnswer.Answer) )
+                .GroupBy(userAnswer => userAnswer.Answer)
+                .Select(g =>  g.Count() )
+                .ToList();
+            return stats;
         }
     }
 }

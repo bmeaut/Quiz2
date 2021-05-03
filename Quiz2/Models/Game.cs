@@ -19,7 +19,7 @@ namespace Quiz2.Models
         [Required]
         public Quiz Quiz { get; set; }
         
-        public int CurrentQuestionId { get; set; }
+        public int? CurrentQuestionId { get; set; }
         public Question CurrentQuestion { get; set; }
         
         public string OwnerId { get; set; }

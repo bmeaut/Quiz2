@@ -31,6 +31,7 @@ export class QuizOwnerQuestionComponent implements OnInit {
      {id: 4, questionID: 0,correct: false, text: "Válasz4"}]};
 
   letters: string[];
+  stats: number[];
 
   constructor(public gameService: GamesService) { }
 
@@ -42,6 +43,10 @@ export class QuizOwnerQuestionComponent implements OnInit {
       this.startTimer();
     });
     this.letters = ['A', 'B', 'C', 'D'];
+    this.stats = [0,0,0,0];
+    this.gameService.currentQuestionStat.subscribe((stats :number[]) => {
+      this.stats=stats;
+    })
     this.startTimer();
     this.drawChart();
   }
@@ -72,7 +77,7 @@ export class QuizOwnerQuestionComponent implements OnInit {
     this.chart = new Chart('canvas', {
       type: 'bar',
       data: {
-        labels: ['A', 'B', 'C', 'D'],
+        labels: this.stats,
         datasets: [
           {
             data: [6,3,4,10],

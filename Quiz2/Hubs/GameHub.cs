@@ -107,6 +107,8 @@ namespace Quiz2.Hubs
         public void SendAnswer(string joinId, int answerId)
         {
             userAnswerService.CreateUserAnswer(joinId, answerId, Context.UserIdentifier);
+            var stats = userAnswerService.getCurrentQuestionStat(joinId);
+            Clients.Group(joinId + "Owner").SendAsync("currentQuestionStat", stats);
         }
         
         public void CreateGame(int quizId)

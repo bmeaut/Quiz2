@@ -103,6 +103,7 @@ namespace Quiz2.Services
             var questions = _context.Quizzes
                 .Where(q => q.Id == quizId)
                 .Include(q => q.Questions.OrderBy(question => question.Position).Take(1))
+                .ThenInclude(question => question.Answers.OrderBy(answer => answer.Id))
                 .Select(q => q.Questions)
                 .FirstOrDefault();
             if (questions== null || questions.Count == 0)

@@ -477,18 +477,18 @@ namespace Quiz2.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "26812dc3-0407-4b00-802d-a17405fcb1ed",
+                            Id = "dd4e505e-5e14-42dc-bc70-7cf098089680",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fa81434e-9a33-4f34-baf0-65e412cfe7fe",
+                            ConcurrencyStamp = "9fb153c5-c26d-4c59-ba0d-f7cb660659eb",
                             Email = "user@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "user@gmail.com",
                             NormalizedUserName = "user@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAELg8K+cMFFzsEaqQ2NESwq52x58JuaLS4rSIBoxWBt3B23JIZioFx3F/4VsgnS2b8g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJVb+kPMhzvFLuxAMukd7jq/k37ntjiLKHQS5f8I++4qJ9RGF3nrJBCfbX3L4I1R4Q==",
                             PhoneNumber = "",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "41baf5b7-1a18-423b-a932-5889dbc133e8",
+                            SecurityStamp = "c2a28761-f08c-479a-953c-4b349f135cd9",
                             TwoFactorEnabled = false,
                             UserName = "user@gmail.com"
                         });
@@ -501,7 +501,7 @@ namespace Quiz2.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CurrentQuestionId")
+                    b.Property<int?>("CurrentQuestionId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CurrentQuestionStarted")
@@ -623,13 +623,13 @@ namespace Quiz2.Migrations
                         {
                             Id = 1,
                             Name = "Quiz 1",
-                            OwnerId = "26812dc3-0407-4b00-802d-a17405fcb1ed"
+                            OwnerId = "dd4e505e-5e14-42dc-bc70-7cf098089680"
                         },
                         new
                         {
                             Id = 2,
                             Name = "Quiz 2",
-                            OwnerId = "26812dc3-0407-4b00-802d-a17405fcb1ed"
+                            OwnerId = "dd4e505e-5e14-42dc-bc70-7cf098089680"
                         });
                 });
 
@@ -746,8 +746,7 @@ namespace Quiz2.Migrations
                     b.HasOne("Quiz2.Models.Question", "CurrentQuestion")
                         .WithMany()
                         .HasForeignKey("CurrentQuestionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Quiz2.Models.ApplicationUser", "Owner")
                         .WithMany("OwnGames")

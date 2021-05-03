@@ -98,6 +98,7 @@ namespace Quiz2.Services
             return _context.Questions.Where(question => question.Quiz.Id == quizId)
                 .Where(question => question.Position > currentPosition)
                 .OrderBy(question => question.Position)
+                .Include(question => question.Answers.OrderBy(answer => answer.Id))
                 .FirstOrDefault();
         }
         
