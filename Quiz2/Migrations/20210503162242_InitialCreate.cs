@@ -262,7 +262,7 @@ namespace Quiz2.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     QuizId = table.Column<int>(type: "int", nullable: false),
-                    CurrentQuestionId = table.Column<int>(type: "int", nullable: false),
+                    CurrentQuestionId = table.Column<int>(type: "int", nullable: true),
                     OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     JoinId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
@@ -352,17 +352,17 @@ namespace Quiz2.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "26812dc3-0407-4b00-802d-a17405fcb1ed", 0, "fa81434e-9a33-4f34-baf0-65e412cfe7fe", "user@gmail.com", true, false, null, "user@gmail.com", "user@gmail.com", "AQAAAAEAACcQAAAAELg8K+cMFFzsEaqQ2NESwq52x58JuaLS4rSIBoxWBt3B23JIZioFx3F/4VsgnS2b8g==", "", false, "41baf5b7-1a18-423b-a932-5889dbc133e8", false, "user@gmail.com" });
+                values: new object[] { "dd4e505e-5e14-42dc-bc70-7cf098089680", 0, "9fb153c5-c26d-4c59-ba0d-f7cb660659eb", "user@gmail.com", true, false, null, "user@gmail.com", "user@gmail.com", "AQAAAAEAACcQAAAAEJVb+kPMhzvFLuxAMukd7jq/k37ntjiLKHQS5f8I++4qJ9RGF3nrJBCfbX3L4I1R4Q==", "", false, "c2a28761-f08c-479a-953c-4b349f135cd9", false, "user@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "Quizzes",
                 columns: new[] { "Id", "Name", "OwnerId" },
-                values: new object[] { 1, "Quiz 1", "26812dc3-0407-4b00-802d-a17405fcb1ed" });
+                values: new object[] { 1, "Quiz 1", "dd4e505e-5e14-42dc-bc70-7cf098089680" });
 
             migrationBuilder.InsertData(
                 table: "Quizzes",
                 columns: new[] { "Id", "Name", "OwnerId" },
-                values: new object[] { 2, "Quiz 2", "26812dc3-0407-4b00-802d-a17405fcb1ed" });
+                values: new object[] { 2, "Quiz 2", "dd4e505e-5e14-42dc-bc70-7cf098089680" });
 
             migrationBuilder.InsertData(
                 table: "Questions",
