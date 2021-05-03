@@ -61,7 +61,7 @@ namespace Quiz2.Services
         public List<Question> GetQuestions(int quizId)
         {
             var quiz = _context.Quizzes
-                .Include(q => q.Questions)
+                .Include(q => q.Questions.OrderBy(question => question.Position))
                 .FirstOrDefault(q => q.Id == quizId);
             if(quiz != null)
             {
