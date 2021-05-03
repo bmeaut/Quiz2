@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Quiz2.Helper;
+using Quiz2.Models;
 using Quiz2.Services;
 
 namespace Quiz2.Controllers
@@ -16,11 +19,20 @@ namespace Quiz2.Controllers
             this.statService = statService;
         }
         
-        //GET: api/Stat/
+        //GET: api/Stat/GetNumberOfUserAnswers
+        [Route("GetNumberOfUserAnswers")]
         [HttpGet]
         public ActionResult<int> GetNumberOfUserAnswers(int gameId, int answerId)
         {
             return statService.GetNumberOfUserAnswers(gameId, answerId);
+        }
+        
+        //GET: api/Stat/GetOwnedGameHistory
+        [Route("GetOwnedGameHistory")]
+        [HttpGet]
+        public ActionResult<List<Game>> GetOwnedGameHistory()
+        {
+            return statService.GetOwnedGameHistory(HttpContext.User.GetUserId());
         }
     }
 }
