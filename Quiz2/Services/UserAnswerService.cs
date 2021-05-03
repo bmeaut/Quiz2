@@ -42,12 +42,5 @@ namespace Quiz2.Services
             Console.WriteLine("null");
             return null;
         }
-        
-        public int GetNumberOfUserAnswers(int answerId)
-        {
-            return _context.UserAnswers
-                .Include(userAnswer => userAnswer.Answer)
-                .Count(userAnswer => userAnswer.Answer.Id == answerId);
-        }
     }
 }
