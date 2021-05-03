@@ -37,12 +37,29 @@ namespace Quiz2.Data
             .Entity<Game>()
             .HasMany(p => p.JoinedUsers)
             .WithMany(p => p.Games)
-            .UsingEntity(j => j.ToTable("JoinedUsers"));
+            .UsingEntity(j => j.ToTable("JoinedUsers"))
+            .HasOne(p => p.Owner)
+            .WithMany(u => u.OwnGames)
+            .HasForeignKey(p => p.OwnerId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<UserAnswer>()
+            .HasOne(u => u.Answer)
+            .WithMany()
+            .HasForeignKey(u => u.AnswerId)
+            .OnDelete(DeleteBehavior.Restrict);
         
         modelBuilder.Entity<Game>()
-            .HasOne(p => p.Owner)
+            .HasOne(g => g.CurrentQuestion)
             .WithMany()
-            .HasForeignKey(p => p.OwnerId);
+            .HasForeignKey(g => g.CurrentQuestionId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+     /*   modelBuilder.Entity<Game>()
+            .HasOne(p => p.Owner)
+            .WithMany(u => u.OwnGames)
+            .HasForeignKey(p => p.OwnerId)
+            .OnDelete(DeleteBehavior.Restrict);*/
       
        /* modelBuilder.Entity<Answer>().ToTable("Answers");
         modelBuilder.Entity<Game>().ToTable("Games");

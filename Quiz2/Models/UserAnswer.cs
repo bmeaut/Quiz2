@@ -14,7 +14,7 @@ namespace Quiz2.Models
         [Required]
         public ApplicationUser ApplicationUser { get; set; }
         
-        //public int AnswerId { get; set; }
+        public int AnswerId { get; set; }
         public Answer Answer { get; set; }
         
         public int TimeOfSubmit { get; set; }
