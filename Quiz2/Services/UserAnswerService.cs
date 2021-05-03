@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Quiz2.Data;
 using Quiz2.Models;
 
