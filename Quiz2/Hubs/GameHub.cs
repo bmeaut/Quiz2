@@ -46,6 +46,10 @@ namespace Quiz2.Hubs
                 {
                     Groups.AddToGroupAsync(Context.ConnectionId, joinId);
                     Clients.Caller.SendAsync("joined", joinId);
+                    gameService.AddJoinedUser(game.Id, Context.UserIdentifier);
+                    var names = gameService.GetJoinedUsersNames(game.Id);
+                    Clients.Group(game.JoinId+"Owner").SendAsync("newPlayer",  names);
+                    Clients.Group(game.JoinId).SendAsync("newPlayer",  names);
                 }
             }
             catch(Exception e)
