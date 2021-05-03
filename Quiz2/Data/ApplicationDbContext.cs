@@ -30,8 +30,36 @@ namespace Quiz2.Data
     {
         optionsBuilder.EnableSensitiveDataLogging();
     }
+    
         protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder
+            .Entity<Game>()
+            .HasMany(p => p.JoinedUsers)
+            .WithMany(p => p.Games)
+            .UsingEntity(j => j.ToTable("JoinedUsers"))
+            .HasOne(p => p.Owner)
+            .WithMany(u => u.OwnGames)
+            .HasForeignKey(p => p.OwnerId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<UserAnswer>()
+            .HasOne(u => u.Answer)
+            .WithMany()
+            .HasForeignKey(u => u.AnswerId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<Game>()
+            .HasOne(g => g.CurrentQuestion)
+            .WithMany()
+            .HasForeignKey(g => g.CurrentQuestionId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+     /*   modelBuilder.Entity<Game>()
+            .HasOne(p => p.Owner)
+            .WithMany(u => u.OwnGames)
+            .HasForeignKey(p => p.OwnerId)
+            .OnDelete(DeleteBehavior.Restrict);*/
       
        /* modelBuilder.Entity<Answer>().ToTable("Answers");
         modelBuilder.Entity<Game>().ToTable("Games");

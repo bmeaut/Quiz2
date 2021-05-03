@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Quiz2.Models
@@ -18,7 +19,7 @@ namespace Quiz2.Models
         [Required]
         public Quiz Quiz { get; set; }
         
-        //public int CurrentQuestionId { get; set; }
+        public int? CurrentQuestionId { get; set; }
         public Question CurrentQuestion { get; set; }
         
         public string OwnerId { get; set; }
@@ -28,5 +29,7 @@ namespace Quiz2.Models
         public string JoinId { get; set; }
 
         public GameStatuses Status { get; set; }
+        
+        public DateTime CurrentQuestionStarted { get; set; }
     }
 }

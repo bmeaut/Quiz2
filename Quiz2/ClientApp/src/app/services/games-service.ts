@@ -4,6 +4,7 @@ import {ComponentFactoryResolver, EventEmitter, Injectable} from "@angular/core"
 import {QuizGameComponent} from "../game-components/quiz-game/quiz-game.component";
 import {AuthorizeService} from "../../api-authorization/authorize.service";
 import {async} from "@angular/core/testing";
+import {User} from "../user";
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,10 @@ export class GamesService {
   public gameStartedOwner = new EventEmitter<Question>();
   public gameStarted = new EventEmitter<Question>();
   public newQuestion = new EventEmitter<Question>();
+  public endQuestion = new EventEmitter();
+  public endGame = new EventEmitter();
+  public newPlayer = new EventEmitter<User[]>();
+  public currentQuestionStat = new EventEmitter<number[]>();
   constructor(private authorizeService: AuthorizeService) {
 
 
@@ -63,6 +68,22 @@ export class GamesService {
         this.newQuestion.emit(question)
         console.debug("newQuestion");
       });
+      this.connection.on("endQuestion", () => {
+        this.endQuestion.emit()
+        console.debug("endQuestion");
+      });
+      this.connection.on("endGame", () => {
+        this.endGame.emit()
+        console.debug("endGame");
+      });
+      this.connection.on("newPlayer", (players :User[]) => {
+        this.newPlayer.emit(players)
+        console.debug("newPlayer");
+      });
+      this.connection.on("currentQuestionStat", (stats :number[]) => {
+        this.currentQuestionStat.emit(stats)
+        console.debug("currentQuestionStat");
+      });
       this.connection.start().catch(err => document.write(err));
     });
   }
@@ -90,7 +111,7 @@ export class GamesService {
 
   sendAnswer(answerId: number){
     this.connection.send("SendAnswer",  this.joinId, answerId);
-    console.debug("sendAnswer");
+    console.debug("sendAnswer "+this.joinId);
   }
 
   createGame(quizId: number){

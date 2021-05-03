@@ -9,11 +9,14 @@ import {GamesService} from "../../services/games-service";
 })
 export class QuizOwnerLobbyComponent implements OnInit {
 
-  users: User[] = [{id: "1"}, {id: "2"}, {id: "3"}, {id: "4"}];
+  users: User[] = [];
 
   constructor(public gameService: GamesService) { }
 
   ngOnInit() {
+    this.gameService.newPlayer.subscribe( (players :User[]) => {
+      this.users = players;
+    });
   }
 
   startGame() {

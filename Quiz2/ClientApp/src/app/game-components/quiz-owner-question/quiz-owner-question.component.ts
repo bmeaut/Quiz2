@@ -31,11 +31,22 @@ export class QuizOwnerQuestionComponent implements OnInit {
      {id: 4, questionID: 0,correct: false, text: "Válasz4"}]};
 
   letters: string[];
+  stats: number[];
 
   constructor(public gameService: GamesService) { }
 
   ngOnInit() {
+    this.gameService.newQuestion.subscribe( (question: Question) => {
+      console.debug("new question betöltése")
+      this.question=question;
+      this.timeIsOver = false;
+      this.startTimer();
+    });
     this.letters = ['A', 'B', 'C', 'D'];
+    this.stats = [0,0,0,0];
+    this.gameService.currentQuestionStat.subscribe((stats :number[]) => {
+      this.stats=stats;
+    })
     this.startTimer();
     this.drawChart();
   }
@@ -48,11 +59,12 @@ export class QuizOwnerQuestionComponent implements OnInit {
       timeToAnswer--;
       if(timeToAnswer == 0) {
         this.timeIsOver = true;
+        this.subscriptionToTimer.unsubscribe();
       }
       if(timeToAnswer >= 0) {
         let minutes = Math.floor(timeToAnswer % 3600 / 60);
         let seconds = Math.floor(timeToAnswer % 3600 % 60);
-        
+
         this.displayTime = minutes < 10 ? "0" + minutes + ":" : minutes + ":";
         this.displayTime += seconds < 10 ? "0" + seconds : seconds;
       } else {
@@ -65,7 +77,7 @@ export class QuizOwnerQuestionComponent implements OnInit {
     this.chart = new Chart('canvas', {
       type: 'bar',
       data: {
-        labels: ['A', 'B', 'C', 'D'],
+        labels: this.stats,
         datasets: [
           {
             data: [6,3,4,10],

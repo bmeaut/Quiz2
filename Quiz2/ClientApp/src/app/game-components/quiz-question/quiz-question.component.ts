@@ -35,11 +35,15 @@ export class QuizQuestionComponent implements OnInit {
     this.gameService.newQuestion.subscribe( (question: Question) => {
       console.debug("new question betöltése")
       this.question=question;
+      this.disableAnswers = false;
+      this.timeIsOver = false;
+      this.startTimer();
     });
     this.startTimer();
   }
 
   saveAnswer(): void {
+   // this.gameService.sendAnswer(this.answer.id)
     this.disableAnswers = true;
   }
 
@@ -51,11 +55,12 @@ export class QuizQuestionComponent implements OnInit {
       timeToAnswer--;
       if(timeToAnswer == 0) {
         this.timeIsOver = true;
+        this.subscriptionToTimer.unsubscribe();
       }
       if(timeToAnswer >= 0) {
         let minutes = Math.floor(timeToAnswer % 3600 / 60);
         let seconds = Math.floor(timeToAnswer % 3600 % 60);
-        
+
         this.displayTime = minutes < 10 ? "0" + minutes + ":" : minutes + ":";
         this.displayTime += seconds < 10 ? "0" + seconds : seconds;
       } else {

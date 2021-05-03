@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Quiz2.Data;
+using Quiz2.DTO;
 using Quiz2.Models;
 
 namespace Quiz2.Services
@@ -22,6 +24,9 @@ namespace Quiz2.Services
         }
         public UserAnswer CreateUserAnswer(string joinId, int answerId, string applicationUserId)
         {
+            Console.WriteLine("joinId: "+joinId);
+            Console.WriteLine("answerId: "+answerId);
+            Console.WriteLine("applicationUserId: "+applicationUserId);
             var game = gameService.GetGameByJoinId(joinId);
             var answer = answerService.GetAnswer(answerId);
             var user = applicationUserService.GetUser(applicationUserId);
@@ -30,17 +35,28 @@ namespace Quiz2.Services
                 var userAnswer = new UserAnswer() 
                 {
                     Game = game,
-                    ApplicationUser = user,
+                    ApplicationUserId = applicationUserId,
                     Answer = answer,
-                    TimeOfSubmit = 0
+                    TimeOfSubmit = (DateTime.Now-game.CurrentQuestionStarted).TotalSeconds
                 };
                 _context.UserAnswers.Add(userAnswer);
                 _context.SaveChanges();
-                Console.WriteLine(userAnswer);
+                Console.WriteLine("user válasza: "+userAnswer.ApplicationUser.Id);
                 return userAnswer;
             }
             Console.WriteLine("null");
             return null;
+        }
+
+        public List<int> getCurrentQuestionStat(string joinId)
+        {
+            var game = gameService.GetGameByJoinIdWithCurrentQuestion(joinId);
+            var stats = _context.UserAnswers
+                .Where(userAnswer => game.CurrentQuestion.Answers.Contains(userAnswer.Answer) )
+                .GroupBy(userAnswer => userAnswer.Answer)
+                .Select(g =>  g.Count() )
+                .ToList();
+            return stats;
         }
     }
 }

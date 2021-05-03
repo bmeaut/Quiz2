@@ -1,15 +1,26 @@
 <div class="main-container">
-    <h1>Kvíz</h1>
+    <h1>Kvíz szerkesztése</h1>
     <div class="container">
-        <form>
+        <form [formGroup]="quizForm" (ngSubmit)="createQuiz()">
             <div class="description">
                 <span>Név:</span>
-                <div class="details">
-                    <input name="quizName" type="text" placeholder="Adja meg a kvíz nevét" [(ngModel)]="quiz.name" minlength="3" required #quizName="ngModel">
+                <div class="details" [ngClass]="{'details-invalid': quizForm.get('quiznev').invalid && quizForm.get('quiznev').dirty}">
+                    <input id="quiznev" formControlName="quiznev" type="text" placeholder="Add meg a kvíz nevét" required>
                 </div>
+            </div>
+            <div *ngIf="quizForm.get('quiznev').invalid && (quizForm.get('quiznev').dirty || quizForm.get('quiznev').touched)">
+                <span *ngIf="quizForm.get('quiznev').hasError('required')">
+                    *A név megadása kötelező!
+                </span>
+                <span *ngIf="quizForm.get('quiznev').hasError('minlength')">
+                    *A kvíz neve túl rövid!
+                </span>
+                <span *ngIf="quizForm.get('quiznev').hasError('maxlength')">
+                    *A kvíz neve túl hosszú!
+                </span>
             </div>
         </form>
     </div>
 </div>
-<button type="submit" (click)="modifyQuiz()">Mentés</button>
+<button type="submit" (click)="modifyQuiz()" [disabled]="quizForm.invalid">Mentés</button>
 <button type="submit" [routerLink]="['../../']">Vissza</button>

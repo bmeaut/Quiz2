@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Quiz2.Data;
+using Quiz2.DTO;
 using Quiz2.Models;
 
 namespace Quiz2.Services
@@ -12,12 +14,14 @@ namespace Quiz2.Services
         private readonly ApplicationDbContext _context;
         private readonly IApplicationUserService applicationUserService;
         private readonly IQuestionService questionService;
+        private readonly IQuizService quizService;
 
-        public GameService(IApplicationUserService applicationUserService, ApplicationDbContext context, IQuestionService questionService)
+        public GameService(IApplicationUserService applicationUserService, ApplicationDbContext context, IQuestionService questionService, IQuizService quizService)
         {
             _context = context;
             this.applicationUserService = applicationUserService;
             this.questionService = questionService;
+            this.quizService = quizService;
         }
 
         public Game GetGameByJoinId(string joinId)
@@ -46,10 +50,23 @@ namespace Quiz2.Services
 
         public void SetNextQuestion(Game game)
         {
-            var question = questionService.GetNextQuestion(game.QuizId, game.Id);
-            _context.SaveChanges();
-           
-            
+            var question = questionService.GetNextQuestion(game.QuizId, game.CurrentQuestion.Position);
+            if (question != null)
+            {
+                Console.WriteLine("question != null");
+                game.CurrentQuestion = question;
+                game.CurrentQuestionStarted = DateTime.Now;
+                _context.SaveChanges();
+            }
+            else
+            {
+                Console.WriteLine("question == null");
+                game.CurrentQuestion = null;
+                game.Status = GameStatuses.Finished;
+                _context.SaveChanges();
+            }
+
+
         }
 
         public void Save()
@@ -59,12 +76,15 @@ namespace Quiz2.Services
 
         public Game CreateGame(int quizId, string ownerId)
         {
+            var question = quizService.GetFirstQuestion(quizId);
             var game = new Game()
             {
                 QuizId = quizId,
                 OwnerId = ownerId,
                 JoinId = GenerateJoinId(),
-                Status = GameStatuses.Created
+                Status = GameStatuses.Created,
+                CurrentQuestion = question,
+                CurrentQuestionStarted = DateTime.MinValue
             };
             _context.Games.Add(game);
             _context.SaveChanges();
@@ -81,5 +101,39 @@ namespace Quiz2.Services
 
             return joinId;
         }
+
+        public void AddJoinedUser(int gameId, string applicationUserId)
+        {
+            var applicationUser =applicationUserService.GetUser(applicationUserId);
+            var game = _context.Games.Where(g => g.Id == gameId)
+                .Include(g => g.JoinedUsers)
+                .FirstOrDefault();
+            if (applicationUser != null && game != null)
+            {
+                game.JoinedUsers.Add(applicationUser);
+                _context.SaveChanges();
+            }
+            else
+            {
+                Console.WriteLine("Nincs ilyen user!");
+            }
+        }
+
+        public IEnumerable<PlayerDto> GetJoinedUsersNames(int gameId)
+        {
+            var users = _context.Games.Where(game => game.Id == gameId)
+                .Include(game => game.JoinedUsers)
+                .Select(game1 => game1.JoinedUsers)
+                .FirstOrDefault();
+            
+            var names = from user in users
+                select new PlayerDto()
+                {
+                    Id = user.Id,
+                    Name = user.UserName,
+                };
+            return names;
+        }
+
     }
 }

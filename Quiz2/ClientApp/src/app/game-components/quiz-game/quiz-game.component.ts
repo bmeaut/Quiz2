@@ -39,6 +39,7 @@ export class QuizGameComponent implements OnInit {
     console.debug("ngOnInit vége")
   }
   loadQuizQuestionComponent(question: Question) {
+    console.debug("loadQuizQuestionComponent "+ this.gameService.getJoinId())
     const questionComponentFactory = this.cfr.resolveComponentFactory(QuizQuestionComponent);
     const hostViewContainerRef = this.gameHost.viewContainerRef;
     hostViewContainerRef.clear();

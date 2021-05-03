@@ -13,7 +13,7 @@ export class QuizService {
       id: 1,
       name: "",
       questions: [],
-      owner: { id: "" },
+      owner: { id: "", name: "" },
       games: []
     };
 
@@ -21,7 +21,7 @@ export class QuizService {
 
     setModifiedQuiz(quiz: Quiz): void {
       this.modifiedQuiz = quiz;
-    } 
+    }
 
     getModifiedQuiz(): Quiz {
       return this.modifiedQuiz;

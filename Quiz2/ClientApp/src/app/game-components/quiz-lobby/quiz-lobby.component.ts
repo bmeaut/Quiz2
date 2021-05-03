@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../user';
+import {GamesService} from "../../services/games-service";
 
 @Component({
   selector: 'app-quiz-lobby',
@@ -8,11 +9,14 @@ import { User } from '../../user';
 })
 export class QuizLobbyComponent implements OnInit {
 
-  users: User[] = [{id: "1"}, {id: "2"}, {id: "3"}, {id: "4"}];
+  users: User[] = [];
 
-  constructor() { }
+  constructor(public gameService: GamesService) { }
 
   ngOnInit() {
+    this.gameService.newPlayer.subscribe( (players :User[]) => {
+      this.users = players;
+    });
   }
 
 }
