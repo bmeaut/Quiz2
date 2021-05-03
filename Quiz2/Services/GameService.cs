@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Quiz2.Data;
+using Quiz2.DTO;
 using Quiz2.Models;
 
 namespace Quiz2.Services
@@ -93,5 +95,39 @@ namespace Quiz2.Services
 
             return joinId;
         }
+
+        public void AddJoinedUser(int gameId, string applicationUserId)
+        {
+            var applicationUser =applicationUserService.GetUser(applicationUserId);
+            var game = _context.Games.Where(g => g.Id == gameId)
+                .Include(g => g.JoinedUsers)
+                .FirstOrDefault();
+            if (applicationUser != null && game != null)
+            {
+                game.JoinedUsers.Add(applicationUser);
+                _context.SaveChanges();
+            }
+            else
+            {
+                Console.WriteLine("Nincs ilyen user!");
+            }
+        }
+
+        public IEnumerable<PlayerDto> GetJoinedUsersNames(int gameId)
+        {
+            var users = _context.Games.Where(game => game.Id == gameId)
+                .Include(game => game.JoinedUsers)
+                .Select(game1 => game1.JoinedUsers)
+                .FirstOrDefault();
+            
+            var names = from user in users
+                select new PlayerDto()
+                {
+                    Id = user.Id,
+                    Name = user.UserName,
+                };
+            return names;
+        }
+
     }
 }

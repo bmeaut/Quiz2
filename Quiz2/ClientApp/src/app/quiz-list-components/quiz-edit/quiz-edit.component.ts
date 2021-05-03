@@ -16,7 +16,7 @@ export class QuizEditComponent implements OnInit {
     id: 0,
     name: "",
     questions: [],
-    owner: { id: ""},
+    owner: { id: "", name: ""},
     games: []
   };
 
