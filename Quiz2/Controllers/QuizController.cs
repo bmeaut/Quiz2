@@ -29,14 +29,21 @@ namespace Quiz2.Controllers
         [HttpGet("{quizId}")]
         public ActionResult<Quiz> GetQuiz(int quizId)
         {
-            return quizService.GetQuiz(quizId);
+            if (UserIdCheck(quizId))
+            {
+                return quizService.GetQuiz(quizId);
+            }
+            return null;
         }
 
         // DELETE: api/Quiz/5
         [HttpDelete("{quizId}")]
         public IActionResult DeleteQuiz(int quizId)
         {
-            quizService.DeleteQuiz(quizId);
+            if (UserIdCheck(quizId))
+            {
+                quizService.DeleteQuiz(quizId);
+            }
             return NoContent();
         }
 
@@ -44,7 +51,11 @@ namespace Quiz2.Controllers
         [HttpPut("{quizId}")]
         public ActionResult<Quiz> UpdateQuiz(int quizId, UpdateQuizDto updateQuizDto)
         {
-            return quizService.UpdateQuiz(quizId, updateQuizDto);
+            if (UserIdCheck(quizId))
+            {
+                return quizService.UpdateQuiz(quizId, updateQuizDto);
+            }
+            return null;
         }
 
         // PUT: api/Quiz
@@ -58,14 +69,24 @@ namespace Quiz2.Controllers
         [HttpGet]
         public ActionResult<List<Quiz>> GetQuizzes()
         {
-            return quizService.GetQuizzes();
+            return quizService.GetQuizzes(HttpContext.User.GetUserId());
         }
 
         // GET: api/Quiz/5/questions
         [HttpGet("{quizId}/questions")]
         public ActionResult<List<Question>> GetQuestions(int quizId)
         {
-            return quizService.GetQuestions(quizId);
+            if (UserIdCheck(quizId))
+            {
+                return quizService.GetQuestions(quizId);
+            }
+            return null;
+        }
+
+        private bool UserIdCheck(int quizId)
+        {
+            var quiz = quizService.GetQuiz(quizId);
+            return quiz.Owner.Id == HttpContext.User.GetUserId();
         }
     }
 }

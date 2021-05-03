@@ -48,12 +48,13 @@ namespace Quiz2.Services
             
         }
 
-        public List<Quiz> GetQuizzes()
+        public List<Quiz> GetQuizzes(string ownerId)
         {
             return _context.Quizzes
                 .Include(quiz => quiz.Owner)
                 .Include(quiz => quiz.Questions)
                 .Include(quiz => quiz.Games)
+                .Where(quiz => quiz.Owner.Id == ownerId)
                 .ToList();
         }
 
