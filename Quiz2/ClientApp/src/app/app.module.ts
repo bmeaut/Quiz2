@@ -30,6 +30,7 @@ import { QuizQuestionCreateComponent } from './question-list-components/quiz-que
 import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { JoinGameComponent } from './join-game/join-game.component';
+import { PlayerStatisticsComponent } from './game-components/player-statistics/player-statistics.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { JoinGameComponent } from './join-game/join-game.component';
     QuizQuestionListComponent,
     QuizQuestionListItemComponent,
     FetchDataComponent,
+    PlayerStatisticsComponent,
     QuizGameComponent,
     QuizOwnerLobbyComponent,
     QuizOwnerQuestionComponent,
