@@ -29,7 +29,6 @@ namespace Quiz2.Services
         {
             return _context.Games
                 .Include(game => game.Owner)
-                .Include(game => game.Status)
                 .Include(game => game.Quiz)
                 .Include(game => game.JoinedUsers)
                 .Where(game => game.Owner.Id == ownerId)
