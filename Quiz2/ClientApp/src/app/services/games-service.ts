@@ -5,6 +5,7 @@ import {QuizGameComponent} from "../game-components/quiz-game/quiz-game.componen
 import {AuthorizeService} from "../../api-authorization/authorize.service";
 import {async} from "@angular/core/testing";
 import {User} from "../user";
+import {CurrentQuestionStat} from "../currentQuestionStat";
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,7 @@ export class GamesService {
   public endQuestion = new EventEmitter();
   public endGame = new EventEmitter();
   public newPlayer = new EventEmitter<User[]>();
-  public currentQuestionStat = new EventEmitter<number[]>();
+  public currentQuestionStat = new EventEmitter<CurrentQuestionStat>();
   constructor(private authorizeService: AuthorizeService) {
 
 
@@ -80,8 +81,8 @@ export class GamesService {
         this.newPlayer.emit(players)
         console.debug("newPlayer");
       });
-      this.connection.on("currentQuestionStat", (stats :number[]) => {
-        this.currentQuestionStat.emit(stats)
+      this.connection.on("currentQuestionStat", (stat :CurrentQuestionStat) => {
+        this.currentQuestionStat.emit(stat)
         console.debug("currentQuestionStat");
       });
       this.connection.start().catch(err => document.write(err));

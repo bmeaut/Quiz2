@@ -3,6 +3,7 @@ import { Subscription, timer } from 'rxjs';
 import { Question } from '../../question';
 import { Chart } from 'chart.js';
 import {GamesService} from "../../services/games-service";
+import {CurrentQuestionStat} from "../../currentQuestionStat";
 
 @Component({
   selector: 'app-quiz-owner-question',
@@ -40,12 +41,15 @@ export class QuizOwnerQuestionComponent implements OnInit {
       console.debug("new question betöltése")
       this.question=question;
       this.timeIsOver = false;
+      this.stats = [0,0,0,0];
+      this.drawChart();
       this.startTimer();
     });
     this.letters = ['A', 'B', 'C', 'D'];
     this.stats = [0,0,0,0];
-    this.gameService.currentQuestionStat.subscribe((stats :number[]) => {
-      this.stats=stats;
+    this.gameService.currentQuestionStat.subscribe((stat :CurrentQuestionStat) => {
+      this.stats=stat.stats;
+      this.drawChart();
     })
     this.startTimer();
     this.drawChart();
@@ -77,10 +81,10 @@ export class QuizOwnerQuestionComponent implements OnInit {
     this.chart = new Chart('canvas', {
       type: 'bar',
       data: {
-        labels: this.stats,
+        labels: this.letters,
         datasets: [
           {
-            data: [6,3,4,10],
+            data: this.stats,
             backgroundColor: [
               '#003F63',
               '#003F63',

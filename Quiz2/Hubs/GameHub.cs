@@ -108,6 +108,7 @@ namespace Quiz2.Hubs
         {
             userAnswerService.CreateUserAnswer(joinId, answerId, Context.UserIdentifier);
             var stats = userAnswerService.getCurrentQuestionStat(joinId);
+            Console.WriteLine(stats);
             Clients.Group(joinId + "Owner").SendAsync("currentQuestionStat", stats);
         }
         

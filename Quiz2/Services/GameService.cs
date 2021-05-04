@@ -44,7 +44,7 @@ namespace Quiz2.Services
         {
             return _context.Games.Where(g => g.JoinId == joinId)
                 .Include(game => game.CurrentQuestion)
-                .ThenInclude(question => question.Answers)
+                .ThenInclude(question => question.Answers.OrderBy(answer => answer.Id))
                 .FirstOrDefault();
         }
 

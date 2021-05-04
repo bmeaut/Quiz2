@@ -7,6 +7,6 @@ namespace Quiz2.Services
     public interface IUserAnswerService
     {
         public UserAnswer CreateUserAnswer(string joinId, int answerId, string applicationUserId);
-        public List<int> getCurrentQuestionStat(string joinId);
+        public CurrentQuestionStatDto getCurrentQuestionStat(string joinId);
     }
 }

@@ -48,15 +48,42 @@ namespace Quiz2.Services
             return null;
         }
 
-        public List<int> getCurrentQuestionStat(string joinId)
+        public CurrentQuestionStatDto getCurrentQuestionStat(string joinId)
         {
             var game = gameService.GetGameByJoinIdWithCurrentQuestion(joinId);
             var stats = _context.UserAnswers
-                .Where(userAnswer => game.CurrentQuestion.Answers.Contains(userAnswer.Answer) )
-                .GroupBy(userAnswer => userAnswer.Answer)
-                .Select(g =>  g.Count() )
+                .Where(userAnswer => userAnswer.GameId == game.Id)
+                .Include(userAnswer => userAnswer.Answer)
+                .Where(userAnswer => game.CurrentQuestion.Answers.Contains(userAnswer.Answer))
+                .GroupBy(userAnswer => userAnswer.AnswerId)
+                .OrderBy(g => g.Key)
+                .Select(g => new {AnswerId = g.Key, Count = g.Count()})
                 .ToList();
-            return stats;
+
+            var currentQuestionStatDto = new CurrentQuestionStatDto(){stats = new List<int>()};
+            game.CurrentQuestion.Answers.Sort((x, y) => x.Id.CompareTo(y.Id));
+                
+            foreach (var answer in game.CurrentQuestion.Answers)
+            {
+
+                var find = false;
+                foreach (var stat in stats)
+                {
+                    if (stat.AnswerId == answer.Id)
+                    {
+                        find = true;
+                        currentQuestionStatDto.stats.Add(stat.Count);
+                    }
+                }
+
+                if (!find)
+                {
+                    currentQuestionStatDto.stats.Add(0);
+                }
+               
+            }
+
+            return currentQuestionStatDto;
         }
     }
 }
