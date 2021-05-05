@@ -1,0 +1,18 @@
+<div class="question-header">
+    <span class="rank">Helyezés: 10</span>
+    <span class="question">{{ question.text }}</span>
+    <span class="score">Pontszám: 10</span>
+</div>
+<div class="answer" *ngFor="let answer of question.answers; let i = index" [ngClass]="{'correct-answer': answer.correct === true, 'incorrect-answer': answer.correct === false}">
+    <div class="center">
+        <span class="letter">{{ letters[i] }}</span>
+        <span class="answer-text">{{ answer.text }}</span>
+    </div>
+    <label class="switch">
+            <input type="checkbox" [(ngModel)]="answersSubmittedByThePlayer[i].correct" disabled="disabled">
+            <span class="slider round"></span>
+    </label>
+</div>
+<div class="chart-container">
+    <canvas id="canvas"></canvas>
+</div>
