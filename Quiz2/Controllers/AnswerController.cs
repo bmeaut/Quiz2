@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Quiz2.Data;
 using Quiz2.DTO;
+using Quiz2.Helper;
 using Quiz2.Models;
 using Quiz2.Services;
 
@@ -13,10 +14,14 @@ namespace Quiz2.Controllers
     public class AnswerController: ControllerBase
     {
         private readonly IAnswerService answerService;
+        private readonly IQuizService quizService;
+        private readonly IQuestionService questionService;
 
-        public AnswerController(IAnswerService answerService)
+        public AnswerController(IAnswerService answerService, IQuizService quizService, IQuestionService questionService)
         {
             this.answerService = answerService;
+            this.quizService = quizService;
+            this.questionService = questionService;
         }
 
         // GET: api/Answer/5
@@ -30,7 +35,10 @@ namespace Quiz2.Controllers
         [HttpDelete("{answerId}")]
         public IActionResult DeleteAnswer(int answerId)
         {
-            answerService.DeleteAnswer(answerId);
+            if (UserIdCheck(answerId))
+            {
+                answerService.DeleteAnswer(answerId);
+            }
             return NoContent();
         }
 
@@ -40,7 +48,13 @@ namespace Quiz2.Controllers
         {
             return answerService.CreateAnswer(createAnswerDto);
         }
-        
+        private bool UserIdCheck(int answerId)
+        {
+            var answer = answerService.GetAnswer(answerId);
+            var question = questionService.GetQuestion(answer.QuestionId);
+            var quiz = quizService.GetQuiz(question.QuizId);
+            return quiz.Owner.Id == HttpContext.User.GetUserId();
+        }
 
     }
 }
