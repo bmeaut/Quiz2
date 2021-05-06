@@ -72,8 +72,9 @@ namespace Quiz2.Hubs
                 gameService.Save();
                 Clients.Group(game.JoinId+"Owner").SendAsync("startedOwner",  game.CurrentQuestion);
                 Clients.Group(game.JoinId).SendAsync("started",  game.CurrentQuestion);
-                EndingQuestion(game);
-                //Task.Run(() => EndingQuestion(game) );
+                //EndingQuestion(game);
+                Task task = Task.Run(() => EndingQuestion(game) );
+                task.Wait();
             }
             catch(Exception e)
             {
@@ -94,8 +95,9 @@ namespace Quiz2.Hubs
                 {
                     Clients.Group(game.JoinId + "Owner").SendAsync("newQuestionOwner", game.CurrentQuestion);
                     Clients.Group(game.JoinId).SendAsync("newQuestion", game.CurrentQuestion);
-                    EndingQuestion(game);
-                    //Task.Run(() => EndingQuestion(game) );
+                    //EndingQuestion(game);
+                    Task task = Task.Run(() => EndingQuestion(game) );
+                    task.Wait();
                 }
                 else
                 {
