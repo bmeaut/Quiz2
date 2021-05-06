@@ -37,7 +37,7 @@ export class QuizOwnerQuestionComponent implements OnInit {
   constructor(public gameService: GamesService) { }
 
   ngOnInit() {
-    this.gameService.newQuestion.subscribe( (question: Question) => {
+    this.gameService.newQuestionOwner.subscribe( (question: Question) => {
       console.debug("new question betöltése")
       this.question=question;
       this.timeIsOver = false;

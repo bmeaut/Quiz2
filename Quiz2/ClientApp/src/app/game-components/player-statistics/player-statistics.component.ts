@@ -68,6 +68,7 @@ export class PlayerStatisticsComponent implements OnInit {
   }];
 
   letters: string[];
+  stats: number[];
 
   constructor() { }
 
@@ -80,10 +81,10 @@ export class PlayerStatisticsComponent implements OnInit {
     this.chart = new Chart('canvas', {
       type: 'doughnut',
       data: {
-        labels: ['A','B','C','D'],
+        labels: this.letters,
         datasets: [
           {
-            data: [6,3,4,10],
+            data: this.stats,
             backgroundColor: [
               '#D9D9D9',
               '#353D40',

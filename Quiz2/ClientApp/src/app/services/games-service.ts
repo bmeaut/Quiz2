@@ -20,7 +20,8 @@ export class GamesService {
   public gameStartedOwner = new EventEmitter<Question>();
   public gameStarted = new EventEmitter<Question>();
   public newQuestion = new EventEmitter<Question>();
-  public endQuestion = new EventEmitter();
+  public newQuestionOwner = new EventEmitter<Question>();
+  public endQuestion = new EventEmitter<CurrentQuestionStat>();
   public endGame = new EventEmitter();
   public newPlayer = new EventEmitter<User[]>();
   public currentQuestionStat = new EventEmitter<CurrentQuestionStat>();
@@ -69,8 +70,12 @@ export class GamesService {
         this.newQuestion.emit(question)
         console.debug("newQuestion");
       });
-      this.connection.on("endQuestion", () => {
-        this.endQuestion.emit()
+      this.connection.on("newQuestionOwner", (question :Question) => {
+        this.newQuestionOwner.emit(question)
+        console.debug("newQuestion");
+      });
+      this.connection.on("endQuestion", (stat :CurrentQuestionStat) => {
+        this.endQuestion.emit(stat)
         console.debug("endQuestion");
       });
       this.connection.on("endGame", () => {

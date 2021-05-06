@@ -6,6 +6,8 @@ import { QuizOwnerQuestionComponent } from '../quiz-owner-question/quiz-owner-qu
 import { QuizQuestionComponent } from '../quiz-question/quiz-question.component';
 import {GamesService} from "../../services/games-service";
 import {Question} from "../../question";
+import {PlayerStatisticsComponent} from "../player-statistics/player-statistics.component";
+import {CurrentQuestionStat} from "../../currentQuestionStat";
 
 @Component({
   selector: 'app-quiz-game',
@@ -16,6 +18,7 @@ export class QuizGameComponent implements OnInit {
 
   @ViewChild(PlaceholderDirective, {static: true}) gameHost: PlaceholderDirective;
 
+  private question: Question;
   constructor(private cfr: ComponentFactoryResolver, public gameService: GamesService) { }
 
   ngOnInit() {
@@ -35,6 +38,16 @@ export class QuizGameComponent implements OnInit {
     this.gameService.gameStarted.subscribe( (question: Question) => {
       console.debug("question betöltése")
       this.loadQuizQuestionComponent(question);
+      this.question= question;
+    });
+    this.gameService.newQuestion.subscribe( (question: Question) => {
+      console.debug("question betöltése")
+      this.loadQuizQuestionComponent(question);
+      this.question= question;
+    });
+    this.gameService.endQuestion.subscribe( (stat :CurrentQuestionStat) => {
+      console.debug("player statistics betöltése")
+      this.loadPlayerStatisticsComponent(stat);
     });
     console.debug("ngOnInit vége")
   }
@@ -74,6 +87,15 @@ export class QuizGameComponent implements OnInit {
     const hostViewContainerRef = this.gameHost.viewContainerRef;
     hostViewContainerRef.clear();
     hostViewContainerRef.createComponent(quizOwnerLobbyComponentFactory);
+  }
+
+  loadPlayerStatisticsComponent(stat :CurrentQuestionStat) {
+    const playerStatisticsComponentFactory = this.cfr.resolveComponentFactory(PlayerStatisticsComponent);
+    const hostViewContainerRef = this.gameHost.viewContainerRef;
+    hostViewContainerRef.clear();
+    const playerStatisticsComponent = <PlayerStatisticsComponent>hostViewContainerRef.createComponent(playerStatisticsComponentFactory).instance;
+    playerStatisticsComponent.stats = stat.stats;
+    playerStatisticsComponent.question = this.question;
   }
 
 }

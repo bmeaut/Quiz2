@@ -1,7 +1,7 @@
 <div class="question-header">
     <span class="rank">Helyezés: 10</span>
     <span class="question">{{ question.text }}</span>
-    <span class="score">Pontszám: 10</span>
+    <span class="score">Pontszám: {{question.points}}</span>
 </div>
 <div class="answer" *ngFor="let answer of question.answers; let i = index" [ngClass]="{'correct-answer': answer.correct === true, 'incorrect-answer': answer.correct === false}">
     <div class="center">

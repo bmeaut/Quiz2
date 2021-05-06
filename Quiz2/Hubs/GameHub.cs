@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using Quiz2.Data;
+using Quiz2.DTO;
 using Quiz2.Models;
 using Quiz2.Services;
 
@@ -91,7 +92,7 @@ namespace Quiz2.Hubs
                 gameService.SetNextQuestion(game);
                 if (game.CurrentQuestion != null)
                 {
-                    Clients.Group(game.JoinId + "Owner").SendAsync("newQuestion", game.CurrentQuestion);
+                    Clients.Group(game.JoinId + "Owner").SendAsync("newQuestionOwner", game.CurrentQuestion);
                     Clients.Group(game.JoinId).SendAsync("newQuestion", game.CurrentQuestion);
                     EndingQuestion(game);
                     //Task.Run(() => EndingQuestion(game) );
@@ -108,7 +109,6 @@ namespace Quiz2.Hubs
         {
             userAnswerService.CreateUserAnswer(joinId, answerId, Context.UserIdentifier);
             var stats = userAnswerService.getCurrentQuestionStat(joinId);
-            Console.WriteLine(stats);
             Clients.Group(joinId + "Owner").SendAsync("currentQuestionStat", stats);
         }
         
@@ -124,10 +124,20 @@ namespace Quiz2.Hubs
             Console.WriteLine("slepp előtt");
             Task.Delay(game.CurrentQuestion.SecondsToAnswer * 1000).Wait();
             Console.WriteLine("slepp után");
-            Clients.Group(game.JoinId+"Owner").SendAsync("endQuestion");
-            Clients.Group(game.JoinId).SendAsync("endQuestion");
+            var stats = userAnswerService.getCurrentQuestionStat(game.JoinId);
+           /* PlayerStatisticDto playerStatisticDto = new PlayerStatisticDto()
+            {Id = game.CurrentQuestion.Id,
+                Text = game.CurrentQuestion.Text,
+                Points = game.CurrentQuestion.Points,
+                Stats = stats.stats,
+                
+                
+            };
+            playerStatisticDto.Stats = stats.stats;*/
+            Clients.Group(game.JoinId+"Owner").SendAsync("endQuestionOwner");
+            Clients.Group(game.JoinId).SendAsync("endQuestion", stats);
             Console.WriteLine("NextQuestion előtt");
-            NextQuestion(game.JoinId);
+            //NextQuestion(game.JoinId);
             Console.WriteLine("függvény végén");
         }
     }
