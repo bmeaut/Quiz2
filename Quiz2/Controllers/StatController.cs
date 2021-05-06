@@ -34,5 +34,13 @@ namespace Quiz2.Controllers
         {
             return statService.GetOwnedGameHistory(HttpContext.User.GetUserId());
         }
+        
+        //GET: api/stat/GetUserPointsInGame
+        [Route("GetUserPointsInGame")]
+        [HttpGet]
+        public ActionResult<int> GetUserPointsInGame(int gameId, string userId)
+        {
+            return statService.GetUserPointsInGame(gameId, userId);
+        }
     }
 }

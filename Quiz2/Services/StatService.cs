@@ -21,30 +21,28 @@ namespace Quiz2.Services
         public int GetNumberOfUserAnswers(int gameId, int answerId)
         {
             return _context.UserAnswers
-                .Include(userAnswer => userAnswer.Game)
-                .Include(userAnswer => userAnswer.Answer)
-                .Where(userAnswer => userAnswer.Game.Id == gameId)
-                .Count(userAnswer => userAnswer.Answer.Id == answerId);
+                .Where(userAnswer => userAnswer.GameId == gameId)
+                .Count(userAnswer => userAnswer.AnswerId == answerId);
         }
 
         public List<Game> GetOwnedGameHistory(string ownerId)
         {
             return _context.Games
                 .Include(game => game.Owner)
-                .Include(game => game.Status)
                 .Include(game => game.Quiz)
                 .Include(game => game.JoinedUsers)
                 .Where(game => game.Owner.Id == ownerId)
                 .ToList();
         }
-/*
         public int GetUserPointsInGame(int gameId, string userId)
         {
-            return _context.Games
-                .Include(game => game.JoinedUsers)
-                .Where(game => game.Id == gameId && game.JoinedUsers.FirstOrDefault(user => user.Id == userId))
-
+            return _context.UserAnswers
+                .Where(userAnswer => userAnswer.GameId == gameId && userAnswer.ApplicationUserId == userId)
+                .Include(userAnswer => userAnswer.Answer)
+                .ThenInclude(answer => answer.Question)
+                .Where(userAnswer => userAnswer.Answer.Correct)
+                .Sum(userAnswer => userAnswer.Answer.Question.Points);
         }
-*/
+
     }
 }
