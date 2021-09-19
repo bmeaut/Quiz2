@@ -6,6 +6,7 @@ import {AuthorizeService} from "../../api-authorization/authorize.service";
 import {async} from "@angular/core/testing";
 import {User} from "../user";
 import {CurrentQuestionStat} from "../currentQuestionStat";
+import {Answers} from "../answers";
 
 @Injectable({
   providedIn: 'root',
@@ -115,8 +116,8 @@ export class GamesService {
     console.debug("startGame");
   }
 
-  sendAnswer(answerId: number){
-    this.connection.send("SendAnswer",  this.joinId, answerId);
+  sendAnswer(answers: Answers){
+    this.connection.send("SendAnswer", this.joinId, answers);
     console.debug("sendAnswer "+this.joinId);
   }
 

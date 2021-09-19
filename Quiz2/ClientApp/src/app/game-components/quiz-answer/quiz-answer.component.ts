@@ -9,7 +9,7 @@ import {GamesService} from "../../services/games-service";
 })
 export class QuizAnswerComponent implements OnInit {
 
-  @Input() answer: Answer;
+  @Input()  answer: Answer;
   @Input() timeIsOver: boolean;
   @Input() disableAnswer: boolean;
   @Input() index: number;
@@ -25,14 +25,4 @@ export class QuizAnswerComponent implements OnInit {
     this.letters = ['A', 'B', 'C', 'D'];
   }
 
-  answerSelected(): void {
-    this.gameService.sendAnswer(this.answer.id)
-    //this.answerHasBeenSelected.emit(true);
-
-  }
-  sendAnswerToParentComponent(isChecked: boolean): void {
-
-    this.answer.correct = isChecked;
-    this.answerIsChecked.emit(this.answer);
-  }
 }

@@ -14,13 +14,12 @@
       >Válasz mentése</button>
   </div>
   <div class="answers-wrapper">
-    <app-quiz-answer 
-    *ngFor="let answer of question.answers; let i = index" 
+    <app-quiz-answer
+    *ngFor="let answer of question.answers; let i = index"
     [answer]="answer"
     [index]="i"
     [timeIsOver]="timeIsOver"
     [disableAnswer]="disableAnswers"
-    (answerIsChecked)="answerIsCheckedHandler($event)"
   >
   </app-quiz-answer>
   </div>

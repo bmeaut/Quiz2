@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -74,7 +75,7 @@ namespace Quiz2.Hubs
                 Clients.Group(game.JoinId).SendAsync("started",  game.CurrentQuestion);
                 //EndingQuestion(game);
                 Task task = Task.Run(() => EndingQuestion(game) );
-                task.Wait();
+                task.Wait(); 
             }
             catch(Exception e)
             {
@@ -107,9 +108,13 @@ namespace Quiz2.Hubs
             }
         }
 
-        public void SendAnswer(string joinId, int answerId)
+        public void SendAnswer(string joinId, SendAnswerDto answers)
         {
-            userAnswerService.CreateUserAnswer(joinId, answerId, Context.UserIdentifier);
+         Console.WriteLine(answers.Ids.Count);
+            foreach (var answerId in answers.Ids)
+            {
+                userAnswerService.CreateUserAnswer(joinId, answerId, Context.UserIdentifier);
+            }
             var stats = userAnswerService.getCurrentQuestionStat(joinId);
             Clients.Group(joinId + "Owner").SendAsync("currentQuestionStat", stats);
         }
