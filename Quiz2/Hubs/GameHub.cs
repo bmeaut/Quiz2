@@ -141,8 +141,12 @@ namespace Quiz2.Hubs
                 
             };
             playerStatisticDto.Stats = stats.stats;*/
+           foreach (var user in  game.JoinedUsers)
+           {
+               Clients.User(user.Id).SendAsync("endQuestion", stats);
+           }
             Clients.Group(game.JoinId+"Owner").SendAsync("endQuestionOwner");
-            Clients.Group(game.JoinId).SendAsync("endQuestion", stats);
+        //    Clients.Group(game.JoinId).SendAsync("endQuestion", stats);
             Console.WriteLine("NextQuestion előtt");
             //NextQuestion(game.JoinId);
             Console.WriteLine("függvény végén");

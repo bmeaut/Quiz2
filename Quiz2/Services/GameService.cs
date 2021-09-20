@@ -35,6 +35,7 @@ namespace Quiz2.Services
         {
             return _context.Games.Where(g => g.JoinId == joinId)
                 .Include(game => game.CurrentQuestion)
+                .Include(game => game.JoinedUsers)
                 .Include(game => game.Quiz.Questions.OrderBy(question => question.Position))
                 .ThenInclude(question => question.Answers)
                 .FirstOrDefault();
@@ -65,7 +66,6 @@ namespace Quiz2.Services
                 game.Status = GameStatuses.Finished;
                 _context.SaveChanges();
             }
-
 
         }
 
