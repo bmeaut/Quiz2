@@ -115,8 +115,12 @@ namespace Quiz2.Hubs
             {
                 userAnswerService.CreateUserAnswer(joinId, answerId, Context.UserIdentifier);
             }
-            var stats = userAnswerService.getCurrentQuestionStat(joinId);
-            Clients.Group(joinId + "Owner").SendAsync("currentQuestionStat", stats);
+            var stat = new CurrentQuestionStatDto()
+            {
+                Stats =  userAnswerService.getCurrentQuestionStat(joinId),
+              
+            };
+            Clients.Group(joinId + "Owner").SendAsync("currentQuestionStat", stat);
         }
         
         public void CreateGame(int quizId)
@@ -132,6 +136,10 @@ namespace Quiz2.Hubs
             Task.Delay(game.CurrentQuestion.SecondsToAnswer * 1000).Wait();
             Console.WriteLine("slepp után");
             var stats = userAnswerService.getCurrentQuestionStat(game.JoinId);
+            Console.WriteLine(Context.UserIdentifier);
+
+           
+
            /* PlayerStatisticDto playerStatisticDto = new PlayerStatisticDto()
             {Id = game.CurrentQuestion.Id,
                 Text = game.CurrentQuestion.Text,
@@ -141,9 +149,15 @@ namespace Quiz2.Hubs
                 
             };
             playerStatisticDto.Stats = stats.stats;*/
+
            foreach (var user in  game.JoinedUsers)
            {
-               Clients.User(user.Id).SendAsync("endQuestion", stats);
+               var currentQuestionStatDto = new CurrentQuestionStatDto()
+               {
+                   Stats = stats,
+                   Point = userAnswerService.getUserPoint(game.JoinId, user.Id)
+               };
+               Clients.User(user.Id).SendAsync("endQuestion", currentQuestionStatDto);
            }
             Clients.Group(game.JoinId+"Owner").SendAsync("endQuestionOwner");
         //    Clients.Group(game.JoinId).SendAsync("endQuestion", stats);

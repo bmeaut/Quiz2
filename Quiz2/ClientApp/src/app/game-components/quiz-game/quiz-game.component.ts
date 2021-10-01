@@ -94,7 +94,7 @@ export class QuizGameComponent implements OnInit {
     const hostViewContainerRef = this.gameHost.viewContainerRef;
     hostViewContainerRef.clear();
     const playerStatisticsComponent = <PlayerStatisticsComponent>hostViewContainerRef.createComponent(playerStatisticsComponentFactory).instance;
-    playerStatisticsComponent.stats = stat.stats;
+    playerStatisticsComponent.stat = stat;
     playerStatisticsComponent.question = this.question;
   }
 

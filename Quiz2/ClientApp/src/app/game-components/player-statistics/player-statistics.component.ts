@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { Question } from 'src/app/question';
+import {CurrentQuestionStat} from "../../currentQuestionStat";
 
 @Component({
   selector: 'app-player-statistics',
@@ -68,7 +69,9 @@ export class PlayerStatisticsComponent implements OnInit {
   }];
 
   letters: string[];
-  stats: number[];
+
+  stat: CurrentQuestionStat;
+
 
   constructor() { }
 
@@ -84,7 +87,7 @@ export class PlayerStatisticsComponent implements OnInit {
         labels: this.letters,
         datasets: [
           {
-            data: this.stats,
+            data: this.stat.stats,
             backgroundColor: [
               '#D9D9D9',
               '#353D40',

@@ -77,6 +77,7 @@ export class GamesService {
       });
       this.connection.on("endQuestion", (stat :CurrentQuestionStat) => {
         this.endQuestion.emit(stat)
+        console.debug(stat);
         console.debug("endQuestion");
       });
       this.connection.on("endGame", () => {
