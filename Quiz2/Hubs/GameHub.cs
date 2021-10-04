@@ -14,6 +14,8 @@ using Quiz2.Services;
 
 namespace Quiz2.Hubs
 {
+    public delegate void Notify(string joinId);
+    
     [Authorize]
     public class GameHub : Hub {
         private readonly IGameService gameService;
@@ -21,12 +23,14 @@ namespace Quiz2.Hubs
         private readonly IApplicationUserService applicationUserService;
         private readonly IUserAnswerService userAnswerService;
 
+        private event Notify EndQuestion;
         public GameHub(IGameService gameService, IAnswerService answerService, IApplicationUserService applicationUserService, IUserAnswerService userAnswerService)
         {
             this.gameService = gameService;
             this.answerService = answerService;
             this.applicationUserService = applicationUserService;
             this.userAnswerService = userAnswerService;
+            EndQuestion += NextQuestion;
         }
         public async Task GroupTest() {
             await Clients.Groups("group1").SendAsync("groupTestAnswer","gruop1 jóóóó");
@@ -164,6 +168,8 @@ namespace Quiz2.Hubs
             Console.WriteLine("NextQuestion előtt");
             //NextQuestion(game.JoinId);
             Console.WriteLine("függvény végén");
+            Task.Delay(3 * 1000).Wait();
+            EndQuestion?.Invoke(game.JoinId);
         }
     }
 }
