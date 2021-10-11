@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -6,9 +7,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Quiz2.Data;
 using Quiz2.DTO;
+using Quiz2.Helper;
 using Quiz2.Models;
 using Quiz2.Services;
 
@@ -22,21 +25,23 @@ namespace Quiz2.Hubs
         private readonly IAnswerService answerService;
         private readonly IApplicationUserService applicationUserService;
         private readonly IUserAnswerService userAnswerService;
-
-        private event Notify EndQuestion;
-        public GameHub(IGameService gameService, IAnswerService answerService, IApplicationUserService applicationUserService, IUserAnswerService userAnswerService)
+        private readonly IServiceScopeFactory serviceScopeFactory;
+        public  QuestionTimer QuestionTimer = new QuestionTimer(1000);
+     public GameHub(
+         IGameService gameService, 
+         IAnswerService answerService, 
+         IApplicationUserService applicationUserService, 
+         IUserAnswerService userAnswerService,
+         IServiceScopeFactory serviceScopeFactory
+     )
         {
             this.gameService = gameService;
             this.answerService = answerService;
             this.applicationUserService = applicationUserService;
             this.userAnswerService = userAnswerService;
-            EndQuestion += NextQuestion;
+            this.serviceScopeFactory = serviceScopeFactory;
         }
-        public async Task GroupTest() {
-            await Clients.Groups("group1").SendAsync("groupTestAnswer","gruop1 jóóóó");
-            await Clients.Group("group2").SendAsync("groupTestAnswer","gruop2 végre");
 
-        }
         public void JoinGame(string joinId)
         {
             try
@@ -77,9 +82,15 @@ namespace Quiz2.Hubs
                 gameService.Save();
                 Clients.Group(game.JoinId+"Owner").SendAsync("startedOwner",  game.CurrentQuestion);
                 Clients.Group(game.JoinId).SendAsync("started",  game.CurrentQuestion);
-                //EndingQuestion(game);
-                Task task = Task.Run(() => EndingQuestion(game) );
-                task.Wait(); 
+                QuestionTimer questionTimer = new QuestionTimer(game.CurrentQuestion.SecondsToAnswer * 1000);
+             //   QuestionTimer = QuestionTimer.Timers.GetOrAdd(joinId, QuestionTimer);
+                 questionTimer.callerContext = Context;
+                 questionTimer.hubCallerClients = Clients;
+                 questionTimer.AutoReset = false;
+                 questionTimer.Elapsed +=  (sender, e) => EndingQuestion(sender, game);
+                 questionTimer.Interval = game.CurrentQuestion.SecondsToAnswer * 1000;
+                 questionTimer.Enabled = true;
+          
             }
             catch(Exception e)
             {
@@ -101,8 +112,15 @@ namespace Quiz2.Hubs
                     Clients.Group(game.JoinId + "Owner").SendAsync("newQuestionOwner", game.CurrentQuestion);
                     Clients.Group(game.JoinId).SendAsync("newQuestion", game.CurrentQuestion);
                     //EndingQuestion(game);
-                    Task task = Task.Run(() => EndingQuestion(game) );
-                    task.Wait();
+                    QuestionTimer questionTimer = new QuestionTimer(game.CurrentQuestion.SecondsToAnswer * 1000);
+                    //QuestionTimer = QuestionTimer.Timers.GetOrAdd(joinId, QuestionTimer);
+                    questionTimer.callerContext = Context;
+                    questionTimer.hubCallerClients = Clients;
+                    questionTimer.AutoReset = false;
+                    questionTimer.Elapsed +=  (sender, e) => EndingQuestion(sender, game);
+                    questionTimer.Interval = game.CurrentQuestion.SecondsToAnswer * 1000;
+                    questionTimer.Enabled = true;
+                    //task.Wait();
                 }
                 else
                 {
@@ -110,6 +128,12 @@ namespace Quiz2.Hubs
                     Clients.Group(game.JoinId).SendAsync("endGame");
                 }
             }
+        }
+
+        public void Proba(Game game)
+        {
+            Console.WriteLine("A PRÓBA LEFUTOTT  "+ game.JoinId);
+
         }
 
         public void SendAnswer(string joinId, SendAnswerDto answers)
@@ -134,42 +158,40 @@ namespace Quiz2.Hubs
             Clients.Caller.SendAsync("ownerJoined", game.JoinId);
         }
 
-        private void EndingQuestion(Game game)
+        public void EndingQuestion(object sender, Game game)
         {
-            Console.WriteLine("slepp előtt");
-            Task.Delay(game.CurrentQuestion.SecondsToAnswer * 1000).Wait();
-            Console.WriteLine("slepp után");
-            var stats = userAnswerService.getCurrentQuestionStat(game.JoinId);
-            Console.WriteLine(Context.UserIdentifier);
-
-           
-
-           /* PlayerStatisticDto playerStatisticDto = new PlayerStatisticDto()
-            {Id = game.CurrentQuestion.Id,
-                Text = game.CurrentQuestion.Text,
-                Points = game.CurrentQuestion.Points,
-                Stats = stats.stats,
+            using (var scope = serviceScopeFactory.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetService<ApplicationDbContext>();
                 
-                
-            };
-            playerStatisticDto.Stats = stats.stats;*/
+                var QuestionTimer = (QuestionTimer) sender;
+                Console.WriteLine("cast után " + game.JoinId);
+                List<int> stats = null;
+                try
+                {
+                    stats = userAnswerService.getCurrentQuestionStat(game.JoinId, dbContext);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
 
-           foreach (var user in  game.JoinedUsers)
-           {
-               var currentQuestionStatDto = new CurrentQuestionStatDto()
-               {
-                   Stats = stats,
-                   Point = userAnswerService.getUserPoint(game.JoinId, user.Id)
-               };
-               Clients.User(user.Id).SendAsync("endQuestion", currentQuestionStatDto);
-           }
-            Clients.Group(game.JoinId+"Owner").SendAsync("endQuestionOwner");
-        //    Clients.Group(game.JoinId).SendAsync("endQuestion", stats);
-            Console.WriteLine("NextQuestion előtt");
-            //NextQuestion(game.JoinId);
-            Console.WriteLine("függvény végén");
-            Task.Delay(3 * 1000).Wait();
-            EndQuestion?.Invoke(game.JoinId);
+                }
+                Console.WriteLine("stat után ");
+                foreach (var user in game.JoinedUsers)
+                {
+                    Console.WriteLine("foreach ben ");
+                    var currentQuestionStatDto = new CurrentQuestionStatDto()
+                    {
+                        Stats = stats,
+                        Point = userAnswerService.getUserPoint(game.JoinId, user.Id, dbContext)
+                    };
+                     QuestionTimer.hubCallerClients.User(user.Id).SendAsync("endQuestion", currentQuestionStatDto);
+                }
+
+                QuestionTimer.hubCallerClients.Group(game.JoinId + "Owner").SendAsync("endQuestionOwner");
+                Console.WriteLine("függvény végén");
+
+            }
         }
     }
 }

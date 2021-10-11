@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Quiz2.Data;
 using Quiz2.DTO;
 using Quiz2.Models;
@@ -15,14 +17,21 @@ namespace Quiz2.Services
         private readonly IGameService gameService;
         private readonly IAnswerService answerService;
         private readonly IApplicationUserService applicationUserService;
+        private readonly IServiceScopeFactory serviceScopeFactory;
 
-        public UserAnswerService(ApplicationDbContext context, IGameService gameService, IAnswerService answerService,
-            IApplicationUserService applicationUserService)
+        public UserAnswerService(
+            ApplicationDbContext context, 
+            IGameService gameService, 
+            IAnswerService answerService,
+            IApplicationUserService applicationUserService,
+            IServiceScopeFactory serviceScopeFactory
+            )
         {
             _context = context;
             this.gameService = gameService;
             this.answerService = answerService;
             this.applicationUserService = applicationUserService;
+            this.serviceScopeFactory = serviceScopeFactory;
         }
 
         public UserAnswer CreateUserAnswer(string joinId, int answerId, string applicationUserId)
@@ -52,10 +61,15 @@ namespace Quiz2.Services
             return null;
         }
 
-        public List<int> getCurrentQuestionStat(string joinId)
+        public List<int> getCurrentQuestionStat(string joinId, ApplicationDbContext applicationDbContext = null)
         {
-            var game = gameService.GetGameByJoinIdWithCurrentQuestion(joinId);
-            var stats = _context.UserAnswers
+            if (applicationDbContext == null)
+            {
+                applicationDbContext = _context;
+            }
+
+            var game = gameService.GetGameByJoinIdWithCurrentQuestion(joinId, applicationDbContext);
+            var stats = applicationDbContext.UserAnswers
                 .Where(userAnswer => userAnswer.GameId == game.Id)
                 .Include(userAnswer => userAnswer.Answer)
                 .Where(userAnswer => game.CurrentQuestion.Answers.Contains(userAnswer.Answer))
@@ -87,21 +101,24 @@ namespace Quiz2.Services
                 }
 
             }
-
             return counts;
         }
 
-        public int getUserPoint(string joinId, string applicationUserId)
+        public int getUserPoint(string joinId, string applicationUserId, ApplicationDbContext applicationDbContext = null)
         {
+            if (applicationDbContext == null)
+            {
+                applicationDbContext = _context;
+            }
             var game = gameService.GetGameByJoinId(joinId);
-            return _context.UserAnswers
+            return applicationDbContext.UserAnswers
                 .Where(userAnswer => userAnswer.GameId == game.Id)
                 .Where(userAnswer => userAnswer.ApplicationUserId == applicationUserId)
                 .Include(userAnswer => userAnswer.Answer)
                 .Include(userAnswer => userAnswer.Answer.Question)
                 .Where(userAnswer => userAnswer.Answer.Correct)
                 .Sum(userAnswer => userAnswer.Answer.Question.Points);
-
+            
         }
 
     }

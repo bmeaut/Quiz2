@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Quiz2.Data;
 using Quiz2.DTO;
 using Quiz2.Models;
@@ -15,20 +16,33 @@ namespace Quiz2.Services
         private readonly IApplicationUserService applicationUserService;
         private readonly IQuestionService questionService;
         private readonly IQuizService quizService;
+        private readonly IServiceScopeFactory serviceScopeFactory;
 
-        public GameService(IApplicationUserService applicationUserService, ApplicationDbContext context, IQuestionService questionService, IQuizService quizService)
+
+        public GameService(
+            IApplicationUserService applicationUserService, 
+            ApplicationDbContext context, 
+            IQuestionService questionService, 
+            IQuizService quizService,
+            IServiceScopeFactory serviceScopeFactory
+        )
         {
             _context = context;
             this.applicationUserService = applicationUserService;
             this.questionService = questionService;
             this.quizService = quizService;
+            this.serviceScopeFactory = serviceScopeFactory;
         }
 
         public Game GetGameByJoinId(string joinId)
         {
-            return _context.Games.Where(g => g.JoinId == joinId)
-                .Include(g => g.Owner)
-                .FirstOrDefault();
+            using (var scope = serviceScopeFactory.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetService<ApplicationDbContext>();
+                return dbContext.Games.Where(g => g.JoinId == joinId)
+                    .Include(g => g.Owner)
+                    .FirstOrDefault();
+            }
         }
         
         public Game GetGameWithQuestionsByJoinId(string joinId)
@@ -41,9 +55,14 @@ namespace Quiz2.Services
                 .FirstOrDefault();
         }
         
-        public Game GetGameByJoinIdWithCurrentQuestion(string joinId)
+        public Game GetGameByJoinIdWithCurrentQuestion(string joinId, ApplicationDbContext applicationDbContext = null)
         {
-            return _context.Games.Where(g => g.JoinId == joinId)
+            if (applicationDbContext == null)
+            {
+                applicationDbContext = _context;
+            }
+   
+            return applicationDbContext.Games.Where(g => g.JoinId == joinId)
                 .Include(game => game.CurrentQuestion)
                 .ThenInclude(question => question.Answers.OrderBy(answer => answer.Id))
                 .Include(game => game.JoinedUsers)
