@@ -16,33 +16,31 @@ namespace Quiz2.Services
         private readonly IApplicationUserService applicationUserService;
         private readonly IQuestionService questionService;
         private readonly IQuizService quizService;
-        private readonly IServiceScopeFactory serviceScopeFactory;
 
 
         public GameService(
             IApplicationUserService applicationUserService, 
             ApplicationDbContext context, 
             IQuestionService questionService, 
-            IQuizService quizService,
-            IServiceScopeFactory serviceScopeFactory
+            IQuizService quizService
         )
         {
             _context = context;
             this.applicationUserService = applicationUserService;
             this.questionService = questionService;
             this.quizService = quizService;
-            this.serviceScopeFactory = serviceScopeFactory;
         }
 
-        public Game GetGameByJoinId(string joinId)
+        public Game GetGameByJoinId(string joinId, ApplicationDbContext applicationDbContext = null)
         {
-            using (var scope = serviceScopeFactory.CreateScope())
+            if (applicationDbContext == null)
             {
-                var dbContext = scope.ServiceProvider.GetService<ApplicationDbContext>();
-                return dbContext.Games.Where(g => g.JoinId == joinId)
+                applicationDbContext = _context;
+            }
+            return applicationDbContext.Games.Where(g => g.JoinId == joinId)
                     .Include(g => g.Owner)
                     .FirstOrDefault();
-            }
+            
         }
         
         public Game GetGameWithQuestionsByJoinId(string joinId)

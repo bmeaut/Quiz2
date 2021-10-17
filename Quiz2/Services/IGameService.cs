@@ -7,7 +7,7 @@ namespace Quiz2.Services
 {
     public interface IGameService
     {
-        public Game GetGameByJoinId(string joinId);
+        public Game GetGameByJoinId(string joinId, ApplicationDbContext applicationDbContext = null);
         public Game GetGameWithQuestionsByJoinId(string joinId);
         public Game GetGameByJoinIdWithCurrentQuestion(string joinId, ApplicationDbContext applicationDbContext = null);
         public void SetNextQuestion(Game game);

@@ -43,8 +43,12 @@ label {
     word-break: break-all;
 }
 
-.correct-answer {
+.correct-marked-answer {
     border: 2px solid green;
+}
+
+.correct-answer {
+  border: 2px solid yellow;
 }
 
 .incorrect-answer {
@@ -73,7 +77,7 @@ label {
     width: 60px;
     height: 34px;
 }
-  
+
 .switch input {
     opacity: 0;
     width: 0;
@@ -90,7 +94,7 @@ label {
     background-color: red;
     transition: .4s;
 }
-  
+
 .slider:before {
     position: absolute;
     content: "";
@@ -101,24 +105,24 @@ label {
     background-color: white;
     transition: .4s;
 }
-  
+
 input:checked + .slider {
     background-color: green;
 }
-  
+
 input:focus + .slider {
     box-shadow: 0 0 1px green;
 }
-  
+
 input:checked + .slider:before {
     transform: translateX(26px);
 }
-  
+
 .slider.round {
     border-radius: 34px;
     cursor: context-menu;
 }
-  
+
 .slider.round:before {
     border-radius: 50%;
 }

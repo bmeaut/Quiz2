@@ -89,13 +89,14 @@ export class QuizGameComponent implements OnInit {
     hostViewContainerRef.createComponent(quizOwnerLobbyComponentFactory);
   }
 
-  loadPlayerStatisticsComponent(stat :CurrentQuestionStat) {
+  loadPlayerStatisticsComponent(currentQuestionStat :CurrentQuestionStat) {
     const playerStatisticsComponentFactory = this.cfr.resolveComponentFactory(PlayerStatisticsComponent);
     const hostViewContainerRef = this.gameHost.viewContainerRef;
     hostViewContainerRef.clear();
     const playerStatisticsComponent = <PlayerStatisticsComponent>hostViewContainerRef.createComponent(playerStatisticsComponentFactory).instance;
-    playerStatisticsComponent.stat = stat;
+    playerStatisticsComponent.currentQuestionStat = currentQuestionStat;
     playerStatisticsComponent.question = this.question;
+    playerStatisticsComponent.question.answers = currentQuestionStat.correctedAnswers;
   }
 
 }

@@ -70,7 +70,7 @@ export class PlayerStatisticsComponent implements OnInit {
 
   letters: string[];
 
-  stat: CurrentQuestionStat;
+  currentQuestionStat: CurrentQuestionStat;
 
 
   constructor() { }
@@ -87,7 +87,7 @@ export class PlayerStatisticsComponent implements OnInit {
         labels: this.letters,
         datasets: [
           {
-            data: this.stat.stats,
+            data: this.currentQuestionStat.stats,
             backgroundColor: [
               '#D9D9D9',
               '#353D40',

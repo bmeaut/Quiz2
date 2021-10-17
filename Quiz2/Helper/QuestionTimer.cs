@@ -7,7 +7,7 @@ namespace Quiz2.Helper
 {
     public class QuestionTimer : System.Timers.Timer
     {
-       // public static ConcurrentDictionary<string, QuestionTimer> Timers = new ConcurrentDictionary<string, QuestionTimer>();
+        public static ConcurrentDictionary<string, QuestionTimer> Timers = new ConcurrentDictionary<string, QuestionTimer>();
 
             public QuestionTimer(double interval)
                 : base(interval)

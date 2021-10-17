@@ -83,11 +83,11 @@ namespace Quiz2.Hubs
                 Clients.Group(game.JoinId+"Owner").SendAsync("startedOwner",  game.CurrentQuestion);
                 Clients.Group(game.JoinId).SendAsync("started",  game.CurrentQuestion);
                 QuestionTimer questionTimer = new QuestionTimer(game.CurrentQuestion.SecondsToAnswer * 1000);
-             //   QuestionTimer = QuestionTimer.Timers.GetOrAdd(joinId, QuestionTimer);
+                questionTimer = QuestionTimer.Timers.GetOrAdd(joinId, questionTimer);
                  questionTimer.callerContext = Context;
                  questionTimer.hubCallerClients = Clients;
                  questionTimer.AutoReset = false;
-                 questionTimer.Elapsed +=  (sender, e) => EndingQuestion(sender, game);
+                 questionTimer.Elapsed +=  (sender, e) => EndingQuestion(sender, game.JoinId);
                  questionTimer.Interval = game.CurrentQuestion.SecondsToAnswer * 1000;
                  questionTimer.Enabled = true;
           
@@ -113,11 +113,11 @@ namespace Quiz2.Hubs
                     Clients.Group(game.JoinId).SendAsync("newQuestion", game.CurrentQuestion);
                     //EndingQuestion(game);
                     QuestionTimer questionTimer = new QuestionTimer(game.CurrentQuestion.SecondsToAnswer * 1000);
-                    //QuestionTimer = QuestionTimer.Timers.GetOrAdd(joinId, QuestionTimer);
+                    questionTimer = QuestionTimer.Timers.GetOrAdd(joinId, questionTimer);
                     questionTimer.callerContext = Context;
                     questionTimer.hubCallerClients = Clients;
                     questionTimer.AutoReset = false;
-                    questionTimer.Elapsed +=  (sender, e) => EndingQuestion(sender, game);
+                    questionTimer.Elapsed +=  (sender, e) => EndingQuestion(sender, game.JoinId);
                     questionTimer.Interval = game.CurrentQuestion.SecondsToAnswer * 1000;
                     questionTimer.Enabled = true;
                     //task.Wait();
@@ -145,7 +145,7 @@ namespace Quiz2.Hubs
             }
             var stat = new CurrentQuestionStatDto()
             {
-                Stats =  userAnswerService.getCurrentQuestionStat(joinId),
+                Stats =  userAnswerService.GetCurrentQuestionStat(joinId),
               
             };
             Clients.Group(joinId + "Owner").SendAsync("currentQuestionStat", stat);
@@ -158,18 +158,19 @@ namespace Quiz2.Hubs
             Clients.Caller.SendAsync("ownerJoined", game.JoinId);
         }
 
-        public void EndingQuestion(object sender, Game game)
+        public void EndingQuestion(object sender, string joinId)
         {
             using (var scope = serviceScopeFactory.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetService<ApplicationDbContext>();
-                
+
+                var game = gameService.GetGameByJoinIdWithCurrentQuestion(joinId, dbContext);
                 var QuestionTimer = (QuestionTimer) sender;
                 Console.WriteLine("cast után " + game.JoinId);
                 List<int> stats = null;
                 try
                 {
-                    stats = userAnswerService.getCurrentQuestionStat(game.JoinId, dbContext);
+                    stats = userAnswerService.GetCurrentQuestionStat(game.JoinId, dbContext);
                 }
                 catch (Exception e)
                 {
@@ -180,11 +181,32 @@ namespace Quiz2.Hubs
                 foreach (var user in game.JoinedUsers)
                 {
                     Console.WriteLine("foreach ben ");
-                    var currentQuestionStatDto = new CurrentQuestionStatDto()
+                    var correctedAnswers = game.CurrentQuestion.Answers.Select(answer =>
+                        new CorrectedAnswerDto()
+                        {
+                            Id = answer.Id,
+                            Correct = answer.Correct,
+                            Text = answer.Text,
+                            Marked = userAnswerService.IsMarked(answer.Id, game.Id, user.Id, dbContext),
+                        }
+                    ).ToList();
+                    Console.WriteLine("tolist után");
+                    CurrentQuestionStatDto currentQuestionStatDto = null;
+                    try
                     {
-                        Stats = stats,
-                        Point = userAnswerService.getUserPoint(game.JoinId, user.Id, dbContext)
-                    };
+                        currentQuestionStatDto = new CurrentQuestionStatDto()
+                        {
+                            CorrectedAnswers = correctedAnswers,
+                            Stats = stats,
+                            Point = userAnswerService.GetUserPoint(game.JoinId, user.Id, dbContext)
+                        };
+                    } catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+
+                    }
+
+                    Console.WriteLine("new CurrentQuestionStatDto után");
                      QuestionTimer.hubCallerClients.User(user.Id).SendAsync("endQuestion", currentQuestionStatDto);
                 }
 
