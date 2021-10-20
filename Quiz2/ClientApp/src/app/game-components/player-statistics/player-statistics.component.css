@@ -44,15 +44,15 @@ label {
 }
 
 .correct-marked-answer {
-    border: 2px solid green;
+    border: 5px solid green;
 }
 
 .correct-answer {
-  border: 2px solid yellow;
+  border: 5px solid yellow;
 }
 
 .incorrect-answer {
-    border: 2px solid red;
+    border: 5px solid red;
 }
 
 .answer-text {

@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace Quiz2.DTO
+﻿namespace Quiz2.DTO
 {
     public class SendAnswerDto
     {
-        public List<int> Ids;
+        public int Id{ get; set; }
+        public string Text { get; set; }
     }
 }

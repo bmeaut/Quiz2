@@ -59,7 +59,7 @@ export class QuizQuestionComponent implements OnInit {
       }).map((answer) => answer.id)
     };
     console.debug(answers.ids);
-    this.gameService.sendAnswer(answers);
+    this.gameService.sendAnswers(answers);
     this.disableAnswers = true;
 
   }
