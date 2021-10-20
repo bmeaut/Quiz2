@@ -160,17 +160,23 @@ namespace Quiz2.Hubs
 
         public void SendAnswers(string joinId, SendAnswersDto answers)
         {
-         Console.WriteLine(answers.Ids.Count);
-            foreach (var answerId in answers.Ids)
-            {
-                userAnswerService.CreateUserAnswer(joinId, answerId, Context.UserIdentifier);
-            }
-            var stat = new CurrentQuestionStatDto()
-            {
-                Stats =  userAnswerService.GetCurrentQuestionStat(joinId),
-              
-            };
-            Clients.Group(joinId + "Owner").SendAsync("currentQuestionStat", stat);
+             Console.WriteLine(answers.Ids.Count);
+             var game = gameService.GetGameByJoinIdWithCurrentQuestion(joinId);
+             var timeOfSubmit = (DateTime.Now - game.CurrentQuestionStarted).TotalSeconds;
+
+             if (timeOfSubmit > game.CurrentQuestion.SecondsToAnswer)
+             {
+                 return;
+             }
+             foreach (var answerId in answers.Ids)
+             {
+                userAnswerService.CreateUserAnswer(joinId, answerId, Context.UserIdentifier, timeOfSubmit);
+             }
+             var stat = new CurrentQuestionStatDto()
+             {
+                 Stats =  userAnswerService.GetCurrentQuestionStat(joinId),
+             };
+             Clients.Group(joinId + "Owner").SendAsync("currentQuestionStat", stat);
         }
         
         public void CreateGame(int quizId)

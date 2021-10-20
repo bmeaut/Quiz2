@@ -7,7 +7,7 @@ namespace Quiz2.Services
 {
     public interface IUserAnswerService
     {
-        public UserAnswer CreateUserAnswer(string joinId, int answerId, string applicationUserId);
+        public UserAnswer CreateUserAnswer(string joinId, int answerId, string applicationUserId, double timeOfSubmit);
         public  List<int> GetCurrentQuestionStat(string joinId, ApplicationDbContext applicationDbContext = null);
         public int GetUserPoint(string joinId, string userId, ApplicationDbContext applicationDbContext = null);
 

@@ -31,7 +31,7 @@ namespace Quiz2.Services
             this.applicationUserService = applicationUserService;
         }
 
-        public UserAnswer CreateUserAnswer(string joinId, int answerId, string applicationUserId)
+        public UserAnswer CreateUserAnswer(string joinId, int answerId, string applicationUserId, double timeOfSubmit)
         {
             Console.WriteLine("joinId: " + joinId);
             Console.WriteLine("answerId: " + answerId);
@@ -43,27 +43,24 @@ namespace Quiz2.Services
             var user = applicationUserService.GetUser(applicationUserId);
             Console.WriteLine("user után");
 
-            if (game != null && answer != null && user != null)
+            if (game == null || answer == null || user == null)
             {
-                Console.WriteLine("if ben");
-                var userAnswer = new UserAnswer()
-                {
-                    Game = game,
-                    ApplicationUser = user,
-                    Answer = answer,
-                    TimeOfSubmit = (DateTime.Now - game.CurrentQuestionStarted).TotalSeconds
-                };
-                Console.WriteLine("new után");
-                _context.UserAnswers.Add(userAnswer);
-                Console.WriteLine("Add után");
-                _context.SaveChanges();
-                Console.WriteLine("SaveChanges után");
-                //Console.WriteLine("user válasza: " + userAnswer.ApplicationUser.Id);
-                return userAnswer;
+                return null;
             }
-
-            Console.WriteLine("null");
-            return null;
+            Console.WriteLine("if ben");
+            var userAnswer = new UserAnswer()
+            {
+                Game = game,
+                ApplicationUser = user,
+                Answer = answer,
+                TimeOfSubmit = timeOfSubmit
+            };
+            Console.WriteLine("new után");
+            _context.UserAnswers.Add(userAnswer);
+            Console.WriteLine("Add után");
+            _context.SaveChanges();
+            Console.WriteLine("SaveChanges után");
+            return userAnswer;
         }
 
         public List<int> GetCurrentQuestionStat(string joinId, ApplicationDbContext applicationDbContext = null)
