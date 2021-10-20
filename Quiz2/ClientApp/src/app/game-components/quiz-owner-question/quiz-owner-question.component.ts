@@ -33,6 +33,7 @@ export class QuizOwnerQuestionComponent implements OnInit {
 
   letters: string[];
   stats: number[];
+  disableNextQuestion = true;
 
   constructor(public gameService: GamesService) { }
 
@@ -45,6 +46,9 @@ export class QuizOwnerQuestionComponent implements OnInit {
       this.drawChart();
       this.startTimer();
     });
+    this.gameService.endQuestionOwner.subscribe(() =>{
+        this.disableNextQuestion = false;
+      })
     this.letters = ['A', 'B', 'C', 'D'];
     this.stats = [0,0,0,0];
     this.gameService.currentQuestionStat.subscribe((stat :CurrentQuestionStat) => {
@@ -103,6 +107,11 @@ export class QuizOwnerQuestionComponent implements OnInit {
         maintainAspectRatio:false
     }
     });
+  }
+
+  nextQuestion(){
+    this.gameService.nextQuestion();
+    this.disableNextQuestion = true;
   }
 
 }

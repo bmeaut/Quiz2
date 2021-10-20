@@ -6,7 +6,7 @@
         <div class="timer-wrapper">
             <span class="time">{{ displayTime }}</span>
         </div>
-        <button class="next-btn" (click)="gameService.nextQuestion()">Következő kérdés</button>
+        <button class="next-btn" (click)="nextQuestion()" [disabled]="disableNextQuestion">Következő kérdés</button>
         <div class="answer" [id]="'answer' + i" *ngFor="let answer of question.answers; let i = index">
             <div>
                 <span class="letter">{{ letters[i] }}</span>
