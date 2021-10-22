@@ -8,6 +8,9 @@ import {GamesService} from "../../services/games-service";
 import {Question} from "../../question";
 import {PlayerStatisticsComponent} from "../player-statistics/player-statistics.component";
 import {CurrentQuestionStat} from "../../currentQuestionStat";
+import {QuizFailedJoinComponent} from "../quiz-failed-join/quiz-failed-join.component";
+import {QuizWaitingComponent} from "../quiz-waiting/quiz-waiting.component";
+import {OwnerJoinedToStartedDto} from "../../ownerJoinedToStartedDto";
 
 @Component({
   selector: 'app-quiz-game',
@@ -49,6 +52,22 @@ export class QuizGameComponent implements OnInit {
       console.debug("player statistics betöltése")
       this.loadPlayerStatisticsComponent(stat);
     });
+    this.gameService.gameNotExist.subscribe( () => {
+      console.debug("QuizFailedJoinComponent betöltése")
+      this.loadQuizFailedJoinComponent("Nincs ilyen játék.");
+    });
+    this.gameService.gameFinished.subscribe( () => {
+      console.debug("QuizFailedJoinComponent betöltése")
+      this.loadQuizFailedJoinComponent("A játék már véget ért.");
+    });
+    this.gameService.joinedToStarted.subscribe( () => {
+      console.debug("loadQuizWaitingComponent betöltése")
+      this.loadQuizWaitingComponent();
+    });
+    this.gameService.ownerJoinedToStarted.subscribe( (ownerJoinedToStartedDto: OwnerJoinedToStartedDto) => {
+      console.debug("QuizOwnerQuestionComponent betöltése")
+      this.loadQuizOwnerQuestionComponentWhenStarted(ownerJoinedToStartedDto);
+    });
     console.debug("ngOnInit vége")
   }
   loadQuizQuestionComponent(question: Question) {
@@ -74,6 +93,21 @@ export class QuizGameComponent implements OnInit {
     const quizOwnerQuestionComponent = <QuizOwnerQuestionComponent>hostViewContainerRef.createComponent(quizOwnerQuestionFactory).instance;
     quizOwnerQuestionComponent.question=question;
   }
+  loadQuizOwnerQuestionComponentWhenStarted(ownerJoinedToStartedDto: OwnerJoinedToStartedDto) {
+    const quizOwnerQuestionFactory = this.cfr.resolveComponentFactory(QuizOwnerQuestionComponent);
+    const hostViewContainerRef = this.gameHost.viewContainerRef;
+    hostViewContainerRef.clear();
+    const quizOwnerQuestionComponent = <QuizOwnerQuestionComponent>hostViewContainerRef.createComponent(quizOwnerQuestionFactory).instance;
+    quizOwnerQuestionComponent.question=ownerJoinedToStartedDto.question;
+    if(ownerJoinedToStartedDto.remainingTime <= 0){
+      quizOwnerQuestionComponent.question.secondsToAnswer = 0;
+      quizOwnerQuestionComponent.disableNextQuestion = false;
+    } else{
+      quizOwnerQuestionComponent.question.secondsToAnswer = ownerJoinedToStartedDto.remainingTime;
+    }
+    quizOwnerQuestionComponent.question.secondsToAnswer
+    quizOwnerQuestionComponent.stats=ownerJoinedToStartedDto.currentQuestionStat.stats;
+  }
 
   // loadQuizOwnerStatisticsComponent() {
   //   const quizOwnerStatisticsFactory = this.cfr.resolveComponentFactory(QuizOwnerStatisticsComponent);
@@ -97,6 +131,21 @@ export class QuizGameComponent implements OnInit {
     playerStatisticsComponent.currentQuestionStat = currentQuestionStat;
     playerStatisticsComponent.question = this.question;
     playerStatisticsComponent.question.answers = currentQuestionStat.correctedAnswers;
+  }
+
+  loadQuizFailedJoinComponent(errorText: string) {
+    const quizFailedJoinComponentFactory = this.cfr.resolveComponentFactory(QuizFailedJoinComponent);
+    const hostViewContainerRef = this.gameHost.viewContainerRef;
+    hostViewContainerRef.clear();
+    const quizFailedJoinComponent = <QuizFailedJoinComponent>hostViewContainerRef.createComponent(quizFailedJoinComponentFactory).instance;
+    quizFailedJoinComponent.errorText = errorText;
+  }
+
+  loadQuizWaitingComponent() {
+    const quizWaitingComponentFactory = this.cfr.resolveComponentFactory(QuizWaitingComponent);
+    const hostViewContainerRef = this.gameHost.viewContainerRef;
+    hostViewContainerRef.clear();
+    hostViewContainerRef.createComponent(quizWaitingComponentFactory);
   }
 
 }

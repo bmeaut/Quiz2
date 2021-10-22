@@ -48,19 +48,73 @@ namespace Quiz2.Hubs
             {
                 Console.WriteLine(Context.UserIdentifier);
                 var game = gameService.GetGameByJoinId(joinId);
+                if (game == null)
+                {
+                    Clients.Caller.SendAsync("gameNotExist");
+                    return;
+                }
                 if (game.Owner.Id == Context.UserIdentifier)
                 {
-                    Groups.AddToGroupAsync(Context.ConnectionId, joinId+"Owner");
-                    Clients.Caller.SendAsync("ownerJoined");
+                    switch (game.Status)
+                    {
+                        case GameStatuses.Created:
+                            Groups.AddToGroupAsync(Context.ConnectionId, joinId+"Owner");
+                            Clients.Caller.SendAsync("ownerJoined");
+                            break;
+                        case GameStatuses.Started:
+                            Groups.AddToGroupAsync(Context.ConnectionId, joinId+"Owner");
+                            var gameWithCurrentQuestion = gameService.GetGameByJoinIdWithCurrentQuestion(joinId);
+                            var questionToSend = new SendQuestionDto()
+                            {
+                                Id = gameWithCurrentQuestion.CurrentQuestion.Id,
+                                Text = gameWithCurrentQuestion.CurrentQuestion.Text,
+                                Answers = gameWithCurrentQuestion.CurrentQuestion.Answers.Select(answer =>
+                                    new SendAnswerDto()
+                                    {
+                                        Id = answer.Id,
+                                        Text = answer.Text
+                                    }).ToList(),
+                                SecondsToAnswer = gameWithCurrentQuestion.CurrentQuestion.SecondsToAnswer,
+                                Points = gameWithCurrentQuestion.CurrentQuestion.Points,
+                            };
+                            var ownerJoinedToStarted = new OwnerJoinedToStartedDto()
+                                {
+                                    Question =  questionToSend,
+                                    CurrentQuestionStat =  new CurrentQuestionStatDto()
+                                    {
+                                        Stats =  userAnswerService.GetCurrentQuestionStat(joinId),
+                                    },
+                                    RemainingTime = gameWithCurrentQuestion.CurrentQuestion.SecondsToAnswer - (DateTime.Now - gameWithCurrentQuestion.CurrentQuestionStarted).Seconds,
+                                    JoinId = gameWithCurrentQuestion.JoinId,
+                                };
+                            Clients.Caller.SendAsync("ownerJoinedToStarted", ownerJoinedToStarted);
+                            break;
+                        case GameStatuses.Finished:
+                            Clients.Caller.SendAsync("gameFinished");
+                            break;
+                    }
                 }
                 else
                 {
-                    Groups.AddToGroupAsync(Context.ConnectionId, joinId);
-                    Clients.Caller.SendAsync("joined", joinId);
-                    gameService.AddJoinedUser(game.Id, Context.UserIdentifier);
-                    var names = gameService.GetJoinedUsersNames(game.Id);
-                    Clients.Group(game.JoinId+"Owner").SendAsync("newPlayer",  names);
-                    Clients.Group(game.JoinId).SendAsync("newPlayer",  names);
+                    switch (game.Status)
+                    {
+                        case GameStatuses.Created:
+                            Groups.AddToGroupAsync(Context.ConnectionId, joinId);
+                            Clients.Caller.SendAsync("joined", joinId);
+                            gameService.AddJoinedUser(game.Id, Context.UserIdentifier);
+                            var names = gameService.GetJoinedUsersNames(game.Id);
+                            Clients.Group(game.JoinId+"Owner").SendAsync("newPlayer",  names);
+                            Clients.Group(game.JoinId).SendAsync("newPlayer",  names);
+                            break;
+                        case GameStatuses.Started:
+                            Groups.AddToGroupAsync(Context.ConnectionId, joinId);
+                            Clients.Caller.SendAsync("joinedToStarted", joinId);
+                            gameService.AddJoinedUser(game.Id, Context.UserIdentifier);
+                            break;
+                        case GameStatuses.Finished:
+                            Clients.Caller.SendAsync("gameFinished");
+                            break;
+                    }
                 }
             }
             catch(Exception e)
@@ -139,7 +193,6 @@ namespace Quiz2.Hubs
                     };
                     Clients.Group(game.JoinId + "Owner").SendAsync("newQuestionOwner", questionToSend);
                     Clients.Group(game.JoinId).SendAsync("newQuestion", questionToSend);
-                    //EndingQuestion(game);
                     QuestionTimer questionTimer = new QuestionTimer(game.CurrentQuestion.SecondsToAnswer * 1000);
                     questionTimer = QuestionTimer.Timers.GetOrAdd(joinId, questionTimer);
                     questionTimer.callerContext = Context;
@@ -148,10 +201,11 @@ namespace Quiz2.Hubs
                     questionTimer.Elapsed +=  (sender, e) => EndingQuestion(sender, game.JoinId);
                     questionTimer.Interval = game.CurrentQuestion.SecondsToAnswer * 1000;
                     questionTimer.Enabled = true;
-                    //task.Wait();
                 }
                 else
                 {
+                    game.Status = GameStatuses.Finished;
+                    gameService.Save();
                     Clients.Group(game.JoinId + "Owner").SendAsync("endGame");
                     Clients.Group(game.JoinId).SendAsync("endGame");
                 }

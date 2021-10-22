@@ -31,6 +31,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { JoinGameComponent } from './join-game/join-game.component';
 import { PlayerStatisticsComponent } from './game-components/player-statistics/player-statistics.component';
+import { QuizFailedJoinComponent } from './game-components/quiz-failed-join/quiz-failed-join.component';
+import { QuizWaitingComponent } from './game-components/quiz-waiting/quiz-waiting.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,9 @@ import { PlayerStatisticsComponent } from './game-components/player-statistics/p
     QuizListItemComponent,
     PlaceholderDirective,
     SRTestComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    QuizFailedJoinComponent,
+    QuizWaitingComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -76,7 +80,9 @@ import { PlayerStatisticsComponent } from './game-components/player-statistics/p
     QuizOwnerLobbyComponent,
     QuizOwnerQuestionComponent,
     QuizQuestionComponent,
-    QuizLobbyComponent
+    QuizLobbyComponent,
+    QuizFailedJoinComponent,
+    QuizWaitingComponent
   ]
 })
 export class AppModule { }

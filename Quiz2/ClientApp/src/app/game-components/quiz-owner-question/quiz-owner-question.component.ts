@@ -50,7 +50,9 @@ export class QuizOwnerQuestionComponent implements OnInit {
         this.disableNextQuestion = false;
       })
     this.letters = ['A', 'B', 'C', 'D'];
-    this.stats = [0,0,0,0];
+    if(this.stats == undefined) {
+      this.stats = [0, 0, 0, 0];
+    }
     this.gameService.currentQuestionStat.subscribe((stat :CurrentQuestionStat) => {
       this.stats=stat.stats;
       this.drawChart();
