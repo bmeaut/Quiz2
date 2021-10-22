@@ -9,8 +9,8 @@
       <button
         class="save-btn"
         (click)="saveAnswer()"
-        [disabled]="timeIsOver || disableAnswers"
-        [ngClass]="{'save-btn-disabled' : timeIsOver == true || disableAnswers == true}"
+        [disabled]="timeIsOver || disableAnswers || disableSendAnswers"
+        [ngClass]="{'save-btn-disabled' : timeIsOver || disableAnswers || disableSendAnswers}"
       >Válasz mentése</button>
   </div>
   <div class="answers-wrapper">
@@ -20,6 +20,7 @@
     [index]="i"
     [timeIsOver]="timeIsOver"
     [disableAnswer]="disableAnswers"
+    (answerIsChecked)="answerIsCheckedHandler()"
   >
   </app-quiz-answer>
   </div>

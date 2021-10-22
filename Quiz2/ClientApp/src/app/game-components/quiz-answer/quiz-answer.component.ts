@@ -13,7 +13,7 @@ export class QuizAnswerComponent implements OnInit {
   @Input() timeIsOver: boolean;
   @Input() disableAnswer: boolean;
   @Input() index: number;
-  @Output() answerIsChecked = new EventEmitter<Answer>();
+  @Output() answerIsChecked = new EventEmitter();
 
   letters: string[];
 

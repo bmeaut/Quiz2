@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import { Subscription, timer } from 'rxjs';
 import { Answer } from '../../answer';
 import { Question } from '../../question';
@@ -16,7 +16,7 @@ export class QuizQuestionComponent implements OnInit {
   displayTime: string;
   timeIsOver: boolean = false;
   disableAnswers: boolean = false;
-//answers: Answers;
+  disableSendAnswers: boolean = true;
 
   question: Question = {
     id: 1,
@@ -41,6 +41,7 @@ export class QuizQuestionComponent implements OnInit {
       console.debug("new question betöltése")
       this.question=question;
       this.disableAnswers = false;
+      this.disableSendAnswers = true;
       this.timeIsOver = false;
       this.startTimer();
     });
@@ -86,19 +87,12 @@ export class QuizQuestionComponent implements OnInit {
     });
   }
 
- /* answerIsCheckedHandler(checkedAnswer: Answer): void {
-    if(this.answers.ids.includes(checkedAnswer.id)){
-      var newAnswers: number[];
-      this.answers.ids.forEach( answerId => {
-            if(answerId != checkedAnswer.id){
-              newAnswers.push(answerId);
-            }
-        });
-        this.answers.ids = newAnswers;
-    }else{
-      this.answers.ids.push(checkedAnswer.id);
-    }
-  }*/
+ answerIsCheckedHandler(): void {
+   console.debug("answerIsChecked")
+   this.disableSendAnswers = this.question.answers.filter((answer) => {
+     return answer.marked;
+   }).length == 0;
+  }
 
 }
 

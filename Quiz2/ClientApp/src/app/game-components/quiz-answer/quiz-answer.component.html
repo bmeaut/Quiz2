@@ -4,7 +4,7 @@
                 <span class="answer-text">{{ answer.text }}</span>
         </div>
         <label class="switch">
-                <input type="checkbox" [disabled]="timeIsOver || disableAnswer" [(ngModel)]="answer.marked">
+                <input type="checkbox" [disabled]="timeIsOver || disableAnswer" [(ngModel)]="answer.marked" (change)="answerIsChecked.emit()">
                 <span class="slider round"></span>
         </label>
 </div>
