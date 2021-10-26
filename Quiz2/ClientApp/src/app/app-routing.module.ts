@@ -16,6 +16,7 @@ import { QuizQuestionEditComponent } from "./question-list-components/quiz-quest
 import { QuizQuestionListComponent } from "./question-list-components/quiz-question-list/quiz-question-list.component";
 import { QuizQuestionComponent } from "./game-components/quiz-question/quiz-question.component";
 import { SRTestComponent } from "./SR-test/SR-test.component";
+import { StatListComponent } from "./stat-list-components/stat-list/stat-list.component";
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -32,8 +33,9 @@ const appRoutes: Routes = [
     { path: 'quizzes', component: QuizListComponent},
     { path: 'quizzes/new', component: QuizCreateComponent},
     { path: 'quizzes/:id/edit', component: QuizEditComponent},
+    { path: 'stats', component: StatListComponent},
     { path: 'not-found', component: PageNotFoundComponent },
-    { path: '**', redirectTo: '/not-found' }
+    { path: '**', redirectTo: '/not-found' },
   ];
   
   @NgModule({

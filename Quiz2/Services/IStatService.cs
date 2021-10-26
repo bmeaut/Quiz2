@@ -8,5 +8,6 @@ namespace Quiz2.Services
         public int GetNumberOfUserAnswers(int gameId, int answerId);
         public List<Game> GetOwnedGameHistory(string ownerId);
         public int GetUserPointsInGame(int gameId, string userId);
+        public List<Game> GetPlayedGameHistory(string userId);
     }
 }

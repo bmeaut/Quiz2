@@ -44,5 +44,22 @@ namespace Quiz2.Services
                 .Sum(userAnswer => userAnswer.Answer.Question.Points);
         }
 
+        public List<Game> GetPlayedGameHistory(string userId)
+        {
+            return _context.Games
+                .Include(game => game.Owner)
+                .Include(game => game.Quiz)
+                .Include(game => game.JoinedUsers)
+                .Where(game => game.Owner.Id != userId)
+                .ToList();
+
+            ///???
+            /*
+            return (List<Game>)_context.ApplicationUsers
+                .Find(userId)
+                .Games;
+            */
+        }
+
     }
 }

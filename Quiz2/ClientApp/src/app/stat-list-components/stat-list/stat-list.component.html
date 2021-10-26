@@ -1,0 +1,22 @@
+<div class="main-container">
+    <div class="stat-list-header">
+        <span>Eredmények</span>
+        <div class="btn">
+            <button [routerLink]="['/owngames']">Saját játékok</button>
+        </div>
+        <div class="btn">
+            <button [routerLink]="['/playedgames']">Játszott játékok</button>
+        </div>
+    </div>
+    <div class="container" *ngIf="!gamesLoaded">
+        <span>Eredmények betöltése...</span>
+      </div>
+      <div class="container" *ngIf="games.length == 0 && gamesLoaded">
+        <span>Jelenleg nincsenek eredmények!</span>
+      </div>
+      <div class="container" *ngIf="gamesLoaded && games.length > 0">
+        <app-quiz-list-item *ngFor="let game of games" [game]="game">
+        </app-quiz-list-item>
+      </div>
+
+</div>
