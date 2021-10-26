@@ -15,9 +15,10 @@ export class StatListItemComponent implements OnInit {
   constructor(private router: Router, private statService: StatService) { }
 
   ngOnInit() {
+    this.showGames(this.game)
   }
 
-  showQuestions(game: Game): void {
+  showGames(game: Game): void {
     this.router.navigate(["/stats", this.game, "games"]);
   }
 

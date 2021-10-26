@@ -18,6 +18,8 @@ export class StatListComponent implements OnInit{
         this.gamesLoaded = false;
     }
 
+       
+
     getOwnGameList():void{
         this.statService.getOwnGames().subscribe(games => {
             this.games = games;
