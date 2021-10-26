@@ -5,9 +5,9 @@ import { QuizService } from '../../services/quiz.service';
 import {GamesService} from "../../services/games-service";
 
 @Component({
-  selector: 'app-stat-list-item',
-  templateUrl: './stat-list-item.component.html',
-  styleUrls: ['./stat-list-item.component.css'],
+  selector: 'app-quiz-list-item',
+  templateUrl: './quiz-list-item.component.html',
+  styleUrls: ['./quiz-list-item.component.css'],
 })
 export class QuizListItemComponent implements OnInit {
 

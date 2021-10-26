@@ -15,8 +15,8 @@
         <span>Jelenleg nincsenek eredmények!</span>
       </div>
       <div class="container" *ngIf="gamesLoaded && games.length > 0">
-        <app-quiz-list-item *ngFor="let game of games" [game]="game">
-        </app-quiz-list-item>
+        <app-stat-list-item *ngFor="let game of games" [game]="game">
+        </app-stat-list-item>
       </div>
 
 </div>
