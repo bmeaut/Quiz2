@@ -2,19 +2,19 @@
     <div class="stat-list-header">
         <span>Eredmények</span>
         <div class="btn">
-            <button [routerLink]="['/owngames']">Saját játékok</button>
+            <button (click)="getOwnGameList()">Saját játékok</button>
         </div>
         <div class="btn">
-            <button [routerLink]="['/playedgames']">Játszott játékok</button>
+            <button (click)="getPlayedGameList()">Játszott játékok</button>
         </div>
     </div>
-    <div class="container" *ngIf="!gamesLoaded">
+    <div class="container" *ngIf="!ownGamesLoaded && !playedGamesLoaded">
         <span>Eredmények betöltése...</span>
       </div>
-      <div class="container" *ngIf="games.length == 0 && gamesLoaded">
+      <div class="container" *ngIf="games.length == 0 && (ownGamesLoaded || playedGamesLoaded)">
         <span>Jelenleg nincsenek eredmények!</span>
       </div>
-      <div class="container" *ngIf="gamesLoaded && games.length > 0">
+      <div class="container" *ngIf="(ownGamesLoaded || playedGamesLoaded) && games.length > 0">
         <app-stat-list-item *ngFor="let game of games" [game]="game">
         </app-stat-list-item>
       </div>

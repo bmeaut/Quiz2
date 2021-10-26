@@ -15,8 +15,6 @@ export class StatListComponent implements OnInit{
     constructor(private statService: StatService, private authService: AuthorizeService){}
     ngOnInit(){
         this.games = [];
-        this.getOwnGameList();
-        this.getPlayedGameList();
         this.gamesLoaded = false;
     }
 

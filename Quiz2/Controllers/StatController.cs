@@ -46,9 +46,9 @@ namespace Quiz2.Controllers
         //GET: api/Stat/GetPlayedGameHistory
         [Route("GetPlayedGameHistory")]
         [HttpGet]
-        public ActionResult<List<Game>> GetPlayedGameHistory(string userId)
+        public ActionResult<List<Game>> GetPlayedGameHistory()
         {
-            return statService.GetPlayedGameHistory(userId);
+            return statService.GetPlayedGameHistory(HttpContext.User.GetUserId());
         }
 
     }

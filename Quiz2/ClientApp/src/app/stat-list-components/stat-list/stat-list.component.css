@@ -35,7 +35,7 @@ h2 {
     border-bottom-right-radius: 10px;
 }
 
-.quiz-list-header {
+.stat-list-header {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -46,7 +46,7 @@ h2 {
     padding: 0.5rem;
 }
 
-.quiz-list-header span {
+.stat-list-header span {
     font-size: 2rem;
     flex:1;
     display: flex;

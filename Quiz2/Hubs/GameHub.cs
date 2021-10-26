@@ -87,7 +87,7 @@ namespace Quiz2.Hubs
             var game = gameService.GetGameByJoinIdWithCurrentQuestion(joinId);
             if (game != null)
             {
-                Console.WriteLine(game.CurrentQuestion.Id);
+                //Console.WriteLine(game.CurrentQuestion.Id);
                 gameService.SetNextQuestion(game);
                 if (game.CurrentQuestion != null)
                 {
