@@ -8,13 +8,13 @@
             <button (click)="getPlayedGameList()">Játszott játékok</button>
         </div>
     </div>
-    <div class="container" *ngIf="!ownGamesLoaded && !playedGamesLoaded">
+    <div class="container" *ngIf="!gamesLoaded">
         <span>Eredmények betöltése...</span>
       </div>
-      <div class="container" *ngIf="games.length == 0 && (ownGamesLoaded || playedGamesLoaded)">
+      <div class="container" *ngIf="games.length == 0 && gamesLoaded">
         <span>Jelenleg nincsenek eredmények!</span>
       </div>
-      <div class="container" *ngIf="(ownGamesLoaded || playedGamesLoaded) && games.length > 0">
+      <div class="container" *ngIf="gamesLoaded && games.length > 0">
         <app-stat-list-item *ngFor="let game of games" [game]="game">
         </app-stat-list-item>
       </div>
