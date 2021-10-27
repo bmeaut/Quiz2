@@ -3,4 +3,5 @@ export interface Answer {
     questionID: number;
     correct: boolean;
     text: string;
+   marked?: boolean;
 }

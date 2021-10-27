@@ -34,6 +34,9 @@ import { StatListComponent } from './stat-list-components/stat-list/stat-list.co
 import { StatListItemComponent } from './stat-list-components/stat-list-item/stat-list-item.component';
 import { StatOwnedDetailsComponent } from './stat-game-details-components/stat-owned-details/stat-owned-details.component';
 import { StatPlayedDetailsComponent } from './stat-game-details-components/stat-played-details/stat-played-details.component';
+import { PlayerStatisticsComponent } from './game-components/player-statistics/player-statistics.component';
+import { QuizFailedJoinComponent } from './game-components/quiz-failed-join/quiz-failed-join.component';
+import { QuizWaitingComponent } from './game-components/quiz-waiting/quiz-waiting.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +53,7 @@ import { StatPlayedDetailsComponent } from './stat-game-details-components/stat-
     QuizQuestionListComponent,
     QuizQuestionListItemComponent,
     FetchDataComponent,
+    PlayerStatisticsComponent,
     QuizGameComponent,
     QuizOwnerLobbyComponent,
     QuizOwnerQuestionComponent,
@@ -63,7 +67,9 @@ import { StatPlayedDetailsComponent } from './stat-game-details-components/stat-
     StatPlayedDetailsComponent,
     PlaceholderDirective,
     SRTestComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    QuizFailedJoinComponent,
+    QuizWaitingComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -82,7 +88,9 @@ import { StatPlayedDetailsComponent } from './stat-game-details-components/stat-
     QuizOwnerLobbyComponent,
     QuizOwnerQuestionComponent,
     QuizQuestionComponent,
-    QuizLobbyComponent
+    QuizLobbyComponent,
+    QuizFailedJoinComponent,
+    QuizWaitingComponent
   ]
 })
 export class AppModule { }

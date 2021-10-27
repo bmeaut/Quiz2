@@ -1,8 +1,12 @@
-﻿namespace Quiz2.DTO
+﻿using System.Collections.Generic;
+using Quiz2.Models;
+
+namespace Quiz2.DTO
 {
     public class CurrentQuestionStatDto
     {
-        public int AnswerId;
-        public int AnswersCount;
+        public List<CorrectedAnswerDto> CorrectedAnswers{ get; set; }
+        public List<int> Stats{ get; set; }
+        public int Point{ get; set; }
     }
 }

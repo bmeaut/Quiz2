@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Quiz2.Data;
 using Quiz2.DTO;
 using Quiz2.Models;
@@ -16,7 +17,13 @@ namespace Quiz2.Services
         private readonly IQuestionService questionService;
         private readonly IQuizService quizService;
 
-        public GameService(IApplicationUserService applicationUserService, ApplicationDbContext context, IQuestionService questionService, IQuizService quizService)
+
+        public GameService(
+            IApplicationUserService applicationUserService, 
+            ApplicationDbContext context, 
+            IQuestionService questionService, 
+            IQuizService quizService
+        )
         {
             _context = context;
             this.applicationUserService = applicationUserService;
@@ -24,27 +31,39 @@ namespace Quiz2.Services
             this.quizService = quizService;
         }
 
-        public Game GetGameByJoinId(string joinId)
+        public Game GetGameByJoinId(string joinId, ApplicationDbContext applicationDbContext = null)
         {
-            return _context.Games.Where(g => g.JoinId == joinId)
-                .Include(g => g.Owner)
-                .FirstOrDefault();
+            if (applicationDbContext == null)
+            {
+                applicationDbContext = _context;
+            }
+            return applicationDbContext.Games.Where(g => g.JoinId == joinId)
+                    .Include(g => g.Owner)
+                    .FirstOrDefault();
+            
         }
         
         public Game GetGameWithQuestionsByJoinId(string joinId)
         {
             return _context.Games.Where(g => g.JoinId == joinId)
                 .Include(game => game.CurrentQuestion)
+                .Include(game => game.JoinedUsers)
                 .Include(game => game.Quiz.Questions.OrderBy(question => question.Position))
                 .ThenInclude(question => question.Answers)
                 .FirstOrDefault();
         }
         
-        public Game GetGameByJoinIdWithCurrentQuestion(string joinId)
+        public Game GetGameByJoinIdWithCurrentQuestion(string joinId, ApplicationDbContext applicationDbContext = null)
         {
-            return _context.Games.Where(g => g.JoinId == joinId)
+            if (applicationDbContext == null)
+            {
+                applicationDbContext = _context;
+            }
+   
+            return applicationDbContext.Games.Where(g => g.JoinId == joinId)
                 .Include(game => game.CurrentQuestion)
-                .ThenInclude(question => question.Answers)
+                .ThenInclude(question => question.Answers.OrderBy(answer => answer.Id))
+                .Include(game => game.JoinedUsers)
                 .FirstOrDefault();
         }
 
@@ -65,7 +84,6 @@ namespace Quiz2.Services
                 game.Status = GameStatuses.Finished;
                 _context.SaveChanges();
             }
-
 
         }
 

@@ -1,0 +1,23 @@
+<div class="question-header">
+    <span class="rank">Helyezés: MAJD</span>
+    <span class="question">{{ question.text }}</span>
+    <span class="score">Pontszám: {{currentQuestionStat.point}}</span>
+</div>
+<div class="answer" *ngFor="let answer of question.answers; let i = index"
+     [ngClass]="{
+        'correct-marked-answer': (answer.correct === true && answer.marked === true),
+        'correct-answer': (answer.correct === true && answer.marked === false),
+        'incorrect-answer': (answer.correct === false && answer.marked === true)
+     }">
+    <div class="center">
+        <span class="letter">{{ letters[i] }}</span>
+        <span class="answer-text">{{ answer.text }}</span>
+    </div>
+    <label class="switch">
+            <input type="checkbox" [(ngModel)]="answer.marked" disabled="disabled">
+            <span class="slider round"></span>
+    </label>
+</div>
+<div class="chart-container">
+    <canvas id="canvas"></canvas>
+</div>

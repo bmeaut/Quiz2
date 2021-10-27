@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import { Subscription, timer } from 'rxjs';
 import { Answer } from '../../answer';
 import { Question } from '../../question';
 import {GamesService} from "../../services/games-service";
+import {Answers} from "../../answers";
 
 @Component({
   selector: 'app-quiz-question',
@@ -15,6 +16,7 @@ export class QuizQuestionComponent implements OnInit {
   displayTime: string;
   timeIsOver: boolean = false;
   disableAnswers: boolean = false;
+  disableSendAnswers: boolean = true;
 
   question: Question = {
     id: 1,
@@ -23,28 +25,44 @@ export class QuizQuestionComponent implements OnInit {
     secondsToAnswer: 400,
     position: 1,
     points: 5,
-    answers:
-    [{id: 1, questionID: 0,correct: false, text: "Válasz1"},
-     {id: 2, questionID: 0,correct: false, text: "Válasz2"},
-     {id: 3, questionID: 0,correct: false, text: "Válasz3"},
-     {id: 4, questionID: 0,correct: false, text: "Válasz4"}]};
+    answers: [
+      {id: 1, questionID: 0, correct: false, marked: false, text: "Válasz1"},
+     {id: 2, questionID: 0, correct: false, marked: false, text: "Válasz2"},
+     {id: 3, questionID: 0, correct: false, marked: false, text: "Válasz3"},
+     {id: 4, questionID: 0, correct: false, marked: false, text: "Válasz4"}
+     ]
+  };
 
-  constructor( public gameService: GamesService) { }
+  constructor( public gameService: GamesService) {
+  }
 
   ngOnInit() {
     this.gameService.newQuestion.subscribe( (question: Question) => {
       console.debug("new question betöltése")
       this.question=question;
       this.disableAnswers = false;
+      this.disableSendAnswers = true;
       this.timeIsOver = false;
       this.startTimer();
     });
     this.startTimer();
   }
 
-  saveAnswer(): void {
-   // this.gameService.sendAnswer(this.answer.id)
+  saveAnswer(): void
+  {
+
+    console.debug(this.question.answers.filter((answer) => {
+      return answer.marked;
+    }));
+    const answers: Answers = {
+      ids: this.question.answers.filter((answer) => {
+        return answer.marked;
+      }).map((answer) => answer.id)
+    };
+    console.debug(answers.ids);
+    this.gameService.sendAnswers(answers);
     this.disableAnswers = true;
+
   }
 
   startTimer(): void {
@@ -69,10 +87,12 @@ export class QuizQuestionComponent implements OnInit {
     });
   }
 
-  answerIsCheckedHandler(checkedAnswer: Answer): void {
-    this.question.answers.forEach(answer => {
-      if(answer.id == checkedAnswer.id)
-        answer.correct = checkedAnswer.correct;
-    });
+ answerIsCheckedHandler(): void {
+   console.debug("answerIsChecked")
+   this.disableSendAnswers = this.question.answers.filter((answer) => {
+     return answer.marked;
+   }).length == 0;
   }
+
 }
+
