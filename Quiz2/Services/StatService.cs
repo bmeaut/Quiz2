@@ -4,6 +4,7 @@ using System.Net.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Quiz2.Data;
+using Quiz2.DTO;
 using Quiz2.Helper;
 using Quiz2.Models;
 
@@ -25,13 +26,14 @@ namespace Quiz2.Services
                 .Count(userAnswer => userAnswer.AnswerId == answerId);
         }
 
-        public List<Game> GetOwnedGameHistory(string ownerId)
+        public List<GameStatDto> GetOwnedGameHistory(string ownerId)
         {
             return _context.Games
                 .Include(game => game.Owner)
                 .Include(game => game.Quiz)
                 .Include(game => game.JoinedUsers)
                 .Where(game => game.Owner.Id == ownerId)
+                .Select(game => new GameStatDto() { Id = game.Id})
                 .ToList();
         }
         public int GetUserPointsInGame(int gameId, string userId)
@@ -44,13 +46,14 @@ namespace Quiz2.Services
                 .Sum(userAnswer => userAnswer.Answer.Question.Points);
         }
 
-        public List<Game> GetPlayedGameHistory(string userId)
+        public List<GameStatDto> GetPlayedGameHistory(string userId)
         {
             return _context.Games
                 .Include(game => game.Owner)
                 .Include(game => game.Quiz)
                 .Include(game => game.JoinedUsers)
                 .Where(game => game.Owner.Id != userId)
+                .Select(game => new GameStatDto() { Id = game.Id })
                 .ToList();
 
             ///???

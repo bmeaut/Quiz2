@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Quiz2.DTO;
 using Quiz2.Models;
 
 namespace Quiz2.Services
@@ -6,8 +7,8 @@ namespace Quiz2.Services
     public interface IStatService
     {
         public int GetNumberOfUserAnswers(int gameId, int answerId);
-        public List<Game> GetOwnedGameHistory(string ownerId);
+        public List<GameStatDto> GetOwnedGameHistory(string ownerId);
         public int GetUserPointsInGame(int gameId, string userId);
-        public List<Game> GetPlayedGameHistory(string userId);
+        public List<GameStatDto> GetPlayedGameHistory(string userId);
     }
 }

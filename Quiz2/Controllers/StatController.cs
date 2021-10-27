@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Quiz2.DTO;
 using Quiz2.Helper;
 using Quiz2.Models;
 using Quiz2.Services;
@@ -30,7 +31,7 @@ namespace Quiz2.Controllers
         //GET: api/Stat/GetOwnedGameHistory
         [Route("GetOwnedGameHistory")]
         [HttpGet]
-        public ActionResult<List<Game>> GetOwnedGameHistory()
+        public ActionResult<List<GameStatDto>> GetOwnedGameHistory()
         {
             return statService.GetOwnedGameHistory(HttpContext.User.GetUserId());
         }
@@ -46,7 +47,7 @@ namespace Quiz2.Controllers
         //GET: api/Stat/GetPlayedGameHistory
         [Route("GetPlayedGameHistory")]
         [HttpGet]
-        public ActionResult<List<Game>> GetPlayedGameHistory()
+        public ActionResult<List<GameStatDto>> GetPlayedGameHistory()
         {
             return statService.GetPlayedGameHistory(HttpContext.User.GetUserId());
         }
