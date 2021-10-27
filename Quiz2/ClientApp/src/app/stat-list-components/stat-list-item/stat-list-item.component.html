@@ -1,3 +1,6 @@
 <div class="game">
-    <span><span>{{ game.id }}</span></span>
+    <span><span>{{ game.quizName }}</span></span>
+    <div class="game-buttons">
+        <button type="submit" (click)="showDetails(game)">Részletek</button>
+    </div>
 </div>

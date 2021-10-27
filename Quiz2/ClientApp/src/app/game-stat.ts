@@ -1,5 +1,6 @@
-import { User } from "./user";
 
 export interface GameStat{
-    id: number;
+    id:number;
+    quizName: string;
+    pointsOfUser: number;
 }

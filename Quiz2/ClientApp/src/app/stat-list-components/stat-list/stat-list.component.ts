@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Game } from "src/app/game";
+import { GameStat } from "src/app/game-stat";
 import { StatService} from "src/app/services/stat-service"
 import { AuthorizeService } from "src/api-authorization/authorize.service";
 
@@ -9,13 +9,14 @@ import { AuthorizeService } from "src/api-authorization/authorize.service";
     styleUrls: ['./stat-list.component.css']
 })
 export class StatListComponent implements OnInit{
-    games: Game[];
+    games: GameStat[];
     gamesLoaded:boolean;
 
     constructor(private statService: StatService, private authService: AuthorizeService){}
     ngOnInit(){
         this.games = [];
         this.gamesLoaded = false;
+        this.getOwnGameList();
     }
 
        

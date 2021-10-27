@@ -33,7 +33,7 @@ namespace Quiz2.Services
                 .Include(game => game.Quiz)
                 .Include(game => game.JoinedUsers)
                 .Where(game => game.Owner.Id == ownerId)
-                .Select(game => new GameStatDto() { Id = game.Id})
+                .Select(game => new GameStatDto() { Id = game.Id, QuizName = game.Quiz.Name, PointsOfUser = 0 })
                 .ToList();
         }
         public int GetUserPointsInGame(int gameId, string userId)
@@ -48,12 +48,13 @@ namespace Quiz2.Services
 
         public List<GameStatDto> GetPlayedGameHistory(string userId)
         {
+            ApplicationUser user = _context.ApplicationUsers.Find(userId);
             return _context.Games
                 .Include(game => game.Owner)
                 .Include(game => game.Quiz)
                 .Include(game => game.JoinedUsers)
-                .Where(game => game.Owner.Id != userId)
-                .Select(game => new GameStatDto() { Id = game.Id })
+                .Where(game => game.Owner.Id != userId && game.JoinedUsers.Contains(user))
+                .Select(game => new GameStatDto() { Id = game.Id, QuizName = game.Quiz.Name, PointsOfUser = 1 })
                 .ToList();
 
             ///???

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { Game } from '../../game';
+import { GameStat } from 'src/app/game-stat';
 import { StatService } from '../../services/stat-service';
 
 @Component({
@@ -10,14 +10,14 @@ import { StatService } from '../../services/stat-service';
 })
 export class StatListItemComponent implements OnInit {
 
-  @Input() game: Game;
+  @Input() game: GameStat;
 
   constructor(private router: Router, private statService: StatService) { }
 
   ngOnInit() {
   }
-
-  showGames(game: Game): void {
+  
+  showDetails(game: GameStat): void {
     this.router.navigate(["/stats", this.game, "games"]);
   }
 
