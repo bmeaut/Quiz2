@@ -16,9 +16,14 @@ export class StatListItemComponent implements OnInit {
 
   ngOnInit() {
   }
-  
+
   showDetails(game: GameStat): void {
-    this.router.navigate(["/stats", this.game, "games"]);
+    if(game.isOwned){
+      this.router.navigate(["/stats", this.game.id, "detailsOwned"]);
+    }
+    else{
+      this.router.navigate(["/stats", this.game.id, "detailsPlayed"]);
+    }
   }
 
 }

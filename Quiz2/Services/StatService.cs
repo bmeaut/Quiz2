@@ -33,7 +33,7 @@ namespace Quiz2.Services
                 .Include(game => game.Quiz)
                 .Include(game => game.JoinedUsers)
                 .Where(game => game.Owner.Id == ownerId)
-                .Select(game => new GameStatDto() { Id = game.Id, QuizName = game.Quiz.Name, PointsOfUser = 0 })
+                .Select(game => new GameStatDto() { Id = game.Id, QuizName = game.Quiz.Name, IsOwned = true })
                 .ToList();
         }
         public int GetUserPointsInGame(int gameId, string userId)
@@ -54,7 +54,7 @@ namespace Quiz2.Services
                 .Include(game => game.Quiz)
                 .Include(game => game.JoinedUsers)
                 .Where(game => game.Owner.Id != userId && game.JoinedUsers.Contains(user))
-                .Select(game => new GameStatDto() { Id = game.Id, QuizName = game.Quiz.Name, PointsOfUser = 1 })
+                .Select(game => new GameStatDto() { Id = game.Id, QuizName = game.Quiz.Name, IsOwned = false })
                 .ToList();
 
             ///???

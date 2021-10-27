@@ -32,6 +32,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { JoinGameComponent } from './join-game/join-game.component';
 import { StatListComponent } from './stat-list-components/stat-list/stat-list.component';
 import { StatListItemComponent } from './stat-list-components/stat-list-item/stat-list-item.component';
+import { StatOwnedDetailsComponent } from './stat-game-details-components/stat-owned-details/stat-owned-details.component';
+import { StatPlayedDetailsComponent } from './stat-game-details-components/stat-played-details/stat-played-details.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,8 @@ import { StatListItemComponent } from './stat-list-components/stat-list-item/sta
     QuizListItemComponent,
     StatListComponent,
     StatListItemComponent,
+    StatOwnedDetailsComponent,
+    StatPlayedDetailsComponent,
     PlaceholderDirective,
     SRTestComponent,
     PageNotFoundComponent

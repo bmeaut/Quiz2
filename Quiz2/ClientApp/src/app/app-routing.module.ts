@@ -17,6 +17,8 @@ import { QuizQuestionListComponent } from "./question-list-components/quiz-quest
 import { QuizQuestionComponent } from "./game-components/quiz-question/quiz-question.component";
 import { SRTestComponent } from "./SR-test/SR-test.component";
 import { StatListComponent } from "./stat-list-components/stat-list/stat-list.component";
+import { StatOwnedDetailsComponent } from "./stat-game-details-components/stat-owned-details/stat-owned-details.component"
+import { StatPlayedDetailsComponent } from "./stat-game-details-components/stat-played-details/stat-played-details.component";
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -34,6 +36,8 @@ const appRoutes: Routes = [
     { path: 'quizzes/new', component: QuizCreateComponent},
     { path: 'quizzes/:id/edit', component: QuizEditComponent},
     { path: 'stats', component: StatListComponent},
+    { path: 'stats/:id/detailsOwned', component: StatOwnedDetailsComponent},
+    { path: 'stats/:id/detailsPlayed', component: StatPlayedDetailsComponent},
     { path: 'not-found', component: PageNotFoundComponent },
     { path: '**', redirectTo: '/not-found' },
   ];

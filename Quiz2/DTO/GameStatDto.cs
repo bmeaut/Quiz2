@@ -9,6 +9,6 @@ namespace Quiz2.DTO
     {
         public int Id;
         public string QuizName;
-        public int PointsOfUser;
+        public bool IsOwned;
     }
 }
