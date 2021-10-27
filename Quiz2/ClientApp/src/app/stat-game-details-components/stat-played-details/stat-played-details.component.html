@@ -1,1 +1,9 @@
-<div>played</div>
+<div class="main-container">
+    <div class="questions-header">
+        <span>Kérdések</span>
+    </div>
+    <div class="container">
+        <app-stat-played-list-item *ngFor="let question of questions" [question]="question">
+        </app-stat-played-list-item>
+    </div>
+</div>

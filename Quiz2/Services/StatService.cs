@@ -48,6 +48,7 @@ namespace Quiz2.Services
 
         public List<GameStatDto> GetPlayedGameHistory(string userId)
         {
+            //servicel
             ApplicationUser user = _context.ApplicationUsers.Find(userId);
             return _context.Games
                 .Include(game => game.Owner)
@@ -56,13 +57,25 @@ namespace Quiz2.Services
                 .Where(game => game.Owner.Id != userId && game.JoinedUsers.Contains(user))
                 .Select(game => new GameStatDto() { Id = game.Id, QuizName = game.Quiz.Name, IsOwned = false })
                 .ToList();
+        }
 
-            ///???
+        public List<Question> GetQuestionsOfPlayedGame(string userId)
+        {//, int gameId
+            //Game game = _context.Games.Where(game => game.Id == gameId).First();
+            //actual answers correct
+            //user answers marked
+            //DTO
             /*
-            return (List<Game>)_context.ApplicationUsers
-                .Find(userId)
-                .Games;
+            return _context.Questions.Where(question=> question.QuizId == game.QuizId)
+                .Include(question => question.Answers)
+                .Select(question => new {  })
             */
+            //todo
+            return _context.Questions
+                .Include(question => question.Quiz)
+                .Include(question => question.Answers)
+                .ToList();
+
         }
 
     }

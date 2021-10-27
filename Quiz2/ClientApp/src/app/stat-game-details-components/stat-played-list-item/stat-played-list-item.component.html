@@ -1,0 +1,15 @@
+<div class="question-header">
+    <span class="rank">Helyezés: MAJD</span>
+    <span class="question">{{ question.text }}</span>
+    <span class="score">Pontszám: {{question.point}}</span>
+</div>
+<div class="answer" *ngFor="let answer of question.answers; let i = index"
+     [ngClass]="{
+        'correct-marked-answer': (answer.correct === true && answer.marked === true),
+        'correct-answer': (answer.correct === true && answer.marked === false),
+        'incorrect-answer': (answer.correct === false && answer.marked === true)
+     }">
+    <div class="center">
+        <span class="answer-text">{{ answer.text }}</span>
+    </div>
+</div>
