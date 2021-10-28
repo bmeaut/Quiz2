@@ -218,10 +218,11 @@ namespace Quiz2.Hubs
              var game = gameService.GetGameByJoinIdWithCurrentQuestion(joinId);
              var timeOfSubmit = (DateTime.Now - game.CurrentQuestionStarted).TotalSeconds;
 
-             if (timeOfSubmit > game.CurrentQuestion.SecondsToAnswer)
+             if (timeOfSubmit > game.CurrentQuestion.SecondsToAnswer || !userAnswerService.IsTheFirstAnswer(game.Id, game.CurrentQuestionId, Context.UserIdentifier))
              {
                  return;
              }
+             
              foreach (var answerId in answers.Ids)
              {
                 userAnswerService.CreateUserAnswer(joinId, answerId, Context.UserIdentifier, timeOfSubmit);

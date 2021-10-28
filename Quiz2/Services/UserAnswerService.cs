@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -144,9 +145,16 @@ namespace Quiz2.Services
             return applicationDbContext.UserAnswers
                 .Where(userAnswer => userAnswer.GameId == gameId)
                 .Where(userAnswer => userAnswer.ApplicationUserId == applicationUserId)
-                .Where(userAnswer => userAnswer.AnswerId == answerId)
-                .Any();
+                .Any(userAnswer => userAnswer.AnswerId == answerId);
         }
 
+        public bool IsTheFirstAnswer(int gameId, int? questionId, string applicationUserId)
+        {
+            return _context.UserAnswers
+                .Where(userAnswer => userAnswer.GameId == gameId)
+                .Where(userAnswer => userAnswer.Answer.QuestionId == questionId)
+                .Where(userAnswer => userAnswer.ApplicationUserId == applicationUserId)
+                .IsNullOrEmpty();
+        }
     }
 }
