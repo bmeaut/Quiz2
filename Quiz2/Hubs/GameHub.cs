@@ -130,7 +130,7 @@ namespace Quiz2.Hubs
         {
             try
             {
-                var game = gameService.GetGameWithQuestionsByJoinId(joinId);
+                var game = gameService.GetGameByJoinIdWithCurrentQuestion(joinId);
                 game.Status = GameStatuses.Started;
                 game.CurrentQuestionStarted = DateTime.Now;
                 gameService.Save();
@@ -218,10 +218,11 @@ namespace Quiz2.Hubs
              var game = gameService.GetGameByJoinIdWithCurrentQuestion(joinId);
              var timeOfSubmit = (DateTime.Now - game.CurrentQuestionStarted).TotalSeconds;
 
-             if (timeOfSubmit > game.CurrentQuestion.SecondsToAnswer)
+             if (timeOfSubmit > game.CurrentQuestion.SecondsToAnswer || !userAnswerService.IsTheFirstAnswer(game.Id, game.CurrentQuestionId, Context.UserIdentifier))
              {
                  return;
              }
+             
              foreach (var answerId in answers.Ids)
              {
                 userAnswerService.CreateUserAnswer(joinId, answerId, Context.UserIdentifier, timeOfSubmit);
@@ -245,19 +246,10 @@ namespace Quiz2.Hubs
             using var scope = serviceScopeFactory.CreateScope();
             var dbContext = scope.ServiceProvider.GetService<ApplicationDbContext>();
 
-            var game = gameService.GetGameByJoinIdWithCurrentQuestion(joinId, dbContext);
+            var game = gameService.GetGameByJoinIdWithCurrentQuestionAndJoinUsers(joinId, dbContext);
             var QuestionTimer = (QuestionTimer) sender;
             Console.WriteLine("cast után " + game.JoinId);
-            List<int> stats = null;
-            try
-            {
-                stats = userAnswerService.GetCurrentQuestionStat(game.JoinId, dbContext);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-
-            }
+            List<int> stats = userAnswerService.GetCurrentQuestionStat(game.JoinId, dbContext);
             Console.WriteLine("stat után ");
             foreach (var user in game.JoinedUsers)
             {
@@ -272,20 +264,13 @@ namespace Quiz2.Hubs
                     }
                 ).ToList();
                 Console.WriteLine("tolist után");
-                CurrentQuestionStatDto currentQuestionStatDto = null;
-                try
-                {
-                    currentQuestionStatDto = new CurrentQuestionStatDto()
+                CurrentQuestionStatDto currentQuestionStatDto = new CurrentQuestionStatDto()
                     {
                         CorrectedAnswers = correctedAnswers,
                         Stats = stats,
                         Point = userAnswerService.GetUserPoint(game.JoinId, user.Id, dbContext)
                     };
-                } catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-
-                }
+              
 
                 Console.WriteLine("new CurrentQuestionStatDto után");
                 QuestionTimer.hubCallerClients.User(user.Id).SendAsync("endQuestion", currentQuestionStatDto);

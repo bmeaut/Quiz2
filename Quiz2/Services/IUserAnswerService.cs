@@ -13,5 +13,7 @@ namespace Quiz2.Services
 
         public bool IsMarked(int answerId, int gameId, string applicationUserId,
             ApplicationDbContext applicationDbContext = null);
+
+        public bool IsTheFirstAnswer(int gameId, int? quizId, string applicationUserId);
     }
 }

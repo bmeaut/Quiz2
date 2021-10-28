@@ -26,8 +26,8 @@ export class QuizQuestionCreateComponent implements OnInit {
   };
 
   constructor(
-    private router: Router, 
-    private questionService: QuizQuestionService, 
+    private router: Router,
+    private questionService: QuizQuestionService,
     private route: ActivatedRoute
     ) { }
 
@@ -37,10 +37,10 @@ export class QuizQuestionCreateComponent implements OnInit {
       'score': new FormControl(null, [Validators.required, Validators.min(0), Validators.pattern("^[0-9]*$"),]),
       'timeToAnswer': new FormControl(null, [Validators.required, Validators.min(4), Validators.pattern("^[0-9]*$")]),
       'position': new FormControl(null, [Validators.required, Validators.min(1), Validators.pattern("^[0-9]*$")]),
-      'answerA': new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(200)]),
-      'answerB': new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(200)]),
-      'answerC': new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(200)]),
-      'answerD': new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(200)]),
+      'answerA': new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(200)]),
+      'answerB': new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(200)]),
+      'answerC': new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(200)]),
+      'answerD': new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(200)]),
       'answerACorrect': new FormControl(false),
       'answerBCorrect': new FormControl(false),
       'answerCCorrect': new FormControl(false),
