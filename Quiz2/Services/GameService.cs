@@ -63,6 +63,19 @@ namespace Quiz2.Services
             return applicationDbContext.Games.Where(g => g.JoinId == joinId)
                 .Include(game => game.CurrentQuestion)
                 .ThenInclude(question => question.Answers.OrderBy(answer => answer.Id))
+                .FirstOrDefault();
+        }
+        
+        public Game GetGameByJoinIdWithCurrentQuestionAndJoinUsers(string joinId, ApplicationDbContext applicationDbContext = null)
+        {
+            if (applicationDbContext == null)
+            {
+                applicationDbContext = _context;
+            }
+   
+            return applicationDbContext.Games.Where(g => g.JoinId == joinId)
+                .Include(game => game.CurrentQuestion)
+                .ThenInclude(question => question.Answers.OrderBy(answer => answer.Id))
                 .Include(game => game.JoinedUsers)
                 .FirstOrDefault();
         }
