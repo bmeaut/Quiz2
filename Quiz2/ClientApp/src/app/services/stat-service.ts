@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
 import { GameStat } from "../game-stat";
 import { Question } from "../question";
+import { User } from "../user";
 
 @Injectable({
     providedIn: 'root'
@@ -20,6 +21,10 @@ export class StatService {
   }
 
     getQuestionsOfPlayedGame(gameId){
-        return this.httpClient.get<Question[]>(this.baseUrl + "api/Stat/" +gameId +"/GetQuestionsOfPlayedGame")//gameId
+        return this.httpClient.get<Question[]>(this.baseUrl + "api/Stat/" +gameId +"/GetQuestionsOfPlayedGame")
+    }
+
+    getUsersOfPlayedGame(gameId){
+        return this.httpClient.get<User[]>(this.baseUrl + "api/Stat/" +gameId +"/GetUsersOfPlayedGame")
     }
 }

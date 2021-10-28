@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { AuthorizeService } from "src/api-authorization/authorize.service";
 import { Question } from "src/app/question";
 import { StatService } from "src/app/services/stat-service";
-import { threadId } from "worker_threads";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({

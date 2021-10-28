@@ -38,6 +38,7 @@ import { PlayerStatisticsComponent } from './game-components/player-statistics/p
 import { QuizFailedJoinComponent } from './game-components/quiz-failed-join/quiz-failed-join.component';
 import { QuizWaitingComponent } from './game-components/quiz-waiting/quiz-waiting.component';
 import { StatPlayedListItem } from './stat-game-details-components/stat-played-list-item/stat-played-list-item.component';
+import { StatOwnedListItem } from './stat-game-details-components/stat-owned-list-item/stat-owned-list-item.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { StatPlayedListItem } from './stat-game-details-components/stat-played-l
     StatOwnedDetailsComponent,
     StatPlayedDetailsComponent,
     StatPlayedListItem,
+    StatOwnedListItem,
     PlaceholderDirective,
     SRTestComponent,
     PageNotFoundComponent,

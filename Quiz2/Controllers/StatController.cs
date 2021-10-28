@@ -60,5 +60,13 @@ namespace Quiz2.Controllers
             return statService.GetQuestionsOfPlayedGame(gameId, HttpContext.User.GetUserId());
         }
 
+        //GET: api/Stat/{gameId}/GetUsersOfPlayedGame
+        [Route("{gameId}/GetUsersOfPlayedGame")]
+        [HttpGet]
+        public ActionResult<List<PlayerDto>> GetUsersOfPlayedGame(int gameId)
+        {
+            return statService.GetUsersOfPlayedGame(gameId);
+        }
+
     }
 }

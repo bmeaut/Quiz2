@@ -64,22 +64,7 @@ namespace Quiz2.Services
         }
 
         public List<CorrectedQuestionDto> GetQuestionsOfPlayedGame(int gameId, string userId)
-        {//, int gameId
-            //Game game = _context.Games.Where(game => game.Id == gameId).First();
-            //actual answers correct
-            //user answers marked
-            //DTO
-            /*
-            return _context.Questions.Where(question=> question.QuizId == game.QuizId)
-                .Include(question => question.Answers)
-                .Select(question => new {  })
-            */
-            //todo
-            /*return _context.Questions
-                .Include(question => question.Quiz)
-                .Include(question => question.Answers)
-                .ToList();*/
-
+        {
             var game = gameService.GetGameByIdWithQuestions(gameId);
             return game.Quiz.Questions.Select(question => new CorrectedQuestionDto()
             {
@@ -97,6 +82,11 @@ namespace Quiz2.Services
                 Points = question.Points,
             }).ToList();
       
+        }
+
+        public List<PlayerDto> GetUsersOfPlayedGame(int gameId)
+        {
+            return gameService.GetJoinedUsersNames(gameId).ToList();
         }
 
     }

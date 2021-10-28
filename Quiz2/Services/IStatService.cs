@@ -11,5 +11,6 @@ namespace Quiz2.Services
         public int GetUserPointsInGame(int gameId, string userId);
         public List<GameStatDto> GetPlayedGameHistory(string userId);
         public List<CorrectedQuestionDto> GetQuestionsOfPlayedGame(int gameId, string userId);
+        public List<PlayerDto> GetUsersOfPlayedGame(int gameId);
     }
 }

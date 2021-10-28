@@ -1,1 +1,9 @@
-<div>owned</div>
+<div class="main-container">
+    <div class="user-header">
+        <span>Részt vett játékosok</span>
+    </div>
+    <div class="container">
+        <app-stat-owned-list-item *ngFor="let user of users" [user]="user">
+        </app-stat-owned-list-item>
+    </div>
+</div>
