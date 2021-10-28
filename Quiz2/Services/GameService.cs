@@ -166,5 +166,14 @@ namespace Quiz2.Services
             return names;
         }
 
+        public Game GetGameByIdWithQuestions(int gameId)
+        {
+            return _context.Games.Where(game => game.Id == gameId)
+                .Include(game => game.Quiz)
+                .ThenInclude(quiz => quiz.Questions)
+                .ThenInclude(questions => questions.Answers)
+                .FirstOrDefault();
+        }
+
     }
 }

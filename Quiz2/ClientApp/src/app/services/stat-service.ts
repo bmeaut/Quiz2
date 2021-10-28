@@ -8,7 +8,7 @@ import { Question } from "../question";
     providedIn: 'root'
 })
 export class StatService {
-    
+
   constructor(private httpClient: HttpClient, @Inject('BASE_URL') readonly baseUrl: string) { }
 
   getOwnGames(){
@@ -19,7 +19,7 @@ export class StatService {
       return this.httpClient.get<GameStat[]>(this.baseUrl + "api/Stat/GetPlayedGameHistory")
   }
 
-    getQuestionsOfPlayedGame(){
-        return this.httpClient.get<Question[]>(this.baseUrl + "api/Stat/GetQuestionsOfPlayedGame")//gameId
+    getQuestionsOfPlayedGame(gameId){
+        return this.httpClient.get<Question[]>(this.baseUrl + "api/Stat/" +gameId +"/GetQuestionsOfPlayedGame")//gameId
     }
 }

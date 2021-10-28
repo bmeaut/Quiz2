@@ -15,6 +15,7 @@ namespace Quiz2.Services
         public Game CreateGame(int quizId, string applicationUserId);
         public void AddJoinedUser(int gameId, string applicationUserId);
         public  IEnumerable<PlayerDto> GetJoinedUsersNames(int gameId);
+        public Game GetGameByIdWithQuestions(int gameId);
         public void Save();
     }
 }

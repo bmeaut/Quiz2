@@ -14,10 +14,14 @@ namespace Quiz2.Services
     {
         
         private readonly ApplicationDbContext _context;
+        private readonly IGameService gameService;
+        private readonly IUserAnswerService userAnswerService;
 
-        public StatService(ApplicationDbContext context)
+        public StatService(ApplicationDbContext context, IGameService gameService, IUserAnswerService userAnswerService)
         {
             _context = context;
+            this.gameService = gameService;
+            this.userAnswerService = userAnswerService;
         }
         public int GetNumberOfUserAnswers(int gameId, int answerId)
         {
@@ -59,7 +63,7 @@ namespace Quiz2.Services
                 .ToList();
         }
 
-        public List<Question> GetQuestionsOfPlayedGame(string userId)
+        public List<CorrectedQuestionDto> GetQuestionsOfPlayedGame(int gameId, string userId)
         {//, int gameId
             //Game game = _context.Games.Where(game => game.Id == gameId).First();
             //actual answers correct
@@ -71,11 +75,28 @@ namespace Quiz2.Services
                 .Select(question => new {  })
             */
             //todo
-            return _context.Questions
+            /*return _context.Questions
                 .Include(question => question.Quiz)
                 .Include(question => question.Answers)
-                .ToList();
+                .ToList();*/
 
+            var game = gameService.GetGameByIdWithQuestions(gameId);
+            return game.Quiz.Questions.Select(question => new CorrectedQuestionDto()
+            {
+                Id = question.Id,
+                Text = question.Text,
+                Answers = question.Answers.Select(answer =>
+                    new CorrectedAnswerDto()
+                    {
+                        Id = answer.Id,
+                        Correct = answer.Correct,
+                        Text = answer.Text,
+                        Marked = userAnswerService.IsMarked(answer.Id, game.Id, userId),
+                    }
+                ).ToList(),
+                Points = question.Points,
+            }).ToList();
+      
         }
 
     }
