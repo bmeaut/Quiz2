@@ -8,6 +8,7 @@ import {User} from "../user";
 import {CurrentQuestionStat} from "../currentQuestionStat";
 import {Answers} from "../answers";
 import {OwnerJoinedToStartedDto} from "../ownerJoinedToStartedDto";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +34,7 @@ export class GamesService {
   public gameFinished = new EventEmitter();
   public ownerJoinedToStarted = new EventEmitter();
   public joinedToStarted = new EventEmitter<OwnerJoinedToStartedDto>();
-  constructor(private authorizeService: AuthorizeService) {
+  constructor(private authorizeService: AuthorizeService, private router: Router) {
     this.started = false;
 
     this.authorizeService.getAccessToken().subscribe(token => {
@@ -89,9 +90,13 @@ export class GamesService {
           console.debug("endQuestion");
         }
       });
-      this.connection.on("endGame", () => {
-        this.endGame.emit()
+      this.connection.on("endGame", (gameId: number) => {
+        this.router.navigate(["/stats",gameId , "detailsPlayed"]);
         console.debug("endGame");
+      });
+      this.connection.on("endGameOwner", (gameId: number) => {
+        this.router.navigate(["/stats", gameId , "detailsOwned"]);
+        console.debug("endGameOwner");
       });
       this.connection.on("newPlayer", (players :User[]) => {
         this.newPlayer.emit(players)

@@ -206,8 +206,8 @@ namespace Quiz2.Hubs
                 {
                     game.Status = GameStatuses.Finished;
                     gameService.Save();
-                    Clients.Group(game.JoinId + "Owner").SendAsync("endGame");
-                    Clients.Group(game.JoinId).SendAsync("endGame");
+                    Clients.Group(game.JoinId + "Owner").SendAsync("endGameOwner", game.Id);
+                    Clients.Group(game.JoinId).SendAsync("endGame", game.Id);
                 }
             }
         }
