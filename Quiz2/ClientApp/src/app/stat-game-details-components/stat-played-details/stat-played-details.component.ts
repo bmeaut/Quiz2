@@ -17,7 +17,12 @@ import {ActivatedRoute, Router} from "@angular/router";
 
     ngOnInit() {
       this.questions = [];
-      this.getQuestionsOfGame();
+      if(this.route.snapshot.paramMap.get('id')===null){
+        this.getQuestionsOfPlayedGameWithUserId();
+      }
+      else{
+        this.getQuestionsOfGame();
+      }
     }
 
     getQuestionsOfGame(){
@@ -25,5 +30,9 @@ import {ActivatedRoute, Router} from "@angular/router";
         this.questions = questions;
       });
     }
-
+    getQuestionsOfPlayedGameWithUserId(){
+      this.statService.getQuestionsOfPlayedGameWithUserId(this.route.snapshot.paramMap.get('gameId'), this.route.snapshot.paramMap.get('userId')).subscribe(questions => {
+        this.questions = questions;
+      });
+    } 
   }

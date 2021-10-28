@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { User } from "oidc-client";
+import { ActivatedRoute, Router } from "@angular/router";
+import { User } from "../../user";
 import { AuthorizeService } from "src/api-authorization/authorize.service";
 import { StatService } from "src/app/services/stat-service";
 
@@ -12,13 +13,13 @@ import { StatService } from "src/app/services/stat-service";
   
     @Input() user: User;
 
-    constructor(private statService: StatService, private authService: AuthorizeService) { }
+    constructor( private route: ActivatedRoute, private router: Router, private statService: StatService, private authService: AuthorizeService) { }
   
     ngOnInit() {
     }
     
-    showDetails(game){
-
+    showDetails(){
+      this.router.navigate(["/stats", this.route.snapshot.paramMap.get('id') , "detailsOwned", this.user.id]);
     }
   
   }

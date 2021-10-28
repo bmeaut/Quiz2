@@ -24,7 +24,16 @@ export class StatService {
         return this.httpClient.get<Question[]>(this.baseUrl + "api/Stat/" +gameId +"/GetQuestionsOfPlayedGame")
     }
 
+
+    getQuestionsOfPlayedGameWithUserId(gameId, userId){
+        return this.httpClient.get<Question[]>(this.baseUrl + "api/Stat/" +gameId+"/"+userId +"/getQuestionsOfPlayedGameWithUserId")
+    }
+
+
+
     getUsersOfPlayedGame(gameId){
         return this.httpClient.get<User[]>(this.baseUrl + "api/Stat/" +gameId +"/GetUsersOfPlayedGame")
     }
+
+    
 }

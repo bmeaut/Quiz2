@@ -38,6 +38,7 @@ const appRoutes: Routes = [
     { path: 'quizzes/:id/edit', component: QuizEditComponent},
     { path: 'stats', component: StatListComponent},
     { path: 'stats/:id/detailsOwned', component: StatOwnedDetailsComponent},
+    { path: 'stats/:gameId/detailsOwned/:userId', component: StatPlayedDetailsComponent},
     { path: 'stats/:id/detailsPlayed', component: StatPlayedDetailsComponent},
     { path: 'playerstats', component: PlayerStatisticsComponent},
     { path: 'not-found', component: PageNotFoundComponent },
