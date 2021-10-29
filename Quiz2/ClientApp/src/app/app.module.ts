@@ -20,7 +20,6 @@ import { PlaceholderDirective } from '../../src/directives/placeholder.directive
 import { QuizGameComponent } from './game-components/quiz-game/quiz-game.component';
 import { QuizOwnerLobbyComponent } from './game-components/quiz-owner-lobby/quiz-owner-lobby.component';
 import { QuizOwnerQuestionComponent } from './game-components/quiz-owner-question/quiz-owner-question.component';
-import {SRTestComponent} from "./SR-test/SR-test.component";
 import {GamesService} from "./services/games-service";
 import { QuizListComponent } from './quiz-list-components/quiz-list/quiz-list.component';
 import { QuizListItemComponent } from './quiz-list-components/quiz-list-item/quiz-list-item.component';
@@ -70,7 +69,6 @@ import { StatOwnedListItem } from './stat-game-details-components/stat-owned-lis
     StatPlayedListItem,
     StatOwnedListItem,
     PlaceholderDirective,
-    SRTestComponent,
     PageNotFoundComponent,
     QuizFailedJoinComponent,
     QuizWaitingComponent

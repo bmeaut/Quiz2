@@ -15,7 +15,6 @@ import { QuizQuestionCreateComponent } from "./question-list-components/quiz-que
 import { QuizQuestionEditComponent } from "./question-list-components/quiz-question-edit/quiz-question-edit.component";
 import { QuizQuestionListComponent } from "./question-list-components/quiz-question-list/quiz-question-list.component";
 import { QuizQuestionComponent } from "./game-components/quiz-question/quiz-question.component";
-import { SRTestComponent } from "./SR-test/SR-test.component";
 import { StatListComponent } from "./stat-list-components/stat-list/stat-list.component";
 import { StatOwnedDetailsComponent } from "./stat-game-details-components/stat-owned-details/stat-owned-details.component"
 import { StatPlayedDetailsComponent } from "./stat-game-details-components/stat-played-details/stat-played-details.component";
@@ -24,27 +23,26 @@ import { PlayerStatisticsComponent } from "./game-components/player-statistics/p
 const appRoutes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
     { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
-    { path: 'sr-test', component: SRTestComponent },
-    { path: 'question', component: QuizQuestionComponent},
-    { path: 'ownerquestion', component: QuizOwnerQuestionComponent},
-    { path: 'lobby', component: QuizOwnerLobbyComponent},
-    { path: 'game', component: QuizGameComponent},
+    { path: 'question', component: QuizQuestionComponent, canActivate: [AuthorizeGuard]},
+    { path: 'ownerquestion', component: QuizOwnerQuestionComponent, canActivate: [AuthorizeGuard]},
+    { path: 'lobby', component: QuizOwnerLobbyComponent, canActivate: [AuthorizeGuard]},
+    { path: 'game', component: QuizGameComponent, canActivate: [AuthorizeGuard]},
     { path: 'join', component: JoinGameComponent, canActivate: [AuthorizeGuard]},
-    { path: 'quizzes/:id/questions', component: QuizQuestionListComponent},
-    { path: 'quizzes/:id/questions/new', component: QuizQuestionCreateComponent},
-    { path: 'quizzes/:id/questions/:questionid/edit', component: QuizQuestionEditComponent},
-    { path: 'quizzes', component: QuizListComponent},
-    { path: 'quizzes/new', component: QuizCreateComponent},
-    { path: 'quizzes/:id/edit', component: QuizEditComponent},
-    { path: 'stats', component: StatListComponent},
-    { path: 'stats/:id/detailsOwned', component: StatOwnedDetailsComponent},
-    { path: 'stats/:gameId/detailsOwned/:userId', component: StatPlayedDetailsComponent},
-    { path: 'stats/:id/detailsPlayed', component: StatPlayedDetailsComponent},
-    { path: 'playerstats', component: PlayerStatisticsComponent},
+    { path: 'quizzes/:id/questions', component: QuizQuestionListComponent, canActivate: [AuthorizeGuard]},
+    { path: 'quizzes/:id/questions/new', component: QuizQuestionCreateComponent, canActivate: [AuthorizeGuard]},
+    { path: 'quizzes/:id/questions/:questionid/edit', component: QuizQuestionEditComponent, canActivate: [AuthorizeGuard]},
+    { path: 'quizzes', component: QuizListComponent, canActivate: [AuthorizeGuard]},
+    { path: 'quizzes/new', component: QuizCreateComponent, canActivate: [AuthorizeGuard]},
+    { path: 'quizzes/:id/edit', component: QuizEditComponent, canActivate: [AuthorizeGuard]},
+    { path: 'stats', component: StatListComponent, canActivate: [AuthorizeGuard]},
+    { path: 'stats/:id/detailsOwned', component: StatOwnedDetailsComponent, canActivate: [AuthorizeGuard]},
+    { path: 'stats/:gameId/detailsOwned/:userId', component: StatPlayedDetailsComponent, canActivate: [AuthorizeGuard]},
+    { path: 'stats/:id/detailsPlayed', component: StatPlayedDetailsComponent, canActivate: [AuthorizeGuard]},
+    { path: 'playerstats', component: PlayerStatisticsComponent, canActivate: [AuthorizeGuard]},
     { path: 'not-found', component: PageNotFoundComponent },
     { path: '**', redirectTo: '/not-found' },
   ];
-  
+
   @NgModule({
     imports: [
       RouterModule.forRoot(appRoutes)
@@ -52,5 +50,5 @@ const appRoutes: Routes = [
     exports: [RouterModule]
   })
   export class AppRoutingModule {
-  
+
   }

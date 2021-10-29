@@ -130,8 +130,7 @@ namespace Quiz2.Services
                 .Where(userAnswer => userAnswer.ApplicationUserId == applicationUserId)
                 .Include(userAnswer => userAnswer.Answer)
                 .Include(userAnswer => userAnswer.Answer.Question)
-                .Where(userAnswer => userAnswer.Answer.Correct)
-                .Sum(userAnswer => userAnswer.Answer.Question.Points);
+                .Sum(userAnswer => userAnswer.Answer.Correct ? userAnswer.Answer.Question.Points : -userAnswer.Answer.Question.Points);
             
         }
 
