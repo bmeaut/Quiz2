@@ -43,6 +43,9 @@ export class QuizOwnerQuestionComponent implements OnInit {
       this.question=question;
       this.timeIsOver = false;
       this.stats = [0,0,0,0];
+      if( this.chart) {
+        this.chart.destroy();
+      }
       this.drawChart();
       this.startTimer();
     });
@@ -55,6 +58,7 @@ export class QuizOwnerQuestionComponent implements OnInit {
     }
     this.gameService.currentQuestionStat.subscribe((stat :CurrentQuestionStat) => {
       this.stats=stat.stats;
+      this.chart.destroy();
       this.drawChart();
     })
     this.startTimer();
