@@ -18,11 +18,11 @@ namespace Quiz2.Controllers
     [Authorize]
     public class QuizController : ControllerBase
     {
-        private readonly IQuizService quizService;
+        private readonly IQuizService _quizService;
 
         public QuizController(IQuizService quizService)
         {
-            this.quizService = quizService;
+            _quizService = quizService;
         }
 
         // GET: api/Quiz/5
@@ -31,7 +31,7 @@ namespace Quiz2.Controllers
         {
             if (UserIdCheck(quizId))
             {
-                return quizService.GetQuiz(quizId);
+                return _quizService.GetQuiz(quizId);
             }
             return null;
         }
@@ -42,7 +42,7 @@ namespace Quiz2.Controllers
         {
             if (UserIdCheck(quizId))
             {
-                quizService.DeleteQuiz(quizId);
+                _quizService.DeleteQuiz(quizId);
             }
             return NoContent();
         }
@@ -53,7 +53,7 @@ namespace Quiz2.Controllers
         {
             if (UserIdCheck(quizId))
             {
-                return quizService.UpdateQuiz(quizId, updateQuizDto);
+                return _quizService.UpdateQuiz(quizId, updateQuizDto);
             }
             return null;
         }
@@ -62,14 +62,14 @@ namespace Quiz2.Controllers
         [HttpPut]
         public ActionResult<Quiz> CreateQuiz(CreateQuizDto createQuizDto)
         { 
-            return quizService.CreateQuiz(createQuizDto, HttpContext.User.GetUserId());
+            return _quizService.CreateQuiz(createQuizDto, HttpContext.User.GetUserId());
         }
 
         // GET: api/Quiz
         [HttpGet]
         public ActionResult<List<Quiz>> GetQuizzes()
         {
-            return quizService.GetQuizzes(HttpContext.User.GetUserId());
+            return _quizService.GetQuizzes(HttpContext.User.GetUserId());
         }
 
         // GET: api/Quiz/5/questions
@@ -78,14 +78,14 @@ namespace Quiz2.Controllers
         {
             if (UserIdCheck(quizId))
             {
-                return quizService.GetQuestions(quizId);
+                return _quizService.GetQuestions(quizId);
             }
             return null;
         }
 
         private bool UserIdCheck(int quizId)
         {
-            var quiz = quizService.GetQuiz(quizId);
+            var quiz = _quizService.GetQuiz(quizId);
             return quiz.Owner.Id == HttpContext.User.GetUserId();
         }
     }

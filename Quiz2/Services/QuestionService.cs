@@ -9,12 +9,12 @@ namespace Quiz2.Services
     public class QuestionService: IQuestionService
     {
         private readonly ApplicationDbContext _context;
-        private readonly IAnswerService answerService;
+        private readonly IAnswerService _answerService;
 
         public QuestionService(IAnswerService answerService, ApplicationDbContext context)
         {
             _context = context;
-            this.answerService = answerService;
+            _answerService = answerService;
         }
 
         
@@ -44,7 +44,7 @@ namespace Quiz2.Services
                 foreach (CreateAnswerDto createAnswerDto in createQuestionDto.Answers)
                 {
                     createAnswerDto.QuestionId = question.Id;
-                    answerService.CreateAnswer(createAnswerDto);
+                    _answerService.CreateAnswer(createAnswerDto);
                 }
                 return GetQuestion(question.Id);
             }
@@ -56,24 +56,25 @@ namespace Quiz2.Services
             var question = _context.Questions
                 .Include(q => q.Answers)
                 .FirstOrDefault(q => q.Id == questionId);
-            if(question != null)
+            if (question == null)
             {
-                question.Text = updateQuestionDto.Text;
-                question.SecondsToAnswer = updateQuestionDto.SecondsToAnswer;
-                question.Points = updateQuestionDto.Points;
-                question.Position = updateQuestionDto.Position;
-                foreach (var questionAnswer in question.Answers)
-                {
-                    var answer = updateQuestionDto.Answers
-                        .Find(a => a.Id == questionAnswer.Id);
-                    if (answer != null)
-                    {
-                        questionAnswer.Text = answer.Text;
-                        questionAnswer.Correct = answer.Correct;
-                    }
-                }
-                _context.SaveChanges();
+                return null;
             }
+            question.Text = updateQuestionDto.Text;
+            question.SecondsToAnswer = updateQuestionDto.SecondsToAnswer;
+            question.Points = updateQuestionDto.Points;
+            question.Position = updateQuestionDto.Position;
+            foreach (var questionAnswer in question.Answers)
+            {
+                var answer = updateQuestionDto.Answers
+                    .Find(a => a.Id == questionAnswer.Id);
+                if (answer != null)
+                {
+                    questionAnswer.Text = answer.Text;
+                    questionAnswer.Correct = answer.Correct;
+                }
+            }
+            _context.SaveChanges();
             return GetQuestion(question.Id);
         }
 
@@ -82,15 +83,16 @@ namespace Quiz2.Services
             var question = _context.Questions
                 .Include(q => q.Answers)
                 .FirstOrDefault(q => q.Id == questionId);
-            if (question != null)
+            if (question == null)
             {
-                while(question.Answers.FirstOrDefault() != null)
-                {
-                    answerService.DeleteAnswer(question.Answers.FirstOrDefault().Id);
-                }
-                _context.Questions.Remove(question);
-                _context.SaveChanges();
+                return;
             }
+            while(question.Answers.FirstOrDefault() != null)
+            {
+                _answerService.DeleteAnswer(question.Answers.FirstOrDefault().Id);
+            }
+            _context.Questions.Remove(question);
+            _context.SaveChanges();
         }
 
         public Question GetNextQuestion(int quizId, int currentPosition)

@@ -15,27 +15,27 @@ namespace Quiz2.Controllers
     [Authorize]
     public class QuestionController: ControllerBase
     {
-        private readonly IQuestionService questionService;
-        private readonly IQuizService quizService;
+        private readonly IQuestionService _questionService;
+        private readonly IQuizService _quizService;
 
         public QuestionController(IQuestionService questionService, IQuizService quizService)
         {
-            this.questionService = questionService;
-            this.quizService = quizService;
+            _questionService = questionService;
+            _quizService = quizService;
         }
 
         // GET: api/Question/5
         [HttpGet("{questionId}")]
         public ActionResult<Question> GetQuestion(int questionId)
         {
-            return questionService.GetQuestion(questionId);
+            return _questionService.GetQuestion(questionId);
         }
 
         // PUT: api/Question
         [HttpPut]
         public ActionResult<Question> CreateQuestion(CreateQuestionDto createQuestionDto)
         {
-            return questionService.CreateQuestion(createQuestionDto);
+            return _questionService.CreateQuestion(createQuestionDto);
         }
 
         //PATCH: api/Question/5
@@ -44,7 +44,7 @@ namespace Quiz2.Controllers
         {
             if (UserIdCheck(questionId))
             {
-                return questionService.UpdateQuestion(questionId, updateQuestionDto);
+                return _questionService.UpdateQuestion(questionId, updateQuestionDto);
             }
             return null;
         }
@@ -55,15 +55,15 @@ namespace Quiz2.Controllers
         {
             if (UserIdCheck(questionId))
             {
-                questionService.DeleteQuestion(questionId);   
+                _questionService.DeleteQuestion(questionId);   
             }
             return NoContent();
         }
         
         private bool UserIdCheck(int questionId)
         {
-            var question = questionService.GetQuestion(questionId);
-            var quiz = quizService.GetQuiz(question.QuizId);
+            var question = _questionService.GetQuestion(questionId);
+            var quiz = _quizService.GetQuiz(question.QuizId);
             return quiz.Owner.Id == HttpContext.User.GetUserId();
         }
     }

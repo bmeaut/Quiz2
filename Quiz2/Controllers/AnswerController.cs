@@ -13,22 +13,22 @@ namespace Quiz2.Controllers
     [Authorize]
     public class AnswerController: ControllerBase
     {
-        private readonly IAnswerService answerService;
-        private readonly IQuizService quizService;
-        private readonly IQuestionService questionService;
+        private readonly IAnswerService _answerService;
+        private readonly IQuizService _quizService;
+        private readonly IQuestionService _questionService;
 
         public AnswerController(IAnswerService answerService, IQuizService quizService, IQuestionService questionService)
         {
-            this.answerService = answerService;
-            this.quizService = quizService;
-            this.questionService = questionService;
+            _answerService = answerService;
+            _quizService = quizService;
+            _questionService = questionService;
         }
 
         // GET: api/Answer/5
         [HttpGet("{answerId}")]
         public ActionResult<Answer> GetAnswer(int answerId)
         {
-            return answerService.GetAnswer(answerId);
+            return _answerService.GetAnswer(answerId);
         }
 
         // DELETE: api/Answer/5
@@ -37,7 +37,7 @@ namespace Quiz2.Controllers
         {
             if (UserIdCheck(answerId))
             {
-                answerService.DeleteAnswer(answerId);
+                _answerService.DeleteAnswer(answerId);
             }
             return NoContent();
         }
@@ -46,13 +46,13 @@ namespace Quiz2.Controllers
         [HttpPut]
         public ActionResult<Answer> CreateAnswer(CreateAnswerDto createAnswerDto)
         {
-            return answerService.CreateAnswer(createAnswerDto);
+            return _answerService.CreateAnswer(createAnswerDto);
         }
         private bool UserIdCheck(int answerId)
         {
-            var answer = answerService.GetAnswer(answerId);
-            var question = questionService.GetQuestion(answer.QuestionId);
-            var quiz = quizService.GetQuiz(question.QuizId);
+            var answer = _answerService.GetAnswer(answerId);
+            var question = _questionService.GetQuestion(answer.QuestionId);
+            var quiz = _quizService.GetQuiz(question.QuizId);
             return quiz.Owner.Id == HttpContext.User.GetUserId();
         }
 

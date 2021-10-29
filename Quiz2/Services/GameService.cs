@@ -13,9 +13,9 @@ namespace Quiz2.Services
     public class GameService: IGameService
     {
         private readonly ApplicationDbContext _context;
-        private readonly IApplicationUserService applicationUserService;
-        private readonly IQuestionService questionService;
-        private readonly IQuizService quizService;
+        private readonly IApplicationUserService _applicationUserService;
+        private readonly IQuestionService _questionService;
+        private readonly IQuizService _quizService;
 
 
         public GameService(
@@ -26,21 +26,18 @@ namespace Quiz2.Services
         )
         {
             _context = context;
-            this.applicationUserService = applicationUserService;
-            this.questionService = questionService;
-            this.quizService = quizService;
+            _applicationUserService = applicationUserService;
+            _questionService = questionService;
+            _quizService = quizService;
         }
 
         public Game GetGameByJoinId(string joinId, ApplicationDbContext applicationDbContext = null)
         {
-            if (applicationDbContext == null)
-            {
-                applicationDbContext = _context;
-            }
+            applicationDbContext ??= _context;
+            
             return applicationDbContext.Games.Where(g => g.JoinId == joinId)
                     .Include(g => g.Owner)
                     .FirstOrDefault();
-            
         }
         
         public Game GetGameWithQuestionsByJoinId(string joinId)
@@ -55,11 +52,8 @@ namespace Quiz2.Services
         
         public Game GetGameByJoinIdWithCurrentQuestion(string joinId, ApplicationDbContext applicationDbContext = null)
         {
-            if (applicationDbContext == null)
-            {
-                applicationDbContext = _context;
-            }
-   
+            applicationDbContext ??= _context;
+
             return applicationDbContext.Games.Where(g => g.JoinId == joinId)
                 .Include(game => game.CurrentQuestion)
                 .ThenInclude(question => question.Answers.OrderBy(answer => answer.Id))
@@ -68,11 +62,8 @@ namespace Quiz2.Services
         
         public Game GetGameByJoinIdWithCurrentQuestionAndJoinUsers(string joinId, ApplicationDbContext applicationDbContext = null)
         {
-            if (applicationDbContext == null)
-            {
-                applicationDbContext = _context;
-            }
-   
+            applicationDbContext ??= _context;
+
             return applicationDbContext.Games.Where(g => g.JoinId == joinId)
                 .Include(game => game.CurrentQuestion)
                 .ThenInclude(question => question.Answers.OrderBy(answer => answer.Id))
@@ -82,7 +73,7 @@ namespace Quiz2.Services
 
         public void SetNextQuestion(Game game)
         {
-            var question = questionService.GetNextQuestion(game.QuizId, game.CurrentQuestion.Position);
+            var question = _questionService.GetNextQuestion(game.QuizId, game.CurrentQuestion.Position);
             if (question != null)
             {
                 Console.WriteLine("question != null");
@@ -107,7 +98,7 @@ namespace Quiz2.Services
 
         public Game CreateGame(int quizId, string ownerId)
         {
-            var question = quizService.GetFirstQuestion(quizId);
+            var question = _quizService.GetFirstQuestion(quizId);
             var game = new Game()
             {
                 QuizId = quizId,
@@ -135,19 +126,16 @@ namespace Quiz2.Services
 
         public void AddJoinedUser(int gameId, string applicationUserId)
         {
-            var applicationUser =applicationUserService.GetUser(applicationUserId);
+            var applicationUser =_applicationUserService.GetUser(applicationUserId);
             var game = _context.Games.Where(g => g.Id == gameId)
                 .Include(g => g.JoinedUsers)
                 .FirstOrDefault();
-            if (applicationUser != null && game != null)
+            if (applicationUser == null || game == null)
             {
-                game.JoinedUsers.Add(applicationUser);
-                _context.SaveChanges();
+                return;
             }
-            else
-            {
-                Console.WriteLine("Nincs ilyen user!");
-            }
+            game.JoinedUsers.Add(applicationUser);
+            _context.SaveChanges();
         }
 
         public IEnumerable<PlayerDto> GetJoinedUsersNames(int gameId)

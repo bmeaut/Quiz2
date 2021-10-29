@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using IdentityServer4.Extensions;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Quiz2.Data;
-using Quiz2.DTO;
 using Quiz2.Models;
 
 namespace Quiz2.Services
@@ -15,9 +10,9 @@ namespace Quiz2.Services
     public class UserAnswerService : IUserAnswerService
     {
         private readonly ApplicationDbContext _context;
-        private readonly IGameService gameService;
-        private readonly IAnswerService answerService;
-        private readonly IApplicationUserService applicationUserService;
+        private readonly IGameService _gameService;
+        private readonly IAnswerService _answerService;
+        private readonly IApplicationUserService _applicationUserService;
 
         public UserAnswerService(
             ApplicationDbContext context, 
@@ -27,28 +22,20 @@ namespace Quiz2.Services
             ) 
         {
             _context = context;
-            this.gameService = gameService;
-            this.answerService = answerService;
-            this.applicationUserService = applicationUserService;
+            _gameService = gameService;
+            _answerService = answerService;
+            _applicationUserService = applicationUserService;
         }
 
         public UserAnswer CreateUserAnswer(string joinId, int answerId, string applicationUserId, double timeOfSubmit)
         {
-            Console.WriteLine("joinId: " + joinId);
-            Console.WriteLine("answerId: " + answerId);
-            Console.WriteLine("applicationUserId: " + applicationUserId);
-            var game = gameService.GetGameByJoinId(joinId);
-            Console.WriteLine("game után");
-            var answer = answerService.GetAnswer(answerId);
-            Console.WriteLine("answer után");
-            var user = applicationUserService.GetUser(applicationUserId);
-            Console.WriteLine("user után");
-
+            var game = _gameService.GetGameByJoinId(joinId);
+            var answer = _answerService.GetAnswer(answerId);
+            var user = _applicationUserService.GetUser(applicationUserId);
             if (game == null || answer == null || user == null)
             {
                 return null;
             }
-            Console.WriteLine("if ben");
             var userAnswer = new UserAnswer()
             {
                 Game = game,
@@ -56,11 +43,8 @@ namespace Quiz2.Services
                 Answer = answer,
                 TimeOfSubmit = timeOfSubmit
             };
-            Console.WriteLine("new után");
             _context.UserAnswers.Add(userAnswer);
-            Console.WriteLine("Add után");
             _context.SaveChanges();
-            Console.WriteLine("SaveChanges után");
             return userAnswer;
         }
 
@@ -70,14 +54,13 @@ namespace Quiz2.Services
             if (applicationDbContext == null)
             {
                 applicationDbContext = _context;
-                game = gameService.GetGameByJoinIdWithCurrentQuestion(joinId);
+                game = _gameService.GetGameByJoinIdWithCurrentQuestion(joinId);
             }
             else
             {
-                game = gameService.GetGameByJoinIdWithCurrentQuestion(joinId, applicationDbContext);
+                game = _gameService.GetGameByJoinIdWithCurrentQuestion(joinId, applicationDbContext);
             }
 
-            
             var stats = applicationDbContext.UserAnswers
                 .Where(userAnswer => userAnswer.GameId == game.Id)
                 .Include(userAnswer => userAnswer.Answer)
@@ -93,7 +76,6 @@ namespace Quiz2.Services
 
             foreach (var answer in game.CurrentQuestion.Answers)
             {
-
                 var find = false;
                 foreach (var stat in stats)
                 {
@@ -108,7 +90,6 @@ namespace Quiz2.Services
                 {
                     counts.Add(0);
                 }
-
             }
             return counts;
         }
@@ -119,11 +100,11 @@ namespace Quiz2.Services
             if (applicationDbContext == null)
             {
                 applicationDbContext = _context;
-                game = gameService.GetGameByJoinId(joinId);
+                game = _gameService.GetGameByJoinId(joinId);
             }
             else
             {
-                game = gameService.GetGameByJoinId(joinId, applicationDbContext);
+                game = _gameService.GetGameByJoinId(joinId, applicationDbContext);
             }
             return applicationDbContext.UserAnswers
                 .Where(userAnswer => userAnswer.GameId == game.Id)
@@ -131,15 +112,11 @@ namespace Quiz2.Services
                 .Include(userAnswer => userAnswer.Answer)
                 .Include(userAnswer => userAnswer.Answer.Question)
                 .Sum(userAnswer => userAnswer.Answer.Correct ? userAnswer.Answer.Question.Points : -userAnswer.Answer.Question.Points);
-            
         }
 
         public bool IsMarked(int answerId, int gameId, string applicationUserId, ApplicationDbContext applicationDbContext = null)
         {
-            if (applicationDbContext == null)
-            { 
-                applicationDbContext = _context; 
-            }
+            applicationDbContext ??= _context;
 
             return applicationDbContext.UserAnswers
                 .Where(userAnswer => userAnswer.GameId == gameId)

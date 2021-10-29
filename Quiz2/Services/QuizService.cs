@@ -1,7 +1,6 @@
 ﻿using Quiz2.Data;
 using Quiz2.DTO;
 using Quiz2.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -33,19 +32,19 @@ namespace Quiz2.Services
         public Quiz CreateQuiz(CreateQuizDto createQuizDto, string currentUserId)
         {
             var owner = applicationUserService.GetUser(currentUserId);
-            if(owner != null)
+            if (owner == null)
             {
-                var quiz = new Quiz()
-                {
-                    Name = createQuizDto.Name,
-                    Owner = owner
-                };
-                _context.Quizzes.Add(quiz);
-                _context.SaveChanges();
-                return quiz;
+                return null;
             }
-            return null;
-            
+            var quiz = new Quiz()
+            {
+                Name = createQuizDto.Name,
+                Owner = owner
+            };
+            _context.Quizzes.Add(quiz);
+            _context.SaveChanges();
+            return quiz;
+
         }
 
         public List<Quiz> GetQuizzes(string ownerId)
@@ -63,22 +62,19 @@ namespace Quiz2.Services
             var quiz = _context.Quizzes
                 .Include(q => q.Questions.OrderBy(question => question.Position))
                 .FirstOrDefault(q => q.Id == quizId);
-            if(quiz != null)
-            {
-                return quiz.Questions;
-            }
-            return null;
+            return quiz?.Questions;
         }
 
         public Quiz UpdateQuiz(int quizId, UpdateQuizDto updateQuizDto)
         {
             var quiz = _context.Quizzes
                     .FirstOrDefault(q => q.Id == quizId);
-            if (quiz != null)
+            if (quiz == null)
             {
-                quiz.Name = updateQuizDto.Name;
-                _context.SaveChanges();
+                return null;
             }
+            quiz.Name = updateQuizDto.Name;
+            _context.SaveChanges();
             return quiz;
         }
 
@@ -87,15 +83,18 @@ namespace Quiz2.Services
             var quiz = _context.Quizzes
                     .Include(q => q.Questions)
                     .FirstOrDefault(q => q.Id == quizId);
-            if (quiz != null)
+            
+            if (quiz == null)
             {
-                while (quiz.Questions.FirstOrDefault() != null)
-                {
-                    questionService.DeleteQuestion(quiz.Questions.FirstOrDefault().Id);
-                }
-                _context.Quizzes.Remove(quiz);
-                _context.SaveChanges();
+                return;
             }
+            
+            while (quiz.Questions.FirstOrDefault() != null)
+            {
+                questionService.DeleteQuestion(quiz.Questions.FirstOrDefault().Id);
+            }
+            _context.Quizzes.Remove(quiz);
+            _context.SaveChanges();
         }
         
         public Question GetFirstQuestion(int quizId)

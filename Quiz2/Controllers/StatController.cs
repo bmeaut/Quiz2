@@ -13,11 +13,11 @@ namespace Quiz2.Controllers
     [Authorize]
     public class StatController : ControllerBase
     {
-        private readonly IStatService statService;
+        private readonly IStatService _statService;
 
         public StatController(IStatService statService)
         {
-            this.statService = statService;
+            _statService = statService;
         }
         
         //GET: api/Stat/GetNumberOfUserAnswers
@@ -25,7 +25,7 @@ namespace Quiz2.Controllers
         [HttpGet]
         public ActionResult<int> GetNumberOfUserAnswers(int gameId, int answerId)
         {
-            return statService.GetNumberOfUserAnswers(gameId, answerId);
+            return _statService.GetNumberOfUserAnswers(gameId, answerId);
         }
         
         //GET: api/Stat/GetOwnedGameHistory
@@ -33,7 +33,7 @@ namespace Quiz2.Controllers
         [HttpGet]
         public ActionResult<List<GameStatDto>> GetOwnedGameHistory()
         {
-            return statService.GetOwnedGameHistory(HttpContext.User.GetUserId());
+            return _statService.GetOwnedGameHistory(HttpContext.User.GetUserId());
         }
         
         //GET: api/stat/GetUserPointsInGame
@@ -41,7 +41,7 @@ namespace Quiz2.Controllers
         [HttpGet]
         public ActionResult<int> GetUserPointsInGame(int gameId, string userId)
         {
-            return statService.GetUserPointsInGame(gameId, userId);
+            return _statService.GetUserPointsInGame(gameId, userId);
         }
 
         //GET: api/Stat/GetPlayedGameHistory
@@ -49,7 +49,7 @@ namespace Quiz2.Controllers
         [HttpGet]
         public ActionResult<List<GameStatDto>> GetPlayedGameHistory()
         {
-            return statService.GetPlayedGameHistory(HttpContext.User.GetUserId());
+            return _statService.GetPlayedGameHistory(HttpContext.User.GetUserId());
         }
 
         //GET: api/Stat/{gameId}/GetQuestionsOfPlayedGame
@@ -57,7 +57,7 @@ namespace Quiz2.Controllers
         [HttpGet]
         public ActionResult<List<CorrectedQuestionDto>> GetQuestionsOfPlayedGame(int gameId)
         {
-            return statService.GetQuestionsOfPlayedGame(gameId, HttpContext.User.GetUserId());
+            return _statService.GetQuestionsOfPlayedGame(gameId, HttpContext.User.GetUserId());
         }
 
         //GET: api/Stat/{gameId}/GetUsersOfPlayedGame
@@ -65,7 +65,7 @@ namespace Quiz2.Controllers
         [HttpGet]
         public ActionResult<List<PlayerDto>> GetUsersOfPlayedGame(int gameId)
         {
-            return statService.GetUsersOfPlayedGame(gameId);
+            return _statService.GetUsersOfPlayedGame(gameId);
         }
 
         //GET: api/Stat/{gameId}/{userId}/GetQuestionsOfPlayedGameWithUserId
@@ -73,7 +73,7 @@ namespace Quiz2.Controllers
         [HttpGet]
         public ActionResult<List<CorrectedQuestionDto>> GetUsersOfPlayedGameWithUserId(int gameId, string userId)
         {
-            return statService.GetQuestionsOfPlayedGame(gameId, userId);
+            return _statService.GetQuestionsOfPlayedGame(gameId, userId);
         }
 
 

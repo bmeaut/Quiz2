@@ -25,12 +25,13 @@ namespace Quiz2.Services
         public void DeleteAnswer(int answerId)
         {
             var answer = _context.Answers.Find(answerId);
-            if (answer != null)
+            if (answer == null)
             {
-                _context.Remove(answer);
-                _context.SaveChanges();
+                return;
             }
-            
+            _context.Remove(answer);
+            _context.SaveChanges();
+
         }
         public Answer CreateAnswer(CreateAnswerDto createAnswerDto)
         {

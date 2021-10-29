@@ -14,38 +14,38 @@ namespace Quiz2.Controllers
     [Authorize]
     public class UserController: ControllerBase
     {
-        private readonly IApplicationUserService applicationUserService;
+        private readonly IApplicationUserService _applicationUserService;
 
         public UserController(IApplicationUserService applicationUserService)
         {
-            this.applicationUserService = applicationUserService;
+            _applicationUserService = applicationUserService;
         }
 
         // GET: api/User
         [HttpGet]
         public ActionResult<List<ApplicationUser>> GetUsers()
         {
-            return applicationUserService.GetUsers();
+            return _applicationUserService.GetUsers();
         }
         
         // GET: api/User/5
         [HttpGet("{userId}")]
         public ActionResult<ApplicationUser> GetApplicationUser(string userId)
         {
-            return applicationUserService.GetUser(userId);
+            return _applicationUserService.GetUser(userId);
         }
         // PATCH: api/User/5
         [HttpPatch("{userId}")]
         public ActionResult<ApplicationUser> UpdateApplicationUser(string userId, UpdateApplicationUserDto updateApplicationUserDto)
         {
-            return applicationUserService.UpdateApplicationUser(userId, updateApplicationUserDto);
+            return _applicationUserService.UpdateApplicationUser(userId, updateApplicationUserDto);
         }
 
         //GET: api/User/5/games
         [HttpGet("{userId}/games")]
         public ActionResult<List<Game>> GetGames(string userId)
         {
-            return applicationUserService.GetGames(userId);
+            return _applicationUserService.GetGames(userId);
         }
 
         //GET: api/User/joingame
@@ -53,7 +53,7 @@ namespace Quiz2.Controllers
         public ActionResult<Game> JoinGame(string joinId)
         {
             // join by string id provided
-            return applicationUserService.JoinGame(joinId);
+            return _applicationUserService.JoinGame(joinId);
         }
 
     }

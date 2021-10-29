@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Quiz2.Data;
 using Quiz2.DTO;
-using Quiz2.Helper;
 using Quiz2.Models;
 
 namespace Quiz2.Services
@@ -14,14 +11,14 @@ namespace Quiz2.Services
     {
         
         private readonly ApplicationDbContext _context;
-        private readonly IGameService gameService;
-        private readonly IUserAnswerService userAnswerService;
+        private readonly IGameService _gameService;
+        private readonly IUserAnswerService _userAnswerService;
 
         public StatService(ApplicationDbContext context, IGameService gameService, IUserAnswerService userAnswerService)
         {
             _context = context;
-            this.gameService = gameService;
-            this.userAnswerService = userAnswerService;
+            _gameService = gameService;
+            _userAnswerService = userAnswerService;
         }
         public int GetNumberOfUserAnswers(int gameId, int answerId)
         {
@@ -65,7 +62,7 @@ namespace Quiz2.Services
 
         public List<CorrectedQuestionDto> GetQuestionsOfPlayedGame(int gameId, string userId)
         {
-            var game = gameService.GetGameByIdWithQuestions(gameId);
+            var game = _gameService.GetGameByIdWithQuestions(gameId);
             return game.Quiz.Questions.Select(question => new CorrectedQuestionDto()
             {
                 Id = question.Id,
@@ -76,7 +73,7 @@ namespace Quiz2.Services
                         Id = answer.Id,
                         Correct = answer.Correct,
                         Text = answer.Text,
-                        Marked = userAnswerService.IsMarked(answer.Id, game.Id, userId),
+                        Marked = _userAnswerService.IsMarked(answer.Id, game.Id, userId),
                     }
                 ).ToList(),
                 Points = question.Points,
@@ -86,7 +83,7 @@ namespace Quiz2.Services
 
         public List<PlayerDto> GetUsersOfPlayedGame(int gameId)
         {
-            return gameService.GetJoinedUsersNames(gameId).ToList();
+            return _gameService.GetJoinedUsersNames(gameId).ToList();
         }
 
     }

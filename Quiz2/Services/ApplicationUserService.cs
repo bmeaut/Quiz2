@@ -33,17 +33,18 @@ namespace Quiz2.Services
 
         public Game JoinGame(string joinId)
         {
-            return _context.Games.Where(q => q.JoinId.Equals(joinId)).First();
+            return _context.Games.First(q => q.JoinId.Equals(joinId));
         }
 
         public ApplicationUser UpdateApplicationUser(string userId, UpdateApplicationUserDto updateApplicationUserDto)
         {
             var user = _context.ApplicationUsers.Find(userId);
-            if(user != null)
+            if (user == null)
             {
-                user.UserName = updateApplicationUserDto.Name;
-                _context.SaveChanges();
+                return null;
             }
+            user.UserName = updateApplicationUserDto.Name;
+            _context.SaveChanges();
             return user;
         }
     }
