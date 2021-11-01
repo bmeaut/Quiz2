@@ -12,19 +12,7 @@ import { QuizQuestionService } from '../../services/quizquestion.service';
 export class QuizQuestionEditComponent implements OnInit {
 
   questionForm: FormGroup;
-  question: Question = {
-    id: 0,
-    quizId: 0,
-    text: "",
-    answers: [{id: 0, questionID: 0, correct: true, text: ""},
-    {id: 0, questionID: 0 , correct: true, text: ""},
-    {id: 0, questionID: 0, correct: true, text: ""},
-    {id: 0, questionID: 0, correct: true, text: ""}
-    ],
-    secondsToAnswer: 0,
-    position: 0,
-    points: 0
-  };
+  question: Question;
 
   constructor(
     private router: Router,

@@ -21,7 +21,6 @@ export class QuizAnswerComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.debug("QuizQuestionComponent ngOnInit " + this.gameService.getJoinId())
     this.letters = ['A', 'B', 'C', 'D'];
   }
 

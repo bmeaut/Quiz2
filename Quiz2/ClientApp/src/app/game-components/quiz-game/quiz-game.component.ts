@@ -27,51 +27,49 @@ export class QuizGameComponent implements OnInit {
   ngOnInit() {
 
     this.gameService.joinedToGame.subscribe( () => {
-      console.debug("lobby betöltése")
         this.loadQuizLobbyComponent();
     });
+
     this.gameService.ownerJoinedToGame.subscribe( () => {
-      console.debug("owner lobby betöltése")
       this.loadQuizOwnerLobbyComponent();
     });
+
     this.gameService.gameStartedOwner.subscribe( (question: Question) => {
-      console.debug("owner question betöltése")
       this.loadQuizOwnerQuestionComponent(question);
     });
+
     this.gameService.gameStarted.subscribe( (question: Question) => {
-      console.debug("question betöltése")
       this.loadQuizQuestionComponent(question);
       this.question= question;
     });
+
     this.gameService.newQuestion.subscribe( (question: Question) => {
-      console.debug("question betöltése")
       this.loadQuizQuestionComponent(question);
       this.question= question;
     });
+
     this.gameService.endQuestion.subscribe( (stat :CurrentQuestionStat) => {
-      console.debug("player statistics betöltése")
       this.loadPlayerStatisticsComponent(stat);
     });
+
     this.gameService.gameNotExist.subscribe( () => {
-      console.debug("QuizFailedJoinComponent betöltése")
       this.loadQuizFailedJoinComponent("Nincs ilyen játék.");
     });
+
     this.gameService.gameFinished.subscribe( () => {
-      console.debug("QuizFailedJoinComponent betöltése")
       this.loadQuizFailedJoinComponent("A játék már véget ért.");
     });
+
     this.gameService.joinedToStarted.subscribe( () => {
-      console.debug("loadQuizWaitingComponent betöltése")
       this.loadQuizWaitingComponent();
     });
+
     this.gameService.ownerJoinedToStarted.subscribe( (ownerJoinedToStartedDto: OwnerJoinedToStartedDto) => {
-      console.debug("QuizOwnerQuestionComponent betöltése")
       this.loadQuizOwnerQuestionComponentWhenStarted(ownerJoinedToStartedDto);
     });
-    console.debug("ngOnInit vége")
   }
+
   loadQuizQuestionComponent(question: Question) {
-    console.debug("loadQuizQuestionComponent "+ this.gameService.getJoinId())
     const questionComponentFactory = this.cfr.resolveComponentFactory(QuizQuestionComponent);
     const hostViewContainerRef = this.gameHost.viewContainerRef;
     hostViewContainerRef.clear();
@@ -108,13 +106,6 @@ export class QuizGameComponent implements OnInit {
     quizOwnerQuestionComponent.question.secondsToAnswer
     quizOwnerQuestionComponent.stats=ownerJoinedToStartedDto.currentQuestionStat.stats;
   }
-
-  // loadQuizOwnerStatisticsComponent() {
-  //   const quizOwnerStatisticsFactory = this.cfr.resolveComponentFactory(QuizOwnerStatisticsComponent);
-  //   const hostViewContainerRef = this.gameHost.viewContainerRef;
-  //   hostViewContainerRef.clear();
-  //   hostViewContainerRef.createComponent(quizOwnerStatisticsFactory);
-  // }
 
   loadQuizOwnerLobbyComponent() {
     const quizOwnerLobbyComponentFactory = this.cfr.resolveComponentFactory(QuizOwnerLobbyComponent);

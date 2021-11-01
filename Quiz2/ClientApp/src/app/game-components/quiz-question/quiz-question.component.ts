@@ -18,20 +18,7 @@ export class QuizQuestionComponent implements OnInit {
   disableAnswers: boolean = false;
   disableSendAnswers: boolean = true;
 
-  question: Question = {
-    id: 1,
-    quizId: 0,
-    text: "Ez egy kérdés?",
-    secondsToAnswer: 400,
-    position: 1,
-    points: 5,
-    answers: [
-      {id: 1, questionID: 0, correct: false, marked: false, text: "Válasz1"},
-     {id: 2, questionID: 0, correct: false, marked: false, text: "Válasz2"},
-     {id: 3, questionID: 0, correct: false, marked: false, text: "Válasz3"},
-     {id: 4, questionID: 0, correct: false, marked: false, text: "Válasz4"}
-     ]
-  };
+  question: Question;
 
   constructor( public gameService: GamesService) {
   }

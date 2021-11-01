@@ -12,61 +12,13 @@ export class PlayerStatisticsComponent implements OnInit {
 
   chart: Chart;
 
-  question: Question = {
-    text: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas rerum vitae sed aliquid reprehenderit? Quisquam molestiae quaerat tempora id consequuntur!",
-    answers: [{
-      id: 0,
-      questionID: 0,
-      correct: true,
-      text: "Lorem ipsum dolor sit amet."
-    },
-    {
-      id: 0,
-      questionID: 0,
-      correct: false,
-      text: "Lorem ipsum dolor sit amet."
-    },
-    {
-      id: 0,
-      questionID: 0,
-      correct: false,
-      text: "Lorem ipsum dolor sit amet."
-    },
-    {
-      id: 0,
-      questionID: 0,
-      correct: false,
-      text: "Lorem ipsum dolor sit amet."
-    }],
-    secondsToAnswer: 0,
-    position: 0,
-    points: 0,
-  };
+  question: Question;
 
   answersSubmittedByThePlayer: {
     id: number,
     questionID: number,
     correct: boolean
-  }[] = [{
-    id: 0,
-    questionID: 0,
-    correct: false
-  },
-  {
-    id: 0,
-    questionID: 0,
-    correct: false
-  },
-  {
-    id: 0,
-    questionID: 0,
-    correct: true
-  },
-  {
-    id: 0,
-    questionID: 0,
-    correct: false
-  }];
+  }[];
 
   letters: string[];
 

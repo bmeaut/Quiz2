@@ -18,9 +18,4 @@ export class QuizOwnerLobbyComponent implements OnInit {
       this.users = players;
     });
   }
-
-  startGame() {
-
-  }
-
 }

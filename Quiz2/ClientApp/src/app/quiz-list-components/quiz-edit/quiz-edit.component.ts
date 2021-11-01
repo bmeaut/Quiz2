@@ -12,13 +12,7 @@ import { QuizService } from '../../services/quiz.service';
 export class QuizEditComponent implements OnInit {
 
   quizForm: FormGroup;
-  quiz: Quiz = {
-    id: 0,
-    name: "",
-    questions: [],
-    owner: { id: "", name: ""},
-    games: []
-  };
+  quiz: Quiz;
 
   constructor(private quizService: QuizService, private router: Router, private route: ActivatedRoute) { }
 

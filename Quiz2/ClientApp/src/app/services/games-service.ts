@@ -45,123 +45,105 @@ export class GamesService {
         )
         .build();
 
-      this.connection.on("groupTestAnswer", (text: string) => {
-        console.debug(text);
-      });
-
       this.connection.on("joined", (joinId: string) => {
         this.joinId = joinId;
         this.joinedToGame.emit();
-        console.debug("joined");
       });
+
       this.connection.on("ownerJoined", (joinId: string) => {
         this.joinId = joinId;
         this.ownerJoinedToGame.emit();
-        console.debug("ownerJoined");
       });
+
       this.connection.on("joinFailed", () => {
-        console.debug("rossz");
       });
 
       this.connection.on("startedOwner", (question: Question) => {
         this.gameStartedOwner.emit(question);
-        console.debug("elindult");
       });
 
       this.connection.on("started", (question: Question) => {
         this.gameStarted.emit(question);
-        console.debug("elindult");
       });
+
       this.connection.on("startFailed", () => {
-        console.debug("nem indult el");
       });
+
       this.connection.on("newQuestion", (question :Question) => {
-        this.newQuestion.emit(question)
-        console.debug("newQuestion");
+        this.newQuestion.emit(question);
       });
+
       this.connection.on("newQuestionOwner", (question :Question) => {
-        this.newQuestionOwner.emit(question)
-        console.debug("newQuestion");
+        this.newQuestionOwner.emit(question);
       });
+
       this.connection.on("endQuestion", (stat :CurrentQuestionStat) => {
         if(!this.started) {
-          this.endQuestion.emit(stat)
-          console.debug(stat);
-          console.debug("endQuestion");
+          this.endQuestion.emit(stat);
         }
       });
+
       this.connection.on("endGame", (gameId: number) => {
         this.router.navigate(["/stats",gameId , "detailsPlayed"]);
-        console.debug("endGame");
       });
+
       this.connection.on("endGameOwner", (gameId: number) => {
         this.router.navigate(["/stats", gameId , "detailsOwned"]);
-        console.debug("endGameOwner");
       });
+
       this.connection.on("newPlayer", (players :User[]) => {
-        this.newPlayer.emit(players)
-        console.debug("newPlayer");
+        this.newPlayer.emit(players);
       });
+
       this.connection.on("currentQuestionStat", (stat :CurrentQuestionStat) => {
-        this.currentQuestionStat.emit(stat)
-        console.debug("currentQuestionStat");
+        this.currentQuestionStat.emit(stat);
       });
+
       this.connection.on("endQuestionOwner", () => {
-        this.endQuestionOwner.emit()
-        console.debug("endQuestionOwner");
+        this.endQuestionOwner.emit();
       });
+
       this.connection.on("gameNotExist", () => {
-        this.gameNotExist.emit()
-        console.debug("gameNotExist");
+        this.gameNotExist.emit();
       });
+
       this.connection.on("gameFinished", () => {
-        this.gameFinished.emit()
-        console.debug("gameFinished");
+        this.gameFinished.emit();
       });
+
       this.connection.on("ownerJoinedToStarted", (ownerJoinedToStartedDto: OwnerJoinedToStartedDto) => {
         this.joinId = ownerJoinedToStartedDto.joinId;
-        this.ownerJoinedToStarted.emit(ownerJoinedToStartedDto)
-        console.debug("ownerJoinedToStarted");
+        this.ownerJoinedToStarted.emit(ownerJoinedToStartedDto);
       });
+
       this.connection.on("joinedToStarted", (joinId: string) => {
         this.joinId =joinId;
         this.started = true;
-        this.joinedToStarted.emit()
-        console.debug("joinedToStarted");
+        this.joinedToStarted.emit();
       });
+
       this.connection.start().catch(err => document.write(err));
     });
   }
 
   joinGame(joinId: string){
-
     this.connection.send("JoinGame", joinId);
-    console.debug("joinGame " + joinId);
-  }
-
-  keres(){
-    this.connection.send("GroupTest");
-    console.debug("keres");
   }
 
   nextQuestion(){
     this.connection.send("NextQuestion", this.joinId);
-    console.debug("új kérdés");
   }
 
   startGame(){
     this.connection.send("StartGame",  this.joinId);
-    console.debug("startGame");
   }
 
   sendAnswers(answers: Answers){
     this.connection.send("SendAnswers", this.joinId, answers);
-    console.debug("sendAnswers "+this.joinId);
   }
 
   createGame(quizId: number){
     this.connection.send("CreateGame",  quizId);
-    console.debug("createGame");
   }
 
   getJoinId(): string{
