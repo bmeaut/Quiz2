@@ -14,9 +14,15 @@ import { QuizService } from '../../services/quiz.service';
 export class QuizCreateComponent implements OnInit {
 
   quizForm: FormGroup;
-  quiz: Quiz;
+  quiz: Quiz = {
+    id: 0,
+    name: "",
+    questions: null,
+    owner: null,
+    games: null,
+  };
 
-  constructor(private quizSerivce: QuizService, private router: Router) { }
+  constructor(private quizSerivce: QuizService, private router: Router) {}
 
   ngOnInit() {
     this.quizForm = new FormGroup({

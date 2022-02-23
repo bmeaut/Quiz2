@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from '../../question';
 import { QuizQuestionService } from '../../services/quizquestion.service';
+import {Answer} from "../../answer";
 
 @Component({
   selector: 'app-quiz-question-create',
@@ -12,7 +13,20 @@ import { QuizQuestionService } from '../../services/quizquestion.service';
 export class QuizQuestionCreateComponent implements OnInit {
 
   questionForm: FormGroup;
-  question: Question;
+  question: Question = {
+    id: 0,
+    quizId: 0,
+    text: "",
+    answers: [
+      {id: 0, questionID: 0, correct: false, text: ""},
+      {id: 0, questionID: 0, correct: false, text: ""},
+      {id: 0, questionID: 0, correct: false, text: ""},
+      {id: 0, questionID: 0, correct: false, text: ""}
+      ],
+    secondsToAnswer: 0,
+    position: 0,
+    points: 0
+  };
 
   constructor(
     private router: Router,
