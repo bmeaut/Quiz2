@@ -25,7 +25,6 @@ export class QuizQuestionComponent implements OnInit {
 
   ngOnInit() {
     this.gameService.newQuestion.subscribe( (question: Question) => {
-      console.debug("new question betöltése")
       this.question=question;
       this.disableAnswers = false;
       this.disableSendAnswers = true;

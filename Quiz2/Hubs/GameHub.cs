@@ -63,15 +63,16 @@ namespace Quiz2.Hubs
                         case GameStatuses.Started:
                             Groups.AddToGroupAsync(Context.ConnectionId, joinId+"Owner");
                             var gameWithCurrentQuestion = gameService.GetGameByJoinIdWithCurrentQuestion(joinId);
-                            var questionToSend = new SendQuestionDto()
+                            var questionToSend = new SendQuestionToOwnerDto()
                             {
                                 Id = gameWithCurrentQuestion.CurrentQuestion.Id,
                                 Text = gameWithCurrentQuestion.CurrentQuestion.Text,
                                 Answers = gameWithCurrentQuestion.CurrentQuestion.Answers.Select(answer =>
-                                    new SendAnswerDto()
+                                    new SendAnswerToOwnerDto()
                                     {
                                         Id = answer.Id,
-                                        Text = answer.Text
+                                        Text = answer.Text,
+                                        Correct = answer.Correct
                                     }).ToList(),
                                 SecondsToAnswer = gameWithCurrentQuestion.CurrentQuestion.SecondsToAnswer,
                                 Points = gameWithCurrentQuestion.CurrentQuestion.Points,
@@ -147,7 +148,21 @@ namespace Quiz2.Hubs
                     SecondsToAnswer = game.CurrentQuestion.SecondsToAnswer,
                     Points = game.CurrentQuestion.Points,
                 };
-                Clients.Group(game.JoinId+"Owner").SendAsync("startedOwner",  questionToSend);
+                var questionToSendToOwner = new SendQuestionToOwnerDto()
+                {
+                    Id = game.CurrentQuestion.Id,
+                    Text = game.CurrentQuestion.Text,
+                    Answers = game.CurrentQuestion.Answers.Select(answer =>
+                        new SendAnswerToOwnerDto()
+                        {
+                            Id = answer.Id,
+                            Text = answer.Text,
+                            Correct = answer.Correct
+                        }).ToList(),
+                    SecondsToAnswer = game.CurrentQuestion.SecondsToAnswer,
+                    Points = game.CurrentQuestion.Points,
+                };
+                Clients.Group(game.JoinId+"Owner").SendAsync("startedOwner",  questionToSendToOwner);
                 Clients.Group(game.JoinId).SendAsync("started",  questionToSend);
                 
                 QuestionTimer questionTimer = new QuestionTimer(game.CurrentQuestion.SecondsToAnswer * 1000);
@@ -188,7 +203,21 @@ namespace Quiz2.Hubs
                         SecondsToAnswer = game.CurrentQuestion.SecondsToAnswer,
                         Points = game.CurrentQuestion.Points,
                     };
-                    Clients.Group(game.JoinId + "Owner").SendAsync("newQuestionOwner", questionToSend);
+                    var questionToSendToOwner = new SendQuestionToOwnerDto()
+                    {
+                        Id = game.CurrentQuestion.Id,
+                        Text = game.CurrentQuestion.Text,
+                        Answers = game.CurrentQuestion.Answers.Select(answer =>
+                            new SendAnswerToOwnerDto()
+                            {
+                                Id = answer.Id,
+                                Text = answer.Text,
+                                Correct = answer.Correct
+                            }).ToList(),
+                        SecondsToAnswer = game.CurrentQuestion.SecondsToAnswer,
+                        Points = game.CurrentQuestion.Points,
+                    };
+                    Clients.Group(game.JoinId + "Owner").SendAsync("newQuestionOwner", questionToSendToOwner);
                     Clients.Group(game.JoinId).SendAsync("newQuestion", questionToSend);
                     var questionTimer = new QuestionTimer(game.CurrentQuestion.SecondsToAnswer * 1000);
                     questionTimer = QuestionTimer.Timers.GetOrAdd(joinId, questionTimer);

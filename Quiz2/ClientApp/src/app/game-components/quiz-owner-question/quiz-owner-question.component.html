@@ -7,7 +7,8 @@
             <span class="time">{{ displayTime }}</span>
         </div>
         <button class="next-btn" (click)="nextQuestion()" [disabled]="disableNextQuestion">Következő kérdés</button>
-        <div class="answer" [id]="'answer' + i" *ngFor="let answer of question.answers; let i = index">
+        <div class="answer" [id]="'answer' + i" *ngFor="let answer of question.answers; let i = index"
+             [ngClass]="{'correct-answer': (answer.correct === true)}">
             <div>
                 <span class="letter">{{ letters[i] }}</span>
                 <span>{{ answer.text }}</span>

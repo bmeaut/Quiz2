@@ -135,3 +135,7 @@
     margin: 0rem 0.5rem 0rem 0.5rem;
     font-size: 1.6rem;
 }
+
+.correct-answer {
+  border: 5px solid green;
+}
