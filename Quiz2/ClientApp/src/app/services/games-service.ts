@@ -32,6 +32,8 @@ export class GamesService {
   public currentQuestionStat = new EventEmitter<CurrentQuestionStat>();
   public gameNotExist = new EventEmitter();
   public gameFinished = new EventEmitter();
+  public joinFailed = new EventEmitter();
+  public startFailed = new EventEmitter();
   public ownerJoinedToStarted = new EventEmitter();
   public joinedToStarted = new EventEmitter<OwnerJoinedToStartedDto>();
   constructor(private authorizeService: AuthorizeService, private router: Router) {
@@ -56,6 +58,7 @@ export class GamesService {
       });
 
       this.connection.on("joinFailed", () => {
+        this.joinFailed.emit();
       });
 
       this.connection.on("startedOwner", (question: Question) => {
@@ -67,6 +70,7 @@ export class GamesService {
       });
 
       this.connection.on("startFailed", () => {
+        this.startFailed.emit();
       });
 
       this.connection.on("newQuestion", (question :Question) => {

@@ -60,6 +60,14 @@ export class QuizGameComponent implements OnInit {
       this.loadQuizFailedJoinComponent("A játék már véget ért.");
     });
 
+    this.gameService.joinFailed.subscribe( () => {
+      this.loadQuizFailedJoinComponent("A csatlakozás sikertelen.");
+    });
+
+    this.gameService.startFailed.subscribe( () => {
+      this.loadQuizFailedJoinComponent("A játék elindítása sikertelen.");
+    });
+
     this.gameService.joinedToStarted.subscribe( () => {
       this.loadQuizWaitingComponent();
     });
