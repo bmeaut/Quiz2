@@ -24,31 +24,18 @@ export class QuizQuestionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.gameService.newQuestion.subscribe( (question: Question) => {
-      this.question=question;
-      this.disableAnswers = false;
-      this.disableSendAnswers = true;
-      this.timeIsOver = false;
-      this.startTimer();
-    });
     this.startTimer();
   }
 
   saveAnswer(): void
   {
-
-    console.debug(this.question.answers.filter((answer) => {
-      return answer.marked;
-    }));
     const answers: Answers = {
       ids: this.question.answers.filter((answer) => {
         return answer.marked;
       }).map((answer) => answer.id)
     };
-    console.debug(answers.ids);
     this.gameService.sendAnswers(answers);
     this.disableAnswers = true;
-
   }
 
   startTimer(): void {
@@ -74,7 +61,6 @@ export class QuizQuestionComponent implements OnInit {
   }
 
  answerIsCheckedHandler(): void {
-   console.debug("answerIsChecked")
    this.disableSendAnswers = this.question.answers.filter((answer) => {
      return answer.marked;
    }).length == 0;
