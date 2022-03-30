@@ -167,7 +167,6 @@ namespace Quiz2.Hubs
                 
                 QuestionTimer questionTimer = new QuestionTimer(game.CurrentQuestion.SecondsToAnswer * 1000);
                 questionTimer = QuestionTimer.Timers.GetOrAdd(joinId, questionTimer);
-                 questionTimer.callerContext = Context;
                  questionTimer.hubCallerClients = Clients;
                  questionTimer.AutoReset = false;
                  questionTimer.Elapsed +=  (sender, e) => EndingQuestion(sender, game.JoinId);
@@ -221,7 +220,6 @@ namespace Quiz2.Hubs
                     Clients.Group(game.JoinId).SendAsync("newQuestion", questionToSend);
                     var questionTimer = new QuestionTimer(game.CurrentQuestion.SecondsToAnswer * 1000);
                     questionTimer = QuestionTimer.Timers.GetOrAdd(joinId, questionTimer);
-                    questionTimer.callerContext = Context;
                     questionTimer.hubCallerClients = Clients;
                     questionTimer.AutoReset = false;
                     questionTimer.Elapsed +=  (sender, e) => EndingQuestion(sender, game.JoinId);

@@ -13,8 +13,7 @@ namespace Quiz2.Helper
                 : base(interval)
             {
             }
-
-            public HubCallerContext callerContext { get; set; }
+            
             public IHubCallerClients hubCallerClients { get; set; }
         
     }
