@@ -24,7 +24,6 @@ namespace Quiz2.Data
     public DbSet<Quiz> Quizzes { get; set; }
     public DbSet<UserAnswer> UserAnswers { get; set; }
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-    //public DbSet<GameUsers> GameUsers { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -54,21 +53,7 @@ namespace Quiz2.Data
             .WithMany()
             .HasForeignKey(g => g.CurrentQuestionId)
             .OnDelete(DeleteBehavior.Restrict);
-        
-     /*   modelBuilder.Entity<Game>()
-            .HasOne(p => p.Owner)
-            .WithMany(u => u.OwnGames)
-            .HasForeignKey(p => p.OwnerId)
-            .OnDelete(DeleteBehavior.Restrict);*/
-      
-       /* modelBuilder.Entity<Answer>().ToTable("Answers");
-        modelBuilder.Entity<Game>().ToTable("Games");
-        modelBuilder.Entity<Question>().ToTable("Questions");
-        modelBuilder.Entity<Quiz>().ToTable("Quizzes");
-        modelBuilder.Entity<UserAnswer>().ToTable("UserAnswers");*/
-       // modelBuilder.Entity<GameUsers>()
-        //    .HasKey(bc => new { bc.GameId, bc.ApplicationUserId });
-        
+
         ApplicationUser user1 = new ApplicationUser
         {
             AccessFailedCount = 0,
