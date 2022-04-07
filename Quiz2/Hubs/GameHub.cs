@@ -128,9 +128,9 @@ namespace Quiz2.Hubs
 
         public void StartGame(string joinId)
         {
+            var game = gameService.GetGameByJoinIdWithCurrentQuestion(joinId);
             try
             {
-                var game = gameService.GetGameByJoinIdWithCurrentQuestion(joinId);
                 game.Status = GameStatuses.Started;
                 game.CurrentQuestionStarted = DateTime.Now;
                 gameService.Save();
@@ -177,7 +177,8 @@ namespace Quiz2.Hubs
             catch(Exception e)
             {
                 Console.WriteLine(e.Message);
-                Clients.Caller.SendAsync("startFailed");
+                Clients.Group(game.JoinId+"Owner").SendAsync("startFailed");
+                Clients.Group(game.JoinId).SendAsync("startFailed");
             }
         }
 
