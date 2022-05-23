@@ -284,13 +284,13 @@ namespace Quiz2.Hubs
                         Marked = userAnswerService.IsMarked(answer.Id, game.Id, user.Id, dbContext),
                     }
                 ).ToList();
-                CurrentQuestionStatDto currentQuestionStatDto = new CurrentQuestionStatDto()
+                CorrectedQuestionAndStatsDto correctedQuestionAndStatsDto = new CorrectedQuestionAndStatsDto()
                     {
                         CorrectedAnswers = correctedAnswers,
                         Stats = stats,
                         Point = userAnswerService.GetUserPoint(game.JoinId, user.Id, dbContext)
                     };
-                questionTimer.hubCallerClients.User(user.Id).SendAsync("endQuestion", currentQuestionStatDto);
+                questionTimer.hubCallerClients.User(user.Id).SendAsync("endQuestion", correctedQuestionAndStatsDto);
             }
 
             questionTimer.hubCallerClients.Group(game.JoinId + "Owner").SendAsync("endQuestionOwner");
